@@ -238,7 +238,7 @@
 }
 
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot{
-    NSUInteger res = [referencedIndicator.data count];
+    NSUInteger res = [[referencedIndicator getIndicatorValuesKeys] count];
     return res;
 }
 
