@@ -70,7 +70,7 @@
         NSLog(@"Indicator Value being updated");
         [cell setReferencedIndicator:refIndicator];
     });
-
+    [cell.indicatorTitle setFont:[UIFont systemFontOfSize:17.0f]];
     return cell;
 }
 
@@ -109,11 +109,44 @@
     textView.contentOffset = (CGPoint){.x=0, .y=-topCorret};
 }
 
+- (void)highlight:(IndicatorDisplayCell *)cell {
+    
+    UIColor *backcolor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f];
+    UIColor *textColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
+    
+    cell.indicatorTitle.backgroundColor = backcolor;
+    cell.indicatorTitle.textColor = textColor;
+    cell.backgroundColor = backcolor;
+    cell.indicatorValueLabel.textColor = textColor;
+    
+    cell.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+}
+
+- (void)unhighlight:(IndicatorDisplayCell *)cell {
+    
+    UIColor *backcolor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
+    UIColor *textColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.0f];
+    
+    cell.indicatorTitle.backgroundColor = backcolor;
+    cell.indicatorTitle.textColor = textColor;
+    cell.backgroundColor = backcolor;
+    cell.indicatorValueLabel.textColor = textColor;
+    
+    cell.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+}
+
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     Interaction *interaction = [Interaction getInstance];
     IndicatorDisplayCell *cell = (IndicatorDisplayCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
+    [self highlight:cell];
+
     [interaction loadIndicatorData:cell.referencedIndicator startDate:nil finishDate:nil];
     interaction.selectedIndicator = cell.referencedIndicator;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [self unhighlight:(IndicatorDisplayCell *)[collectionView cellForItemAtIndexPath:indexPath]];
 }
 
 @end

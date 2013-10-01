@@ -130,6 +130,15 @@
     return result;
 }
 
+-(NSSet *)getIndicatorValuesKeys{
+    NSMutableSet *mainSet = [[NSMutableSet alloc]init];
+    for (IndicatorData *serie in indicatorData) {
+        NSMutableSet *auxSet = [NSMutableSet setWithArray:[serie.indicatorSeriesData allKeys]];
+        [mainSet unionSet:auxSet];
+    }
+    return mainSet;
+}
+
 
 
 

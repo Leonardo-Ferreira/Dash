@@ -34,7 +34,7 @@
     [self configureHost];
     [self configureGraph];
     [self configurePlots];
-    //[self configureAxes];
+    [self configureAxes];
 }
 
 -(void)loadingChartView{
@@ -111,13 +111,13 @@
     axisLineStyle.lineWidth = 2.0f;
     axisLineStyle.lineColor = [CPTColor blackColor];
     CPTMutableTextStyle *axisTextStyle = [[CPTMutableTextStyle alloc] init];
-    axisTextStyle.color = [CPTColor whiteColor];
+    axisTextStyle.color = [CPTColor blackColor];
     axisTextStyle.fontName = @"Helvetica-Bold";
     axisTextStyle.fontSize = 11.0f;
     CPTMutableLineStyle *tickLineStyle = [CPTMutableLineStyle lineStyle];
     tickLineStyle.lineColor = [CPTColor blackColor];
     tickLineStyle.lineWidth = 2.0f;
-    CPTMutableLineStyle *gridLineStyle = [CPTMutableLineStyle lineStyle];
+    //CPTMutableLineStyle *gridLineStyle = [CPTMutableLineStyle lineStyle];
     tickLineStyle.lineColor = [CPTColor blackColor];
     tickLineStyle.lineWidth = 1.0f;
 
@@ -133,12 +133,22 @@
     x.majorTickLineStyle = axisLineStyle;
     x.majorTickLength = 4.0f;
     x.tickDirection = CPTSignNegative;
-    NSMutableSet *xLabels = [NSMutableSet setWithCapacity:4];
-    NSMutableSet *xLocations = [NSMutableSet setWithCapacity:4];
+    NSMutableSet *xLabels = [NSMutableSet setWithCapacity:[referencedIndicator.data count]];
+    NSMutableSet *xLocations = [NSMutableSet setWithCapacity:[referencedIndicator.data count]];
     NSInteger i = 0;
-    for (IndicatorData *item in referencedIndicator.data) {
-        
+    for (NSString *item in [referencedIndicator getIndicatorValuesKeys]) {
+        CPTAxisLabel *label = [[CPTAxisLabel alloc]initWithText:[item substringToIndex:10] textStyle:x.labelTextStyle];
+        CGFloat location = i++;
+        label.tickLocation = CPTDecimalFromCGFloat(location);
+        label.offset = x.majorTickLength;
+        if(label){
+            [xLabels addObject:label];
+            [xLocations addObject:[NSNumber numberWithFloat:location]];
+        }
     }
+    x.axisLabels = xLabels;
+    x.majorTickLocations = xLocations;
+    
 }
 
 -(void)configureHost{
