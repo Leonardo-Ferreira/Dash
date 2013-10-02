@@ -12,7 +12,9 @@
 
 @end
 
-@implementation RootTabBarViewController
+@implementation RootTabBarViewController{
+    Interaction *interaction;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,6 +34,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self tabBar:self.tabBar didSelectItem:self.tabBar.selectedItem];
+    interaction = [Interaction getInstance];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -48,18 +51,24 @@
     
 }
 
+-(BOOL)shouldAutorotate{
+    return interaction.selectedIndicator != nil;
+}
+
 - (void) orientationChanged:(NSNotification *)note
 {
-    UIDevice * device = note.object;
-    switch(device.orientation)
-    {
-        case UIDeviceOrientationLandscapeLeft:
-        case UIDeviceOrientationLandscapeRight:
-            [self pushView];
-            break;
-        default:
-            break;
-    };
+    if (interaction.selectedIndicator != nil) {
+        UIDevice * device = note.object;
+        switch(device.orientation)
+        {
+            case UIDeviceOrientationLandscapeLeft:
+            case UIDeviceOrientationLandscapeRight:
+                [self pushView];
+                break;
+            default:
+                break;
+        };
+    }
 }
 
 -(void)pushView{

@@ -14,7 +14,6 @@
 		885BC04E17ECCE4000B7FD62 /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 885BC04B17ECCDD500B7FD62 /* libCorePlot-CocoaTouch.a */; };
 		885BC05017ECCED200B7FD62 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 885BC04F17ECCED200B7FD62 /* QuartzCore.framework */; };
 		88623CBE17E23044007742BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88623CBD17E23044007742BB /* Images.xcassets */; };
-		8889743917FAE77900B9C48B /* SerieInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8889743817FAE77900B9C48B /* SerieInformation.m */; };
 		88BCA5E217E0A6A40066DE2C /* RootTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BCA5E117E0A6A40066DE2C /* RootTabBarViewController.m */; };
 		88BCA5E517E0A8DD0066DE2C /* DefaultChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BCA5E417E0A8DD0066DE2C /* DefaultChartViewController.m */; };
 		88BCA5E817E0B7520066DE2C /* Indicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BCA5E717E0B7520066DE2C /* Indicator.m */; };
@@ -26,6 +25,7 @@
 		B321A6C517A32899000A7BB7 /* Interaction.m in Sources */ = {isa = PBXBuildFile; fileRef = B321A6C417A32899000A7BB7 /* Interaction.m */; };
 		B321A6C817A328BC000A7BB7 /* ActionPerformed.m in Sources */ = {isa = PBXBuildFile; fileRef = B321A6C717A328BC000A7BB7 /* ActionPerformed.m */; };
 		B321A6CA17A32D82000A7BB7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B321A6C917A32D82000A7BB7 /* CoreLocation.framework */; };
+		B3603ED717FB4B4D00349B55 /* SerieInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = B3603ED617FB4B4D00349B55 /* SerieInformation.m */; };
 		B36775F317D4D3EB009FBE7F /* DeviceStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = B36775F217D4D3EB009FBE7F /* DeviceStyle.m */; };
 		B36775F617D4DBAB009FBE7F /* BasicImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B36775F517D4DBAB009FBE7F /* BasicImageInfo.m */; };
 		B3A43E0617A1ABD400D3FF44 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3A43E0517A1ABD400D3FF44 /* UIKit.framework */; };
@@ -72,8 +72,6 @@
 		885BC04417ECCDD500B7FD62 /* CorePlot-CocoaTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CorePlot-CocoaTouch.xcodeproj"; path = "CorePlot_1.3/Source/framework/CorePlot-CocoaTouch.xcodeproj"; sourceTree = "<group>"; };
 		885BC04F17ECCED200B7FD62 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		88623CBD17E23044007742BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		8889743717FAE77900B9C48B /* SerieInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SerieInformation.h; path = ../../../../Downloads/Foil/SerieInformation.h; sourceTree = "<group>"; };
-		8889743817FAE77900B9C48B /* SerieInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SerieInformation.m; path = ../../../../Downloads/Foil/SerieInformation.m; sourceTree = "<group>"; };
 		88BCA5E017E0A6A40066DE2C /* RootTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTabBarViewController.h; sourceTree = "<group>"; };
 		88BCA5E117E0A6A40066DE2C /* RootTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootTabBarViewController.m; sourceTree = "<group>"; };
 		88BCA5E317E0A8DD0066DE2C /* DefaultChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultChartViewController.h; sourceTree = "<group>"; };
@@ -95,6 +93,8 @@
 		B321A6C617A328BC000A7BB7 /* ActionPerformed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionPerformed.h; sourceTree = "<group>"; };
 		B321A6C717A328BC000A7BB7 /* ActionPerformed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionPerformed.m; sourceTree = "<group>"; };
 		B321A6C917A32D82000A7BB7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B3603ED517FB4B4D00349B55 /* SerieInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerieInformation.h; sourceTree = "<group>"; };
+		B3603ED617FB4B4D00349B55 /* SerieInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerieInformation.m; sourceTree = "<group>"; };
 		B36775F117D4D3EB009FBE7F /* DeviceStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceStyle.h; sourceTree = "<group>"; };
 		B36775F217D4D3EB009FBE7F /* DeviceStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceStyle.m; sourceTree = "<group>"; };
 		B36775F417D4DBAB009FBE7F /* BasicImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicImageInfo.h; sourceTree = "<group>"; };
@@ -228,8 +228,8 @@
 				88BCA5E717E0B7520066DE2C /* Indicator.m */,
 				88BCA5E917E0EABF0066DE2C /* IndicatorData.h */,
 				88BCA5EA17E0EABF0066DE2C /* IndicatorData.m */,
-				8889743717FAE77900B9C48B /* SerieInformation.h */,
-				8889743817FAE77900B9C48B /* SerieInformation.m */,
+				B3603ED517FB4B4D00349B55 /* SerieInformation.h */,
+				B3603ED617FB4B4D00349B55 /* SerieInformation.m */,
 			);
 			name = "Entities Package";
 			sourceTree = "<group>";
@@ -389,7 +389,7 @@
 				B321A6C517A32899000A7BB7 /* Interaction.m in Sources */,
 				B3AB94CA17C853FE008CA59E /* SubscriberContextSelectionViewController.m in Sources */,
 				8858945217E33B5C00D999BC /* Reachability.m in Sources */,
-				8889743917FAE77900B9C48B /* SerieInformation.m in Sources */,
+				B3603ED717FB4B4D00349B55 /* SerieInformation.m in Sources */,
 				B321A6C817A328BC000A7BB7 /* ActionPerformed.m in Sources */,
 				B36775F317D4D3EB009FBE7F /* DeviceStyle.m in Sources */,
 				884E17FD17EA101100300649 /* IndicatorDisplayCell.m in Sources */,
@@ -514,6 +514,7 @@
 					"$(inherited)/**",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"/Users/AeC/Desktop/Hospitale/Foil/**",
+					"/Users/Shared/Projects/Dash/**",
 				);
 				INFOPLIST_FILE = "Foil/Foil-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
@@ -538,6 +539,7 @@
 					"$(inherited)/**",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"/Users/AeC/Desktop/Hospitale/Foil/**",
+					"/Users/Shared/Projects/Dash/**",
 				);
 				INFOPLIST_FILE = "Foil/Foil-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;

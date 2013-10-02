@@ -19,6 +19,7 @@
     UILabel *textLabel;
     UIView *modalView;
     UIActivityIndicatorView *wheel;
+    NSNumber *maxValueY,*minValueY;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -66,6 +67,7 @@
 -(void)configurePlots{
     CPTGraph *graph = hostView.hostedGraph;
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)graph.defaultPlotSpace;
+    plotSpace.allowsUserInteraction = YES;
     
     CPTMutablePlotRange *xRange = [plotSpace.xRange mutableCopy];
     [xRange expandRangeByFactor:CPTDecimalFromCGFloat(1.1f)];
@@ -159,6 +161,8 @@
 }
 
 -(void)configureGraph{
+    maxValueY = [NSNumber numberWithInt:-999999999];
+    minValueY = [NSNumber numberWithInt:999999999];
     CPTGraph *graph = [[CPTXYGraph alloc]initWithFrame:hostView.bounds];
     //[graph applyTheme:[CPTTheme themeNamed:kCPTDarkGradientTheme]];
     hostView.hostedGraph = graph;
@@ -238,7 +242,7 @@
 }
 
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot{
-    NSUInteger res = [referencedIndicator.data count];
+    NSUInteger res = [[referencedIndicator getIndicatorValuesKeys] count];
     return res;
 }
 
@@ -261,6 +265,19 @@
                     id val = [subItem.indicatorSeriesData objectForKey: auxKey];
                     float fValue = [((NSString *)val) floatValue];
                     result = [NSNumber numberWithFloat: fValue/10000];
+                    BOOL changed = NO;
+                    if (result > maxValueY) {
+                        maxValueY = result;
+                        changed = YES;
+                    }else{
+                        if (result < minValueY) {
+                            minValueY = result;
+                            changed = YES;
+                        }
+                    }
+                    if (changed) {
+                        ((CPTXYPlotSpace *)hostView.hostedGraph.defaultPlotSpace).yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat([minValueY floatValue] * 1.1f) length:CPTDecimalFromFloat([maxValueY floatValue] * 1.1f)];
+                    }
                 }
             }
             break;
