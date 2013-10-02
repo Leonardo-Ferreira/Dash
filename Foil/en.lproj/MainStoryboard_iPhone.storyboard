@@ -18,16 +18,20 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="tiK-s9-0ZK">
-                                <rect key="frame" x="150" y="230" width="20" height="20"/>
+                                <rect key="frame" x="150" y="312" width="20" height="20"/>
                             </activityIndicatorView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dash" translatesAutoresizingMaskIntoConstraints="NO" id="sVj-vL-Vet">
-                                <rect key="frame" x="40" y="176" width="240" height="128"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dash" translatesAutoresizingMaskIntoConstraints="NO" id="sVj-vL-Vet">
+                                <rect key="frame" x="56" y="183" width="208" height="114"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.94509803920000002" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="tiK-s9-0ZK" secondAttribute="centerY" id="M50-Sq-3gy"/>
+                            <constraint firstItem="Y4m-cv-jBu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tiK-s9-0ZK" secondAttribute="bottom" constant="141" id="FM7-Ez-5oM"/>
+                            <constraint firstAttribute="centerY" secondItem="sVj-vL-Vet" secondAttribute="centerY" id="XTi-tw-Y79"/>
+                            <constraint firstAttribute="centerX" secondItem="sVj-vL-Vet" secondAttribute="centerX" id="gRr-BK-CQr"/>
+                            <constraint firstItem="Y4m-cv-jBu" firstAttribute="top" relation="lessThanOrEqual" secondItem="tiK-s9-0ZK" secondAttribute="bottom" constant="229" id="oe9-nE-KdM"/>
+                            <constraint firstItem="tiK-s9-0ZK" firstAttribute="top" secondItem="sVj-vL-Vet" secondAttribute="bottom" constant="15" id="rtp-bD-XVK"/>
                             <constraint firstAttribute="centerX" secondItem="tiK-s9-0ZK" secondAttribute="centerX" id="snK-8d-MvZ"/>
                         </constraints>
                     </view>
@@ -170,7 +174,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" indicatorStyle="white" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="g7e-1d-cW5">
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" indicatorStyle="black" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="g7e-1d-cW5">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -661,9 +665,6 @@
         <image name="TabIconCorporativo" width="30" height="27"/>
         <image name="TabIconFinanceiro" width="28" height="30"/>
         <image name="dash" width="208" height="114"/>
-        <image name="dash" width="208" height="114"/>
-        <image name="dash" width="208" height="114"/>
-        <image name="hospitale" width="120" height="23"/>
         <image name="hospitale" width="120" height="23"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
