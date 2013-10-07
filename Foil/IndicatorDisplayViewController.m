@@ -111,13 +111,15 @@
 
 - (void)highlight:(IndicatorDisplayCell *)cell {
     
-    UIColor *backcolor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f];
+    UIColor *backcolor = [UIColor colorWithRed:18.0/255.0 green:146.0/255.0 blue:208.0/255.0 alpha:1.0f];
     UIColor *textColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
+    UIColor *bottomBarColor = [UIColor colorWithRed:0.0/255.0 green:126.0/255.0 blue:188.0/255.0 alpha:1.0f];
     
     cell.indicatorTitle.backgroundColor = backcolor;
     cell.indicatorTitle.textColor = textColor;
     cell.backgroundColor = backcolor;
     cell.indicatorValueLabel.textColor = textColor;
+    cell.bottomBarUIView.backgroundColor = bottomBarColor;
     
     cell.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
 }
@@ -125,12 +127,14 @@
 - (void)unhighlight:(IndicatorDisplayCell *)cell {
     
     UIColor *backcolor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
-    UIColor *textColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.0f];
+    UIColor *textColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f];
+    UIColor *bottomBarColor = [UIColor colorWithRed:189.0/255.0 green:195.0/255.0 blue:199.0/255.0 alpha:1.0f];
     
     cell.indicatorTitle.backgroundColor = backcolor;
     cell.indicatorTitle.textColor = textColor;
     cell.backgroundColor = backcolor;
     cell.indicatorValueLabel.textColor = textColor;
+    cell.bottomBarUIView.backgroundColor = bottomBarColor;
     
     cell.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
 }

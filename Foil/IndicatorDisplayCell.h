@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *indicatorValueLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, readonly) Indicator *referencedIndicator;
+@property (weak, nonatomic) IBOutlet UIView *bottomBarUIView;
 
 -(void)setReferencedIndicator:(Indicator *)referencedIndicator;
 @end
