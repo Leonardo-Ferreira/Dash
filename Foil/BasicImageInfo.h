@@ -12,4 +12,6 @@
 @property(nonatomic) NSString *ImageUrl;
 @property(nonatomic) NSString *ImageHash;
 @property(atomic) UIImage *Image;
+
+    //+(BasicImageInfo *)GetImageInfoForKey:(id)key;
 @end

@@ -80,7 +80,6 @@
 }
 
 -(NSData *)downloadImage:(NSString *)imageHash{
-    Interaction *interaction = [Interaction getInstance];
     NSData *result;
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     NSString *screenSizeDescription = [NSString stringWithFormat:@"%fx%f",screenRect.size.width,screenRect.size.height];
@@ -91,10 +90,10 @@
     [blobRootURL appendString:imageHash];
     [blobRootURL appendString:screenSizeDescription];
     [blobRootURL appendString:@".png"];
-    if([interaction requestConnectivity])
+    /*if([interaction requestConnectivity])
     {
         result=[NSData dataWithContentsOfURL:[NSURL URLWithString: @"http://example.com/image.jpg"]];
-    }
+    }*/
     return result;
 }
 

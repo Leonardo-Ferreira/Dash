@@ -25,7 +25,7 @@
     [headers setObject:[[NSURL URLWithString:validateAgainstURL] host] forKey:@"Host"];
     
     //192.168.245.205/hospitaleintegrationservices/corporativo.asmx
-    [Util Post:validateAgainstURL content:packageXML headers:headers successBlock:^(NSData *data, id jsonData){
+    [Util post:validateAgainstURL content:packageXML headers:headers successBlock:^(NSData *data, id jsonData){
         NSLog(@"Post Succeded");
         NSXMLParser *parser = [[NSXMLParser alloc]initWithData:data];
         parser.delegate = self;

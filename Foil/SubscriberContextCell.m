@@ -15,15 +15,16 @@
     IBOutlet UIImageView *contextImageView;
 }
 
-@synthesize title=_title;
-@synthesize thumbnailImage=_thumbnailImage;
+@synthesize title = _title;
+@synthesize thumbnailImage = _thumbnailImage;
 @synthesize referenceContext;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        imageSet = NO;
+        titleSet = NO;
     }
     return self;
 }
@@ -45,30 +46,31 @@
 }
 
 -(void)setTitle:(NSString *)title{
-    titleSet=NO;
-    [_cellActivityIndicator startAnimating];
-    contextNameLabel.text = title;
-    titleSet=YES;
-    [self requestCloseActivityIndicator];
+    if(!titleSet){
+        [_cellActivityIndicator startAnimating];
+        contextNameLabel.text = title;
+        titleSet=YES;
+        [self requestCloseActivityIndicator];
+    }
 }
 
 -(void)setThumbnailImage:(NSString *)imageURL imageHash:(NSString *)imageHash{
-    imageSet = NO;
-    [_cellActivityIndicator startAnimating];
-    Interaction *interactionRef = [Interaction getInstance];
-    [interactionRef getImageFromURLAsync:imageURL imageHash:imageHash finishBlock:^(UIImage *image){
-        dispatch_async(dispatch_get_main_queue(), ^
-                       {
-                           if(image.size.height > contextImageView.bounds.size.height || image.size.width > contextImageView.bounds.size.width){
-                               contextImageView.contentMode = UIViewContentModeScaleAspectFit;
-                               contextImageView.clipsToBounds = YES;
-                           }
-                           [contextImageView setImage:image];
-                           [contextImageView setContentMode:UIViewContentModeScaleAspectFit];
-                       });
-        imageSet=YES;
-        [self requestCloseActivityIndicator];
-    }];
+    if(!imageSet){
+        [_cellActivityIndicator startAnimating];
+        [Util getImageFromURLAsync:imageURL imageHash:imageHash subscriberContext:referenceContext finishBlock:^(UIImage *image){
+            dispatch_async(dispatch_get_main_queue(), ^
+                           {
+                               if(image.size.height > contextImageView.bounds.size.height || image.size.width > contextImageView.bounds.size.width){
+                                   contextImageView.contentMode = UIViewContentModeScaleAspectFit;
+                                   contextImageView.clipsToBounds = YES;
+                               }
+                               [contextImageView setImage:image];
+                               [contextImageView setContentMode:UIViewContentModeScaleAspectFit];
+                           });
+            imageSet = YES;
+            [self requestCloseActivityIndicator];
+        }];
+    }
 }
 
 

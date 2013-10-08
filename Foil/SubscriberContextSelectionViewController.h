@@ -14,6 +14,7 @@
 
 @interface SubscriberContextSelectionViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UICollectionView *colletionView;
+@property (weak, nonatomic) IBOutlet UIView *loadingView;
 
 @property (strong, nonatomic, readwrite) NSString *usernameEntered;
 @property (strong, nonatomic, readwrite) NSString *passwordEntered;

@@ -10,10 +10,10 @@
 
 @interface DeviceStyle : NSObject
 
-@property(nonatomic) NSInteger Height;
-@property(nonatomic) NSInteger Width;
-@property(nonatomic) bool IsRetina;
-@property(nonatomic) bool IsFlatDesigned;
+@property(nonatomic, readonly) NSInteger height;
+@property(nonatomic, readonly) NSInteger width;
+@property(nonatomic, readonly) bool isRetina;
+@property(nonatomic, readonly) bool isFlatDesigned;
 
 -(id)initWithFormattedString:(NSString *) formattedString;
 

@@ -10,6 +10,7 @@
 #import "Interaction.h"
 #import "DefaultChartViewController.h"
 
-@interface RootTabBarViewController : UITabBarController<UITabBarControllerDelegate>
+@interface RootTabBarViewController : UIViewController<UITabBarDelegate, UITabBarControllerDelegate>
+@property (weak, nonatomic) IBOutlet UITabBar *rootTabBar;
 
 @end

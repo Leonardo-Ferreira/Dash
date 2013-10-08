@@ -9,10 +9,8 @@
 #import "Interaction.h"
 
 @implementation Interaction{
-    NSUInteger networkActivityCounter;
     NSMutableArray *_indicators;
     NSString *userNameAux;
-    NSMutableDictionary *imagesDictionary;
     BOOL startUpCompleted;
     BOOL locationEnabled;
     dispatch_queue_t indicatorLoadingQueue;
@@ -28,8 +26,6 @@
 @synthesize finishDateTime;
 @synthesize startLocation;
 @synthesize finishLocation;
-@synthesize operatingSystem;
-@synthesize deviceModel;
 @synthesize actions = _actions;
 @synthesize currentUser = _currentUser;
 @synthesize currentSubscriberContext = _currentSubscriberContext;
@@ -67,32 +63,11 @@ static Interaction *sharedInstance = nil;
 
 -(void)startUp{
     startUpCompleted = false;
-    imagesDictionary = [[NSMutableDictionary alloc]init];
-        //Load Dictionary with default images
     startUpCompleted = true;
 }
 
 -(void)addAction:(ActionPerformed *)action{
     
-}
-
--(BOOL)requestConnectivity{
-    @synchronized(self){
-        networkActivityCounter++;
-    }
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    return YES;
-}
-
--(void)releaseConnectivity{
-    @synchronized(self){
-        if(networkActivityCounter){
-            networkActivityCounter--;
-        }
-        if (!networkActivityCounter) {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        }
-    }
 }
 
 -(void)loadAllContextsForUser:(NSString *)username{
@@ -104,9 +79,8 @@ static Interaction *sharedInstance = nil;
     
     dispatch_async(contextsLoaderQueue, ^{
         NSLog(@"Loading all contexts block started");
-        [self requestConnectivity];
         
-        Util *ref = [Util Get:[NSString stringWithFormat:@"%@/userContext?username=%@", Util.azureBaseUrl, [username stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]
+        Util *ref = [Util get:[NSString stringWithFormat:@"%@/userContext?username=%@", Util.azureBaseUrl, [username stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]
                  successBlock:^(NSData *data, id jsonData){
                      NSLog(@"Loading all contexts block succeeded");
                      if([userNameAux isEqualToString:username]){
@@ -117,7 +91,6 @@ static Interaction *sharedInstance = nil;
                  } completeBlock:^{
                      NSLog(@"load all contexts for user async block completed.");
                      _loadingContextsCompleted = YES;
-                     [self releaseConnectivity];
                  }];
         //Keep Thread alive without blocking. This is not equal to
         while (!ref.operationCompleted) {
@@ -125,76 +98,6 @@ static Interaction *sharedInstance = nil;
         }
     });
     NSLog(@"Load All Contexts Dispatched. It should start at any moment if it not already.");
-}
-
--(void)loadImageFromURL:(NSString *)imageURL finishBlock:(FinishBlock)block{
-    if (imageDownloadingQueue == NULL) {
-        imageDownloadingQueue = dispatch_queue_create("imageDownloadingQueue", NULL);
-    }
-    dispatch_async(imageDownloadingQueue, ^{
-        NSLog(@"Starting image download.");
-        [self requestConnectivity];
-        NSString *iUrl = [imageURL stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-        NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString: iUrl]];
-        UIImage *image = [UIImage imageWithData:imgData];
-        NSString *requestUrl = [NSString stringWithFormat:@"%@/MediaInfo?URL=%@", Util.azureBaseUrl, iUrl];
-        NSLog(@"Image download done. Image size = %.0fx%.0f. Getting hash. requestUrl = \"%@\"",image.size.width,image.size.height,requestUrl);
-        __block NSString *hash = nil;
-        [self requestConnectivity];
-        Util *ref = [Util Get:requestUrl successBlock:^(NSData *data, id jsonData){
-            hash = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            if(hash != nil){
-                BasicImageInfo *info = [[BasicImageInfo alloc]init];
-                info.Image = image;
-                info.ImageHash = hash;
-                info.ImageUrl = imageURL;
-                NSLog(@"Setting image to dictionary. Key = %@",imageURL);
-                [imagesDictionary setObject:info forKey:info.ImageUrl];
-                if (block != NULL) {
-                    block(image);
-                }
-            }
-            else{
-                NSLog(@"Hash for image IS NIL");
-            }
-        } errorBlock: NULL completeBlock:^{[self releaseConnectivity];}];
-        while (!ref.operationCompleted) {
-            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
-        }
-    });
-}
-
--(UIImage *)getImageFromURL:(NSString *)imageURL imageHash:(NSString *)imageHash{
-    BasicImageInfo *result=[imagesDictionary objectForKey:imageURL];
-    if (imageHash == nil) {
-        result=nil;
-    }
-    if (result == nil || result.ImageHash != imageHash) {
-        [self loadImageFromURL:imageURL finishBlock:NULL];
-        NSUInteger count=0;
-        do {
-            [NSThread sleepForTimeInterval:.5];
-            result = [imagesDictionary objectForKey:imageURL];
-            count++;
-        } while (result == nil && count < 41);//arbitrary number = 20 seconds
-    }
-    return result.Image;
-}
-
--(void)getImageFromURLAsync:(NSString *)imageURL imageHash:(NSString *)imageHash finishBlock:(FinishBlock)finishBlock{
-    BasicImageInfo *result = [imagesDictionary objectForKey:imageURL];
-    if (imageHash == nil) {
-        result=nil;
-    }
-    if (result == nil || result.ImageHash != imageHash) {
-        [self loadImageFromURL:imageURL finishBlock:finishBlock];
-        /*NSUInteger count=0;
-        do {
-            [NSThread sleepForTimeInterval:.5];
-            result = [imagesDictionary objectForKey:imageURL];
-            count++;
-        } while (result == nil && count < 11);//arbitrary number = 20 seconds*/
-    }
 }
 
 
@@ -258,7 +161,6 @@ static Interaction *sharedInstance = nil;
         indicator.isLoadingData = NO;
         indicator.dataFinishedLoading=YES;
         NSLog(@"Operation completed.");
-        [self releaseConnectivity];
     };
     
     successBlock_t successBlock = ^(NSData *data, id jsonData){
@@ -269,12 +171,10 @@ static Interaction *sharedInstance = nil;
     };
     
     dispatch_async(indicatorLoadingQueue, ^{
-        [self requestConnectivity];
-        
         [_loadedIndicatorsDictionary removeObjectForKey:indicator.title];
         NSString *requestStr =[NSString stringWithFormat:@"%@/indicators?name=%@", [_currentSubscriberContext rootURLForCurrentSubscriberContext],indicator.internalName];
         
-        Util *refOp = [Util Get:requestStr successBlock:successBlock errorBlock:^(NSError *error){} completeBlock:completeBlock];
+        Util *refOp = [Util get:requestStr successBlock:successBlock errorBlock:^(NSError *error){} completeBlock:completeBlock];
         
         while (!refOp.operationCompleted) {
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
@@ -299,7 +199,6 @@ static Interaction *sharedInstance = nil;
         NSLog(@"Operation completed.");
         indicatorBase.dataFinishedLoading = YES;
         indicatorBase.isLoadingData = NO;
-        [self releaseConnectivity];
     };
     
     successBlock_t successBlock = ^(NSData *data, id jsonData){
@@ -313,13 +212,12 @@ static Interaction *sharedInstance = nil;
     
     dispatch_async(indicatorLoadingQueue, ^
     {
-        [self requestConnectivity];
         NSString *requestStr =[NSString stringWithFormat:@"%@/indicators?name=%@&resumed=false", [_currentSubscriberContext rootURLForCurrentSubscriberContext], indicatorBase.internalName];
         NSMutableDictionary *headers = [[NSMutableDictionary alloc]init];
         [headers setObject:@"application/json; charset=utf-8" forKey:@"content-type"];
         [headers setObject:@"http://integrationservices.hospitale.aec.com.br/VerificarUsuario" forKey:@"SOAPAction"];
         
-        [Util Post:requestStr content:@"" headers:headers successBlock:successBlock errorBlock:^(NSError *error){} completeBlock:completeBlock];
+        [Util post:requestStr content:@"" headers:headers successBlock:successBlock errorBlock:^(NSError *error){} completeBlock:completeBlock];
         /*[Util Post:[_currentSubscriberContext rootURLForCurrentSubscriberContext] content:payload headers:headers successBlock:successBlock errorBlock:^(NSError *error){indicatorBase.dataFinishedLoadingSuccessfully = NO;} completeBlock:completeBlock];*/
         
         while (!indicatorBase.dataFinishedLoading) {
@@ -333,7 +231,6 @@ static Interaction *sharedInstance = nil;
     ^{
         NSLog(@"Indicators discovery completed.");
         _availibleIndicatorsDiscovered = YES;
-        [self releaseConnectivity];
     };
     
     successBlock_t succeded = ^(NSData *data, id jsonData){
@@ -349,10 +246,9 @@ static Interaction *sharedInstance = nil;
     dispatch_async(indicatorLoadingQueue, ^
     {
         [_indicators removeAllObjects];
-        [self requestConnectivity];
         _availibleIndicatorsDiscovered = NO;
         NSLog(@"%@/indicator",_currentSubscriberContext.ExternalBaseURL);
-        [Util Get:[NSString stringWithFormat:@"%@/indicators",[_currentSubscriberContext rootURLForCurrentSubscriberContext]] successBlock:succeded errorBlock:^(NSError *error){
+        [Util get:[NSString stringWithFormat:@"%@/indicators",[_currentSubscriberContext rootURLForCurrentSubscriberContext]] successBlock:succeded errorBlock:^(NSError *error){
             NSLog(@"%@" , error.description);
         } completeBlock:completed];
         while (!_availibleIndicatorsDiscovered) {
@@ -360,6 +256,19 @@ static Interaction *sharedInstance = nil;
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
         }
     });
+}
+
+-(NSArray *)getIndicatorsSections:(BOOL)waitForIndicatorsDiscover{
+    NSMutableArray *result = [[NSMutableArray alloc]init];
+    while (waitForIndicatorsDiscover && !_availibleIndicatorsDiscovered) {
+        [NSThread sleepForTimeInterval:.3];
+    }
+    for (Indicator *indicator in _indicators) {
+        if (![result containsObject:indicator.section]) {
+            [result addObject:indicator.section];
+        }
+    }
+    return result;
 }
 
 @end

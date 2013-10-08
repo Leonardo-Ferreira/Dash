@@ -10,6 +10,7 @@
 #import "IndicatorData.h"
 #import "Util.h"
 #import "SerieInformation.h"
+#import "IndicatorSection.h"
 
 @interface Indicator : NSObject
 
@@ -20,7 +21,7 @@ typedef NS_ENUM(NSInteger, IndicatorChartType){
     BarChart = 3
 };
 
-@property (nonatomic,readonly) NSString *section;
+@property (nonatomic,readonly) IndicatorSection *section;
 @property (nonatomic,readonly) NSString *internalName;
 @property (nonatomic,readonly) NSString *title;
 @property (nonatomic,readonly) NSString *valuePrefix;
