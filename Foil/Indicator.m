@@ -59,7 +59,7 @@
     _dataFinishedLoading = NO;
     _dataFinishedLoadingSuccessfully = NO;
     
-    _section = [jsonDictionary objectForKey:@"Section"];
+    _section = [[IndicatorSection alloc]initWithJsonDictionary: [jsonDictionary objectForKey:@"Section"]];
     _title = [jsonDictionary objectForKey:@"IndicatorTitle"];
     _internalName = [jsonDictionary objectForKey:@"InternalName"];
     _chartType = (IndicatorChartType)[jsonDictionary objectForKey:@"ChartType"];

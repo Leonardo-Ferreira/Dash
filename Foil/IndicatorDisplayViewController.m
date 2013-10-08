@@ -48,7 +48,7 @@
     }
     NSMutableArray *items = [[NSMutableArray alloc]init];
     for (Indicator *item in interaction.availibleIndicators) {
-        if ([item.section caseInsensitiveCompare:self.tabBarItem.title]==NSOrderedSame) {
+        if ([item.section.title caseInsensitiveCompare:self.tabBarItem.title] == NSOrderedSame) {
             [items addObject:item];
         }
     }

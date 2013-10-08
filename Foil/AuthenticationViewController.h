@@ -21,5 +21,6 @@
 @property (strong, nonatomic, readwrite) NSString *passwordEntered;
 @property (weak, nonatomic) IBOutlet UISwitch *remindMeSwitch;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loginActivity;
 
 @end

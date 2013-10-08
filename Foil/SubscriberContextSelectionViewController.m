@@ -45,7 +45,6 @@
     Interaction *interact = [Interaction getInstance];
     
     if (!interact.contextsLoadingCompleted) {
-        //Keep Thread alive without blocking
         NSLog(@"contexts not loaded yet. Will wait for loading to complete.");
         while (!interact.contextsLoadingCompleted) {
             [[NSRunLoop currentRunLoop]runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
@@ -55,7 +54,7 @@
         NSLog(@"Contexts already loaded.");
     }
     contexts = interact.allContextsForCurrentUser;
-    
+    [self.loadingView removeFromSuperview];
     return contexts.count;
     //return 3;
 }
@@ -97,13 +96,17 @@
     NSArray *aux = [contexts allObjects];
     
     SubscriberContext *auxContext = [[SubscriberContext alloc]initWithJsonDictionary:[aux objectAtIndex:indexPath.item]];//(SubscriberContext *)[aux objectAtIndex:indexPath.item];
+    cell.referenceContext = auxContext;
     [cell setThumbnailImage:auxContext.ThumbImageUrl imageHash:auxContext.ThumbImageHash];
     
-    cell.referenceContext = auxContext;
     [cell setTitle:auxContext.ContextDisplayTitle];
     
     cell.viewForBaselineLayout.layer.cornerRadius = 5;
     cell.viewForBaselineLayout.layer.masksToBounds = YES;
+    
+    /*if (indexPath.item == [aux count]-1) {
+        self.loadingView.hidden = YES;
+    }*/
     
     return cell;
 }
@@ -136,7 +139,8 @@
             [NSThread sleepForTimeInterval:1];
         }
         UIStoryboard *board = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
-        RootTabBarViewController *ctr = [board instantiateViewControllerWithIdentifier:@"RootTabBarView"];
+            //RootTabBarViewController *ctr = [board instantiateViewControllerWithIdentifier:@"RootTabBarView"];
+        RootTabBarViewController *ctr = [board instantiateViewControllerWithIdentifier:@"DynamicRootTabBarView"];
         
         [self presentViewController:ctr animated:YES completion:nil];
     }else{
