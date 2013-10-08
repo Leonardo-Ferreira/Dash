@@ -8,16 +8,16 @@
 
 #import "IndicatorDisplayViewController.h"
 
-@interface IndicatorDisplayViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
+@interface IndicatorDisplayViewController ()
 
 
 @end
 
-@implementation IndicatorDisplayViewController
-{
+@implementation IndicatorDisplayViewController{
     NSMutableArray *currentIndicators;
     dispatch_queue_t concurrentQueue;
 }
+@synthesize referencedSection = _referencedSection;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,7 +48,7 @@
     }
     NSMutableArray *items = [[NSMutableArray alloc]init];
     for (Indicator *item in interaction.availibleIndicators) {
-        if ([item.section.title caseInsensitiveCompare:self.tabBarItem.title] == NSOrderedSame) {
+        if ([item.section.title caseInsensitiveCompare:_referencedSection] == NSOrderedSame) {
             [items addObject:item];
         }
     }

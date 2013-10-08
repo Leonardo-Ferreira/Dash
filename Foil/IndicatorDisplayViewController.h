@@ -10,7 +10,7 @@
 #import "IndicatorDisplayCell.h"
 #import "Interaction.h"
 
-@interface IndicatorDisplayViewController : UIViewController<UITabBarControllerDelegate>
+@interface IndicatorDisplayViewController : UIViewController<UITabBarControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-
+@property (nonatomic, readwrite) NSString *referencedSection;
 @end
