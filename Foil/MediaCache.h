@@ -14,4 +14,8 @@
 +(BasicImageInfo *)cachedImageForURL:(NSString *)imageUrl imageHash:(NSString *)imageHash subscriberContext:(SubscriberContext *)context;
 +(void)cacheImage:(BasicImageInfo *)imageInfo imageContext:(SubscriberContext *)context;
 +(void)cleanCache;
+
+-(void)cacheData:(BasicImageInfo *)imageInfo imageContext:(SubscriberContext *)context;
+-(NSString *)generateFilePath:(SubscriberContext *)context imageHash:(NSString *)imageHash;
+-(BasicImageInfo *)cachedDataForURL:(NSString *)imageUrl imageHash:(NSString *)imageHash subscriberContext:(SubscriberContext *)context;
 @end

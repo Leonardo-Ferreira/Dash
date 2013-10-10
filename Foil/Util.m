@@ -13,6 +13,7 @@
     successBlock_t _successBlock;
     completeBlock_t _completeBlock;
     errorBlock_t _errorBlock;
+    finishBlock _finishBlock;
     NSUInteger networkActivityCounter;
 }
 
@@ -27,13 +28,13 @@
     return @"http://dashteststorage.blob.core.windows.net";
 }
 
-+(id)get:(NSString *)resourceURL successBlock:(successBlock_t)successBlock errorBlock:(errorBlock_t)errorBlock completeBlock:(completeBlock_t)completeBlock;{
++(Util *)get:(NSString *)resourceURL successBlock:(successBlock_t)successBlock errorBlock:(errorBlock_t)errorBlock completeBlock:(completeBlock_t)completeBlock;{
     Util *res = [[Util alloc]init];
     [res get:resourceURL successBlock:successBlock errorBlock:errorBlock completeBlock:completeBlock];
     return res;
 }
 
-+(id)post:(NSString *)resourceURL content:(NSString *)content headers:(NSDictionary *)headers successBlock:(successBlock_t)successBlock errorBlock:(errorBlock_t)errorBlock completeBlock:(completeBlock_t)completeBlock{
++(Util *)post:(NSString *)resourceURL content:(NSString *)content headers:(NSDictionary *)headers successBlock:(successBlock_t)successBlock errorBlock:(errorBlock_t)errorBlock completeBlock:(completeBlock_t)completeBlock{
     Util *res = [[Util alloc]init];
     [res post:resourceURL content:content headers:headers successBlock:successBlock errorBlock:errorBlock completeBlock:completeBlock];
     return res;
@@ -161,13 +162,13 @@
     return lowerBound+arc4random() % (upperBound-lowerBound);
 }
 
-+(UIImage *)getImageFromURL:(NSString *)imageURL imageHash:(NSString *)imageHash subscriberContext:(SubscriberContext *)context{
++(BasicImageInfo *)getImageFromURL:(NSString *)imageURL imageHash:(NSString *)imageHash subscriberContext:(SubscriberContext *)context{
     BasicImageInfo *result = [MediaCache cachedImageForURL:imageURL imageHash:imageHash subscriberContext:context];
     if (imageHash == nil) {
         result=nil;
     }
     if (result == nil || result.ImageHash != imageHash) {
-        [self loadImageFromURL:imageURL subscriberContext:context finishBlock:NULL];
+        [self loadImageFromURL:imageURL imageHash:imageHash subscriberContext:context finishBlock:nil];
         NSUInteger count=0;
         do {
             [NSThread sleepForTimeInterval:.5];
@@ -175,65 +176,45 @@
             count++;
         } while (result == nil && count < 41);//arbitrary number = 20 seconds
     }
-    return result.Image;
+    return result;
 }
 
-+(void)getImageFromURLAsync:(NSString *)imageURL imageHash:(NSString *)imageHash subscriberContext:(SubscriberContext *)context finishBlock:(finishBlock)finishBlock{
-    BasicImageInfo *result = [MediaCache cachedImageForURL:imageURL imageHash:imageHash subscriberContext:context];
-    if (imageHash != nil && imageHash != NULL) {
-        result = nil;
++(void)loadImageFromURL:(NSString *)imageURL imageHash:(NSString *)imageHash subscriberContext:(SubscriberContext *)context finishBlock:(finishBlock)block{
+    Util *ref = [[Util alloc]init];
+    [ref loadImageFromURL:imageURL imageHash:imageHash subscriberContext:context finishBlock:block];
+
+}
+
+-(void)loadImageFromURL:(NSString *)imageURL imageHash:(NSString *)imageHash subscriberContext:(SubscriberContext *)context finishBlock:(finishBlock)block{
+    _finishBlock = [block copy];
+    __block BasicImageInfo *result = nil;
+    if (imageHash != nil && [imageHash class] != [NSNull class]) {
+        result = [MediaCache cachedImageForURL:imageURL imageHash:imageHash subscriberContext:context];
     }
-    if (result == nil || result.ImageHash != imageHash) {
-        [self loadImageFromURL:imageURL subscriberContext:context finishBlock:finishBlock];
-        /*NSUInteger count=0;
-         do {
-         [NSThread sleepForTimeInterval:.5];
-         result = [MediaCache cachedImageForURL:imageURL imageHash:imageHash subscriberContext:context];
-         count++;
-         } while (result == nil && count < 11);//arbitrary number = 20 seconds*/
+    if (result == nil) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSLog(@"Starting image download.");
+            NSString *iUrl = [imageURL stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+            NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString: iUrl]];
+            UIImage *image = [UIImage imageWithData:imgData];
+            result = [[BasicImageInfo alloc]init];
+            result.Image = image;
+            result.ImageHash = imageHash;
+            result.ImageUrl = imageURL;
+            NSLog(@"Setting image to dictionary. Key = %@",imageURL);
+            [MediaCache cacheImage:result imageContext:context];
+            
+            if (_finishBlock) {
+                _finishBlock(result);
+            }
+        });
+    }else{
+        NSLog(@"cache HIT!");
+        if (_finishBlock) {
+            _finishBlock(result);
+        }
     }
 }
-
-+(void)loadImageFromURL:(NSString *)imageURL subscriberContext:(SubscriberContext *)context finishBlock:(finishBlock)block{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSLog(@"Starting image download.");
-        NSString *iUrl = [imageURL stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-        NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString: iUrl]];
-        UIImage *image = [UIImage imageWithData:imgData];
-        /*NSString *requestUrl = [NSString stringWithFormat:@"%@/MediaInfo?URL=%@", Util.azureBaseUrl, iUrl];
-        NSLog(@"Image download done. Image size = %.0fx%.0f. Getting hash. requestUrl = \"%@\"",image.size.width,image.size.height,requestUrl);
-        __block NSString *hash = nil;
-        Util *op = [self get:requestUrl successBlock:^(NSData *data, id jsonData){
-            hash = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            if(hash != nil){
-                BasicImageInfo *info = [[BasicImageInfo alloc]init];
-                info.Image = image;
-                info.ImageHash = hash;
-                info.ImageUrl = imageURL;
-                NSLog(@"Setting image to dictionary. Key = %@",imageURL);
-                [MediaCache cachedImageForURL:imageURL imageHash:hash subscriberContext:context];
-                if (block != NULL) {
-                    block(image);
-                }
-            }
-            else{
-                NSLog(@"Hash for image IS NIL");
-            }
-        } errorBlock: NULL completeBlock:^{}];
-        while (!op.operationCompleted) {
-            [[NSRunLoop currentRunLoop]runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
-        }*/
-        BasicImageInfo *info = [[BasicImageInfo alloc]init];
-        info.Image = image;
-        info.ImageHash = [self generateMD5HashForImage:imgData];
-        info.ImageUrl = imageURL;
-        NSLog(@"Setting image to dictionary. Key = %@",imageURL);
-        [MediaCache cacheImage:info imageContext:context];
-        
-    });
-}
-
-
 
 
 

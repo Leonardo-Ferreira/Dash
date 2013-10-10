@@ -91,7 +91,6 @@
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"Cell for item at indexpath");
     SubscriberContextCell *cell = [self.colletionView dequeueReusableCellWithReuseIdentifier:@"subscriberContext" forIndexPath:indexPath];
     NSArray *aux = [contexts allObjects];
     
@@ -103,10 +102,6 @@
     
     cell.viewForBaselineLayout.layer.cornerRadius = 5;
     cell.viewForBaselineLayout.layer.masksToBounds = YES;
-    
-    /*if (indexPath.item == [aux count]-1) {
-        self.loadingView.hidden = YES;
-    }*/
     
     return cell;
 }

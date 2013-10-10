@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "Interaction.h"
 #import "DefaultChartViewController.h"
+#import "IndicatorDisplayCell.h"
 
-@interface RootTabBarViewController : UIViewController<UITabBarDelegate, UITabBarControllerDelegate>
+@interface RootTabBarViewController : UIViewController<UITabBarDelegate, UITabBarControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UINavigationBarDelegate>
 @property (weak, nonatomic) IBOutlet UITabBar *rootTabBar;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionViewIndicatorsDisplay;
 
 @end
