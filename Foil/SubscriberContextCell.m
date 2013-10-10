@@ -57,18 +57,18 @@
 -(void)setThumbnailImage:(NSString *)imageURL imageHash:(NSString *)imageHash{
     if(!imageSet){
         [_cellActivityIndicator startAnimating];
-        [Util getImageFromURLAsync:imageURL imageHash:imageHash subscriberContext:referenceContext finishBlock:^(UIImage *image){
+        [Util loadImageFromURL:imageURL imageHash:imageHash subscriberContext:referenceContext finishBlock:^(BasicImageInfo *image){
             dispatch_async(dispatch_get_main_queue(), ^
                            {
-                               if(image.size.height > contextImageView.bounds.size.height || image.size.width > contextImageView.bounds.size.width){
+                               if(image.Image.size.height > contextImageView.bounds.size.height || image.Image.size.width > contextImageView.bounds.size.width){
                                    contextImageView.contentMode = UIViewContentModeScaleAspectFit;
                                    contextImageView.clipsToBounds = YES;
                                }
-                               [contextImageView setImage:image];
+                               [contextImageView setImage:image.Image];
                                [contextImageView setContentMode:UIViewContentModeScaleAspectFit];
+                               imageSet = YES;
+                               [self requestCloseActivityIndicator];
                            });
-            imageSet = YES;
-            [self requestCloseActivityIndicator];
         }];
     }
 }
