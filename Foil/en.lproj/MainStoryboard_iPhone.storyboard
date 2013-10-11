@@ -137,6 +137,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.94509803921568625" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                         <rect key="contentStretch" x="0.0" y="1" width="1" height="1"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="MM4-2p-aBT" firstAttribute="leading" secondItem="fMk-2I-R1b" secondAttribute="leading" constant="13" id="0Rx-vf-heQ"/>
                             <constraint firstAttribute="trailing" secondItem="UbI-wo-ZEs" secondAttribute="trailing" constant="12" id="0T2-dW-ael"/>
@@ -155,6 +156,9 @@
                             <constraint firstItem="UbI-wo-ZEs" firstAttribute="leading" secondItem="fMk-2I-R1b" secondAttribute="leading" constant="13" id="srO-Wc-fm2"/>
                             <constraint firstItem="wWg-mB-ufY" firstAttribute="leading" secondItem="Rq7-MD-M18" secondAttribute="trailing" constant="8" id="ypm-N3-tul"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="AKC-mX-Wsa" appends="YES" id="p3u-1v-Ba5"/>
+                        </connections>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
@@ -162,11 +166,18 @@
                         <outlet property="buttonLogin" destination="yRp-3m-OAA" id="qNH-Yd-Q42"/>
                         <outlet property="loginActivity" destination="hhG-2g-Nn0" id="Zoe-Xx-8kF"/>
                         <outlet property="remindMeSwitch" destination="wWg-mB-ufY" id="PcP-Mg-Rwu"/>
+                        <outlet property="tapRecognizer" destination="AKC-mX-Wsa" id="XBJ-gM-NVp"/>
                         <outlet property="textBoxPassword" destination="UbI-wo-ZEs" id="irX-QM-9nk"/>
                         <outlet property="textBoxUsername" destination="MM4-2p-aBT" id="QId-ad-VJt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cSl-Sb-Hth" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="AKC-mX-Wsa">
+                    <connections>
+                        <action selector="handleTap:" destination="TAc-7s-Sfk" id="NAs-Ea-yan"/>
+                        <outlet property="delegate" destination="TAc-7s-Sfk" id="n4c-M4-UJv"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="351" y="172"/>
         </scene>
@@ -403,7 +414,7 @@
                                 </connections>
                             </tabBar>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8WK-jV-Mab">
-                                <rect key="frame" x="0.0" y="44" width="320" height="387"/>
+                                <rect key="frame" x="0.0" y="46" width="320" height="387"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sRK-gC-YN6">
@@ -465,11 +476,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="Title" id="N9V-am-yC6"/>
+                                    <navigationItem title="Title" id="EKD-l3-wu2"/>
                                 </items>
                             </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                     </view>
                     <connections>
                         <outlet property="collectionViewIndicatorsDisplay" destination="8WK-jV-Mab" id="daa-79-PCY"/>

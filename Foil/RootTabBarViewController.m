@@ -16,6 +16,7 @@
     NSMutableArray *currentIndicators;
     Interaction *interaction;
     dispatch_queue_t concurrentQueue;
+    IndicatorDisplayCell *selectedCell;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -215,14 +216,33 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     IndicatorDisplayCell *cell = (IndicatorDisplayCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
-    [self highlight:cell];
-    
-    [interaction loadIndicatorData:cell.referencedIndicator startDate:nil finishDate:nil];
-    interaction.selectedIndicator = cell.referencedIndicator;
+    if (interaction.selectedIndicator == cell.referencedIndicator) {
+        [self unhighlight:(IndicatorDisplayCell *)[collectionView cellForItemAtIndexPath:indexPath]];
+        interaction.selectedIndicator = nil;
+        [cell setSelected:NO];
+        selectedCell = nil;
+    }else{
+        [self highlight:cell];
+        [interaction loadIndicatorData:cell.referencedIndicator startDate:nil finishDate:nil];
+        interaction.selectedIndicator = cell.referencedIndicator;
+        [cell setSelected:YES];
+        selectedCell = cell;
+    }
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
-    [self unhighlight:(IndicatorDisplayCell *)[collectionView cellForItemAtIndexPath:indexPath]];
+    
+}
+- (IBAction)handleTap:(UITapGestureRecognizer *)sender {
+    [self unhighlight:selectedCell];
+    interaction.selectedIndicator = nil;
+    [selectedCell setSelected:NO];
+    selectedCell = nil;
+}
+
+-(BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
+    //BOOL res = interaction.selectedIndicator == ((IndicatorDisplayCell *)[collectionView cellForItemAtIndexPath:indexPath]).referencedIndicator;
+    return YES;
 }
 
 @end

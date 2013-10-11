@@ -29,5 +29,6 @@ typedef void (^ finishBlock)(BasicImageInfo *imageResult);
 +(float)randomInt:(int)lowerBound upperBound:(int)upperBound;
 +(BasicImageInfo *)getImageFromURL:(NSString *)imageURL imageHash:(NSString *)imageHash subscriberContext:(SubscriberContext *)context;
 +(void)loadImageFromURL:(NSString *)imageURL imageHash:(NSString *)imageHash subscriberContext:(SubscriberContext *)context finishBlock:(finishBlock)finishBlock;
++(UIView *)retrieveFirstResponder:(UIView *)topView;
 
 @end

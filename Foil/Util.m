@@ -179,6 +179,17 @@
     return result;
 }
 
++(UIView *)retrieveFirstResponder:(UIView *)topView{
+    if(topView.isFirstResponder){
+        return topView;
+    }else{
+        for (UIView *subView in topView.subviews) {
+            return [Util retrieveFirstResponder:subView];
+        }
+    }
+    return nil;
+}
+
 +(void)loadImageFromURL:(NSString *)imageURL imageHash:(NSString *)imageHash subscriberContext:(SubscriberContext *)context finishBlock:(finishBlock)block{
     Util *ref = [[Util alloc]init];
     [ref loadImageFromURL:imageURL imageHash:imageHash subscriberContext:context finishBlock:block];

@@ -25,7 +25,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "67"
             endingLineNumber = "67"
-            landmarkName = "-initPost:content:headers:successBlock:errorBlock:completeBlock:"
+            landmarkName = "-post:content:headers:successBlock:errorBlock:completeBlock:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,6 +74,22 @@
             startingLineNumber = "44"
             endingLineNumber = "44"
             landmarkName = "-loadingChartView"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Foil/RootTabBarViewController.m"
+            timestampString = "403198567.82817"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
+            landmarkName = "-handleTap:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

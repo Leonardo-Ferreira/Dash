@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		884E17FA17EA0F0C00300649 /* IndicatorDisplayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884E17F917EA0F0C00300649 /* IndicatorDisplayViewController.m */; };
 		884E17FD17EA101100300649 /* IndicatorDisplayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 884E17FC17EA101100300649 /* IndicatorDisplayCell.m */; };
 		8858945217E33B5C00D999BC /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8858945117E33B5C00D999BC /* Reachability.m */; };
 		8858945417E34A9B00D999BC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8858945317E34A9B00D999BC /* SystemConfiguration.framework */; };
@@ -65,8 +64,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		884E17F817EA0F0C00300649 /* IndicatorDisplayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorDisplayViewController.h; sourceTree = "<group>"; };
-		884E17F917EA0F0C00300649 /* IndicatorDisplayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorDisplayViewController.m; sourceTree = "<group>"; };
 		884E17FB17EA101100300649 /* IndicatorDisplayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorDisplayCell.h; sourceTree = "<group>"; };
 		884E17FC17EA101100300649 /* IndicatorDisplayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorDisplayCell.m; sourceTree = "<group>"; };
 		8858945017E33B5C00D999BC /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -201,8 +198,6 @@
 				88BCA5E117E0A6A40066DE2C /* RootTabBarViewController.m */,
 				88BCA5E317E0A8DD0066DE2C /* DefaultChartViewController.h */,
 				88BCA5E417E0A8DD0066DE2C /* DefaultChartViewController.m */,
-				884E17F817EA0F0C00300649 /* IndicatorDisplayViewController.h */,
-				884E17F917EA0F0C00300649 /* IndicatorDisplayViewController.m */,
 				884E17FB17EA101100300649 /* IndicatorDisplayCell.h */,
 				884E17FC17EA101100300649 /* IndicatorDisplayCell.m */,
 			);
@@ -414,7 +409,6 @@
 				B36775F617D4DBAB009FBE7F /* BasicImageInfo.m in Sources */,
 				88BCA5E517E0A8DD0066DE2C /* DefaultChartViewController.m in Sources */,
 				88BCA5E217E0A6A40066DE2C /* RootTabBarViewController.m in Sources */,
-				884E17FA17EA0F0C00300649 /* IndicatorDisplayViewController.m in Sources */,
 				B3ED7DFA17A6F4DF00977A76 /* SubscriberContext.m in Sources */,
 				88BCA5E817E0B7520066DE2C /* Indicator.m in Sources */,
 				88BCA5EB17E0EABF0066DE2C /* IndicatorData.m in Sources */,

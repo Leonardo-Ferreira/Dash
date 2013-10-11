@@ -50,6 +50,11 @@
     return NO;
 }
 
+- (IBAction)handleTap:(UITapGestureRecognizer *)sender {
+    UIView *responder = [Util retrieveFirstResponder:self.view];
+    [responder resignFirstResponder];
+}
+
 - (IBAction)loginClicked {
     NSLog(@"login clicked. Preparing to exibit next view");
     [self.buttonLogin setTitle:@"" forState:UIControlStateNormal];

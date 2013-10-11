@@ -12,7 +12,7 @@
 #import "Interaction.h"
 #import "SubscriberContextSelectionViewController.h"
 
-@interface AuthenticationViewController : UIViewController
+@interface AuthenticationViewController : UIViewController <UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *textBoxUsername;
 @property (weak, nonatomic) IBOutlet UITextField *textBoxPassword;
 @property (weak, nonatomic) IBOutlet UIButton *buttonLogin;
@@ -22,5 +22,6 @@
 @property (weak, nonatomic) IBOutlet UISwitch *remindMeSwitch;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loginActivity;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *tapRecognizer;
 
 @end
