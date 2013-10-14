@@ -113,6 +113,16 @@
      name:UIDeviceOrientationDidChangeNotification
      object:[UIDevice currentDevice]];
     [self becomeFirstResponder];
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor grayColor];
+    [refreshControl addTarget:self action:@selector(refreshControlAction) forControlEvents:UIControlEventValueChanged];
+    [self.collectionViewIndicatorsDisplay addSubview:refreshControl];
+    self.collectionViewIndicatorsDisplay.alwaysBounceVertical = YES;
+}
+
+-(void)refreshControlAction{
+    
 }
 
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{

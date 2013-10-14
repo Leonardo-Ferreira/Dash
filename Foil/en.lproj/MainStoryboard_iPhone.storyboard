@@ -181,6 +181,24 @@
             </objects>
             <point key="canvasLocation" x="351" y="172"/>
         </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="buh-Io-WUO">
+            <objects>
+                <viewController storyboardIdentifier="tutorialView" id="Jdz-AT-w6l" customClass="TutorialViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0tr-Jg-OQ1"/>
+                        <viewControllerLayoutGuide type="bottom" id="x0K-sx-sGT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tsl-nQ-dyS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="On7-v4-9Wb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="350" y="780"/>
+        </scene>
         <!--Subscriber Context Selection View Controller-->
         <scene sceneID="QEr-Mg-3SK">
             <objects>
@@ -401,10 +419,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JTs-0L-nin">
+                            <tabBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JTs-0L-nin">
                                 <rect key="frame" x="0.0" y="431" width="320" height="49"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="dHR-Gm-u3v"/>
+                                </constraints>
                                 <items>
                                     <tabBarItem systemItem="favorites" id="HrK-ZF-4Ao"/>
                                     <tabBarItem systemItem="more" id="hkS-5e-PmQ"/>
@@ -413,10 +434,13 @@
                                     <outlet property="delegate" destination="HiJ-oo-Xsm" id="JGk-y5-CIm"/>
                                 </connections>
                             </tabBar>
-                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8WK-jV-Mab">
-                                <rect key="frame" x="0.0" y="46" width="320" height="387"/>
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8WK-jV-Mab">
+                                <rect key="frame" x="0.0" y="44" width="320" height="387"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="387" id="1J4-Jk-kdt"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sRK-gC-YN6">
                                     <size key="itemSize" width="307" height="60"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -472,16 +496,37 @@
                                     <outlet property="delegate" destination="HiJ-oo-Xsm" id="EEM-Mh-GZd"/>
                                 </connections>
                             </collectionView>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zru-9y-nIp">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <navigationBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2tq-Ar-4CV">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="7x2-5z-yNJ"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="49" id="Ju6-2P-2v3"/>
+                                </constraints>
+                                <color key="barTintColor" red="0.070588235289999995" green="0.57647058819999997" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
                                 <items>
-                                    <navigationItem title="Title" id="EKD-l3-wu2"/>
+                                    <navigationItem title="Indicadores" id="lwi-SK-4do">
+                                        <barButtonItem key="leftBarButtonItem" image="NavBackButton" style="done" id="Bgc-x0-hO7">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
+                                <connections>
+                                    <outlet property="delegate" destination="HiJ-oo-Xsm" id="f3t-z1-WuY"/>
+                                </connections>
                             </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="JTs-0L-nin" firstAttribute="top" secondItem="8WK-jV-Mab" secondAttribute="bottom" id="WKj-al-MAB"/>
+                            <constraint firstItem="8WK-jV-Mab" firstAttribute="top" secondItem="2tq-Ar-4CV" secondAttribute="bottom" id="X84-2g-6rz"/>
+                            <constraint firstItem="JTs-0L-nin" firstAttribute="leading" secondItem="Xhz-aJ-TVS" secondAttribute="leading" id="XHM-lK-fJG"/>
+                            <constraint firstAttribute="bottom" secondItem="JTs-0L-nin" secondAttribute="bottom" id="aRV-5u-A0C"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionViewIndicatorsDisplay" destination="8WK-jV-Mab" id="daa-79-PCY"/>
@@ -494,7 +539,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="NavBackButton" width="12" height="22"/>
         <image name="dash" width="208" height="114"/>
+        <image name="dash" width="208" height="114"/>
+        <image name="dash" width="208" height="114"/>
+        <image name="hospitale" width="120" height="23"/>
         <image name="hospitale" width="120" height="23"/>
     </resources>
     <color key="tintColor" red="0.058767249770000002" green="0.50229988400000003" blue="0.7176167443" alpha="1" colorSpace="calibratedRGB"/>

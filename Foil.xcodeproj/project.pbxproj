@@ -17,6 +17,7 @@
 		88BCA5E517E0A8DD0066DE2C /* DefaultChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BCA5E417E0A8DD0066DE2C /* DefaultChartViewController.m */; };
 		88BCA5E817E0B7520066DE2C /* Indicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BCA5E717E0B7520066DE2C /* Indicator.m */; };
 		88BCA5EB17E0EABF0066DE2C /* IndicatorData.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BCA5EA17E0EABF0066DE2C /* IndicatorData.m */; };
+		B312A274180C37890070CC0E /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B312A273180C37890070CC0E /* TutorialViewController.m */; };
 		B314B34017C86274004612CD /* SubscriberContextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B314B33F17C86274004612CD /* SubscriberContextCell.m */; };
 		B314B34417C985AA004612CD /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = B314B34317C985AA004612CD /* Util.m */; };
 		B321A6BE17A31B01000A7BB7 /* IdentityServices.m in Sources */ = {isa = PBXBuildFile; fileRef = B321A6BD17A31B01000A7BB7 /* IdentityServices.m */; };
@@ -80,6 +81,8 @@
 		88BCA5E717E0B7520066DE2C /* Indicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Indicator.m; sourceTree = "<group>"; };
 		88BCA5E917E0EABF0066DE2C /* IndicatorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorData.h; sourceTree = "<group>"; };
 		88BCA5EA17E0EABF0066DE2C /* IndicatorData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorData.m; sourceTree = "<group>"; };
+		B312A272180C37890070CC0E /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
+		B312A273180C37890070CC0E /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
 		B314B33E17C86274004612CD /* SubscriberContextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriberContextCell.h; sourceTree = "<group>"; };
 		B314B33F17C86274004612CD /* SubscriberContextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriberContextCell.m; sourceTree = "<group>"; };
 		B314B34217C985AA004612CD /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
@@ -200,6 +203,8 @@
 				88BCA5E417E0A8DD0066DE2C /* DefaultChartViewController.m */,
 				884E17FB17EA101100300649 /* IndicatorDisplayCell.h */,
 				884E17FC17EA101100300649 /* IndicatorDisplayCell.m */,
+				B312A272180C37890070CC0E /* TutorialViewController.h */,
+				B312A273180C37890070CC0E /* TutorialViewController.m */,
 			);
 			name = "Interface Package";
 			sourceTree = "<group>";
@@ -399,6 +404,7 @@
 				B321A6C517A32899000A7BB7 /* Interaction.m in Sources */,
 				B3AB94CA17C853FE008CA59E /* SubscriberContextSelectionViewController.m in Sources */,
 				8858945217E33B5C00D999BC /* Reachability.m in Sources */,
+				B312A274180C37890070CC0E /* TutorialViewController.m in Sources */,
 				B3603ED717FB4B4D00349B55 /* SerieInformation.m in Sources */,
 				B321A6C817A328BC000A7BB7 /* ActionPerformed.m in Sources */,
 				B3E8143017FF0DC70088A802 /* IndicatorSection.m in Sources */,
