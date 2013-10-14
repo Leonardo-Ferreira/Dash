@@ -26,13 +26,16 @@
 }
 
 -(void)setReferencedIndicator:(Indicator *)referencedIndicator{
-    _referencedIndicator=referencedIndicator;
+    _referencedIndicator = referencedIndicator;
+    indicatorValueLabel.text = @"";
+    activityIndicator.hidden = NO;
+    [activityIndicator startAnimating];
     while (referencedIndicator.isLoadingData) {
         //[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
         [NSThread sleepForTimeInterval:.1];
     }
     if (referencedIndicator.dataFinishedLoadingSuccessfully) {
-        indicatorValueLabel.text = referencedIndicator.value;
+        indicatorValueLabel.text = [[NSString stringWithFormat:@"%@ %@ %@",referencedIndicator.valuePrefix,referencedIndicator.value,referencedIndicator.valueSufix] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         [activityIndicator stopAnimating];
         indicatorValueLabel.hidden = NO;
     }

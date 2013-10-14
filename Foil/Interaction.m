@@ -149,81 +149,102 @@ static Interaction *sharedInstance = nil;
 }
 
 -(void)loadIndicatorBaseValue:(Indicator *)indicator{
-    indicator.isLoadingData = YES;
-    indicator.dataFinishedLoading = NO;
-    indicator.dataFinishedLoadingSuccessfully = NO;
-    if(indicatorLoadingQueue == NULL){
-        indicatorLoadingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    if (!_loadedIndicatorsDictionary) {
+        _loadedIndicatorsDictionary = [[NSMutableDictionary alloc]init];
+    }
+    if (![_loadedIndicatorsDictionary objectForKey:indicator.title]) {
+        indicator.isLoadingData = YES;
+        indicator.dataFinishedLoading = NO;
+        indicator.dataFinishedLoadingSuccessfully = NO;
+        if(indicatorLoadingQueue == NULL){
+            indicatorLoadingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+        }
+        
+        completeBlock_t completeBlock =
+        ^{
+            indicator.isLoadingData = NO;
+            indicator.dataFinishedLoading=YES;
+            NSLog(@"Operation completed.");
+        };
+        
+        successBlock_t successBlock = ^(NSData *data, id jsonData){
+            indicator.dataFinishedLoadingSuccessfully = YES;
+                //NSString *value = [jsonData objectForKey:@"value"];
+            [indicator dataDictionaryDidLoad:jsonData];
+            [_loadedIndicatorsDictionary setValue:indicator forKey:indicator.title];
+        };
+        
+        dispatch_async(indicatorLoadingQueue, ^{
+            [_loadedIndicatorsDictionary removeObjectForKey:indicator.title];
+            NSString *requestStr =[NSString stringWithFormat:@"%@/indicators?name=%@", [_currentSubscriberContext rootURLForCurrentSubscriberContext],indicator.internalName];
+            
+            Util *refOp = [Util get:requestStr successBlock:successBlock errorBlock:^(NSError *error){} completeBlock:completeBlock];
+            
+            while (!refOp.operationCompleted) {
+                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
+            }
+        });
+    }else{
+        NSLog(@"Indicator already loaded. Cache HIT!");
+    }
+}
+
+-(void)reloadIndicators:(NSArray *)indicators{
+    NSArray *keys = [_loadedIndicatorsDictionary allKeys];
+    for (Indicator *item in indicators) {
+        if ([keys containsObject:item.title]) {
+            NSLog(@"Reseting indicator %@",item.title);
+            [item resetData];
+            [_loadedIndicatorsDictionary removeObjectForKey:item.title];
+            [self loadIndicatorBaseValue:item];
+        }
     }
     
-    completeBlock_t completeBlock =
-    ^{
-        indicator.isLoadingData = NO;
-        indicator.dataFinishedLoading=YES;
-        NSLog(@"Operation completed.");
-    };
-    
-    successBlock_t successBlock = ^(NSData *data, id jsonData){
-        indicator.dataFinishedLoadingSuccessfully=YES;
-        //NSString *value = [jsonData objectForKey:@"value"];
-        [indicator dataDictionaryDidLoad:jsonData];
-        [_loadedIndicatorsDictionary setValue:indicator forKey:indicator.title];
-    };
-    
-    dispatch_async(indicatorLoadingQueue, ^{
-        [_loadedIndicatorsDictionary removeObjectForKey:indicator.title];
-        NSString *requestStr =[NSString stringWithFormat:@"%@/indicators?name=%@", [_currentSubscriberContext rootURLForCurrentSubscriberContext],indicator.internalName];
-        
-        Util *refOp = [Util get:requestStr successBlock:successBlock errorBlock:^(NSError *error){} completeBlock:completeBlock];
-        
-        while (!refOp.operationCompleted) {
-            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
-        }
-    });
 }
 
 -(void)loadIndicatorData:(Indicator *)indicatorBase startDate:(NSDate *)startDate finishDate:(NSDate *)finishDate{
-    
-    if(indicatorLoadingQueue == NULL){
-        indicatorLoadingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-    }
-    
-    if (indicatorBase.isLoadingData || [indicatorBase hasDataForInterval:startDate endDate:finishDate]) {
-        return;
-    }
-    indicatorBase.isLoadingData = YES;
-    indicatorBase.dataFinishedLoading = NO;
-    
-    completeBlock_t completeBlock =
-    ^{
-        NSLog(@"Operation completed.");
-        indicatorBase.dataFinishedLoading = YES;
-        indicatorBase.isLoadingData = NO;
-    };
-    
-    successBlock_t successBlock = ^(NSData *data, id jsonData){
-        [indicatorBase dataDictionaryDidLoad:jsonData];
-        
-        indicatorBase.dataFinishedLoadingSuccessfully = YES;
-    };
-    
-    //NSString *payload = @"";
-    //NSDictionary *headers = [[NSDictionary alloc]init];
-    
-    dispatch_async(indicatorLoadingQueue, ^
-    {
-        NSString *requestStr =[NSString stringWithFormat:@"%@/indicators?name=%@&resumed=false", [_currentSubscriberContext rootURLForCurrentSubscriberContext], indicatorBase.internalName];
-        NSMutableDictionary *headers = [[NSMutableDictionary alloc]init];
-        [headers setObject:@"application/json; charset=utf-8" forKey:@"content-type"];
-        [headers setObject:@"http://integrationservices.hospitale.aec.com.br/VerificarUsuario" forKey:@"SOAPAction"];
-        
-        [Util post:requestStr content:@"" headers:headers successBlock:successBlock errorBlock:^(NSError *error){} completeBlock:completeBlock];
-        /*[Util Post:[_currentSubscriberContext rootURLForCurrentSubscriberContext] content:payload headers:headers successBlock:successBlock errorBlock:^(NSError *error){indicatorBase.dataFinishedLoadingSuccessfully = NO;} completeBlock:completeBlock];*/
-        
-        while (!indicatorBase.dataFinishedLoading) {
-            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
+    if ([indicatorBase hasDataForInterval:startDate endDate:finishDate]) {
+        if(indicatorLoadingQueue == NULL){
+            indicatorLoadingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
         }
-    });
+        
+        if (indicatorBase.isLoadingData || [indicatorBase hasDataForInterval:startDate endDate:finishDate]) {
+            return;
+        }
+        indicatorBase.isLoadingData = YES;
+        indicatorBase.dataFinishedLoading = NO;
+        
+        completeBlock_t completeBlock =
+        ^{
+            NSLog(@"Operation completed.");
+            indicatorBase.dataFinishedLoading = YES;
+            indicatorBase.isLoadingData = NO;
+        };
+        
+        successBlock_t successBlock = ^(NSData *data, id jsonData){
+            [indicatorBase dataDictionaryDidLoad:jsonData];
+            
+            indicatorBase.dataFinishedLoadingSuccessfully = YES;
+        };
+        
+            //NSString *payload = @"";
+            //NSDictionary *headers = [[NSDictionary alloc]init];
+        
+        dispatch_async(indicatorLoadingQueue, ^
+                       {
+                           NSString *requestStr =[NSString stringWithFormat:@"%@/indicators?name=%@&resumed=false", [_currentSubscriberContext rootURLForCurrentSubscriberContext], indicatorBase.internalName];
+                           NSMutableDictionary *headers = [[NSMutableDictionary alloc]init];
+                           [headers setObject:@"application/json; charset=utf-8" forKey:@"content-type"];
+                           [headers setObject:@"http://integrationservices.hospitale.aec.com.br/VerificarUsuario" forKey:@"SOAPAction"];
+                           
+                           [Util post:requestStr content:@"" headers:headers successBlock:successBlock errorBlock:^(NSError *error){} completeBlock:completeBlock];
+                           /*[Util Post:[_currentSubscriberContext rootURLForCurrentSubscriberContext] content:payload headers:headers successBlock:successBlock errorBlock:^(NSError *error){indicatorBase.dataFinishedLoadingSuccessfully = NO;} completeBlock:completeBlock];*/
+                           
+                           while (!indicatorBase.dataFinishedLoading) {
+                               [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
+                           }
+                       });
+    }
 }
 
 -(void)discoverIndicators{

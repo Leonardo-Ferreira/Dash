@@ -43,4 +43,5 @@ typedef NS_ENUM(NSInteger, IndicatorChartType){
 -(id)initWithJsonDictionary:(NSDictionary *)jsonDictionary;
 -(BOOL)hasDataForInterval:(NSDate *)startDate endDate:(NSDate *)endDate;
 -(NSSet *)getIndicatorValuesKeys;
+-(void)resetData;
 @end

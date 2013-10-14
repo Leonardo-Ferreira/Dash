@@ -75,7 +75,13 @@
 }
 
 -(BOOL)hasDataForInterval:(NSDate *)startDate endDate:(NSDate *)endDate{
-    return NO;
+    BOOL result = NO;
+    if (!startDate || !endDate) {
+        result = (indicatorData != nil) || ([indicatorData count] == 0);
+    }else{
+        result = NO;
+    }
+    return result;
 }
 
 -(void)parseDataDictionary:(NSDictionary *)data{
@@ -128,6 +134,10 @@
         result = [NSString stringWithFormat:@"%@ %@",result,_valueSufix];
     }
     return result;
+}
+
+-(void)resetData{
+    [indicatorData removeAllObjects];
 }
 
 -(NSSet *)getIndicatorValuesKeys{

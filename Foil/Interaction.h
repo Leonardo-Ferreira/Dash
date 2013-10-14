@@ -46,6 +46,7 @@
 -(void)askToEnableLocationDate;
 -(BOOL)validateUser:(NSString *)username password:(NSString *)password againstContext:(SubscriberContext *)context;
 -(NSArray *)getIndicatorsSections:(BOOL)waitForIndicatorsDiscover;
+-(void)reloadIndicators:(NSArray *)indicators;
 
 
 +(Interaction *)getInstance;

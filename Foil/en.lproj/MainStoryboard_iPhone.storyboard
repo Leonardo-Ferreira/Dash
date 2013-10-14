@@ -541,9 +541,6 @@
     <resources>
         <image name="NavBackButton" width="12" height="22"/>
         <image name="dash" width="208" height="114"/>
-        <image name="dash" width="208" height="114"/>
-        <image name="dash" width="208" height="114"/>
-        <image name="hospitale" width="120" height="23"/>
         <image name="hospitale" width="120" height="23"/>
     </resources>
     <color key="tintColor" red="0.058767249770000002" green="0.50229988400000003" blue="0.7176167443" alpha="1" colorSpace="calibratedRGB"/>

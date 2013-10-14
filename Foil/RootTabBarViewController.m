@@ -17,6 +17,7 @@
     Interaction *interaction;
     dispatch_queue_t concurrentQueue;
     IndicatorDisplayCell *selectedCell;
+    UIRefreshControl *refreshControl;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -52,10 +53,11 @@
     cell.indicatorTitle.text = refIndicator.title;
     
     [interaction loadIndicatorBaseValue:refIndicator];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    /*dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSLog(@"Indicator Value being updated");
         [cell setReferencedIndicator:refIndicator];
-    });
+    });*/
+    [cell setReferencedIndicator:refIndicator];
     [cell.indicatorTitle setFont:[UIFont systemFontOfSize:17.0f]];
     return cell;
 }
@@ -114,7 +116,7 @@
      object:[UIDevice currentDevice]];
     [self becomeFirstResponder];
     
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.tintColor = [UIColor grayColor];
     [refreshControl addTarget:self action:@selector(refreshControlAction) forControlEvents:UIControlEventValueChanged];
     [self.collectionViewIndicatorsDisplay addSubview:refreshControl];
@@ -122,7 +124,15 @@
 }
 
 -(void)refreshControlAction{
-    
+    NSMutableArray *indicatorsAux = [[NSMutableArray alloc]init];
+    NSArray *indexes = self.collectionViewIndicatorsDisplay.indexPathsForVisibleItems;
+    for (NSIndexPath *index in indexes) {
+        IndicatorDisplayCell *cell = (IndicatorDisplayCell *)[self.collectionViewIndicatorsDisplay cellForItemAtIndexPath:index];
+        [indicatorsAux addObject:cell.referencedIndicator];
+    }
+    [interaction reloadIndicators:indicatorsAux];
+    [self.collectionViewIndicatorsDisplay reloadData];
+    [refreshControl endRefreshing];
 }
 
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
