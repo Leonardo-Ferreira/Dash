@@ -64,11 +64,11 @@
     _internalName = [jsonDictionary objectForKey:@"InternalName"];
     _chartType = (IndicatorChartType)[jsonDictionary objectForKey:@"ChartType"];
     id aux = [jsonDictionary objectForKey:@"PrefixText"];
-    if ([aux class] == [@"" class]) {
+    if ([aux class] != [NSNull class]) {
         _valuePrefix = aux;
     }
     aux = [jsonDictionary objectForKey:@"SufixText"];
-    if ([aux class] == [@"" class]) {
+    if ([aux class] != [NSNull class]) {
         _valueSufix = aux;
     }
     return self;
@@ -122,18 +122,6 @@
 
 -(void)updateValue:(NSString *)value{
     _value = value;
-}
-
--(NSString *)value{
-    NSString *result = @"";
-    if (_valuePrefix != nil) {
-        result = [result stringByAppendingString:[_valuePrefix stringByAppendingString:@" "]];
-    }
-    result = [result stringByAppendingString:_value];
-    if (_valueSufix!=nil) {
-        result = [NSString stringWithFormat:@"%@ %@",result,_valueSufix];
-    }
-    return result;
 }
 
 -(void)resetData{

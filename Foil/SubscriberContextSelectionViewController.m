@@ -14,6 +14,7 @@
 
 @implementation SubscriberContextSelectionViewController{
     NSSet *contexts;
+    BOOL viewAlreadyAppeared;
 }
 
 @synthesize usernameEntered;
@@ -32,6 +33,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    viewAlreadyAppeared = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,21 +43,24 @@
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    NSLog(@"Number of itens in section");
-    Interaction *interact = [Interaction getInstance];
-    
-    if (!interact.contextsLoadingCompleted) {
-        NSLog(@"contexts not loaded yet. Will wait for loading to complete.");
-        while (!interact.contextsLoadingCompleted) {
-            [[NSRunLoop currentRunLoop]runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
+    if (viewAlreadyAppeared) {
+        NSLog(@"Number of itens in section");
+        Interaction *interact = [Interaction getInstance];
+        
+        if (!interact.contextsLoadingCompleted) {
+            NSLog(@"contexts not loaded yet. Will wait for loading to complete.");
+            while (!interact.contextsLoadingCompleted) {
+                [[NSRunLoop currentRunLoop]runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
+            }
         }
+        else{
+            NSLog(@"Contexts already loaded.");
+        }
+        contexts = interact.allContextsForCurrentUser;
+        return contexts.count;
+    }else{
+        return 0;
     }
-    else{
-        NSLog(@"Contexts already loaded.");
-    }
-    contexts = interact.allContextsForCurrentUser;
-    return contexts.count;
-    //return 3;
 }
 
 -(BOOL)prefersStatusBarHidden{
@@ -63,12 +68,19 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     NSLog(@"View did appear");
+    viewAlreadyAppeared = YES;
     [self becomeFirstResponder];
-    [self.colletionView reloadData];
-    [self.loadingView removeFromSuperview];
-    [UIView transitionWithView:_loadingView duration:.1 options:UIViewAnimationOptionTransitionNone animations:^{
-        _loadingView.alpha = 0;} completion:NULL];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self.colletionView reloadData];});
+        //[self.loadingView removeFromSuperview];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+        [UIView transitionWithView:_loadingView duration:.1 options:UIViewAnimationOptionTransitionNone animations:^{
+            _loadingView.alpha = 0;} completion:NULL];
+        });
+    });
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -80,9 +92,17 @@
     return YES;
 }
 
+- (IBAction)backButtonClick:(UIBarButtonItem *)sender {
+    [self goBack];
+}
+
+- (void)goBack {
+    [((UIViewController *)self.nextResponder) dismissViewControllerAnimated:YES completion:nil];
+}
+
 -(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
     if (event.subtype  == UIEventSubtypeMotionShake) {
-        [((UIViewController *)self.nextResponder) dismissViewControllerAnimated:YES completion:nil];
+        [self goBack];
     }
     if([super respondsToSelector:@selector(motionEnded:withEvent:)]){
         [super motionEnded:motion withEvent:event];

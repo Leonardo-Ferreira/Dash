@@ -289,7 +289,14 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="Hospitais" id="hsP-9Y-E4A"/>
+                                    <navigationItem title="Hospitais" id="hsP-9Y-E4A">
+                                        <barButtonItem key="leftBarButtonItem" image="NavBackButton" id="L28-0S-fx7">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <action selector="backButtonClick:" destination="vpj-sK-mgT" id="BfO-Aq-Zgx"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                             <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dash" translatesAutoresizingMaskIntoConstraints="NO" id="Ip9-6L-nJz">

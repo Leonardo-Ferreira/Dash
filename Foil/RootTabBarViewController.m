@@ -24,6 +24,7 @@
     BOOL tooltipPresented;
     BOOL tooltipFadingOut;
     __weak IBOutlet UIBarButtonItem *assistedModeButton;
+    BOOL cancelTooltipFadeOut;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -85,20 +86,68 @@
     [UIView transitionWithView:toolTipUIView duration:1 options:UIViewAnimationOptionTransitionNone animations:^{
         [toolTipUIView setFrame:newRect];
     } completion:^(BOOL completed){
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [NSThread sleepForTimeInterval:2];
-            dispatch_async(dispatch_get_main_queue(),^{
-                [self hideTooltip];
-            });
-        });
+        [self restartTooltipFadeOut];
     }];
     
 }
 
--(void)hideTooltip{
-    [UIView transitionWithView:toolTipUIView duration:3 options:UIViewAnimationOptionTransitionNone animations:^{
-        toolTipUIView.alpha = 0;} completion:^(BOOL finished){[toolTipUIView setFrame:tooltipOriginalPosition];
-            toolTipUIView.alpha = 1;}];
+-(void)restartTooltipFadeOut{
+    cancelTooltipFadeOut = NO;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [NSThread sleepForTimeInterval:2];
+        dispatch_async(dispatch_get_main_queue(),^{
+            [self hideTooltip:10];
+        });
+    });
+}
+
+/*-(void)hideTooltip{
+    NSLog(@"Starting fade-out");
+    for (int i = 0; i < 5; i++) {
+        if (cancelTooltipFadeOut) {
+            NSLog(@"Fade out cancelled");
+            [UIView transitionWithView:toolTipUIView duration:.1 options:UIViewAnimationOptionTransitionNone animations:^{
+                toolTipUIView.alpha = 1;
+            } completion:NULL];
+            [self restartTooltipFadeOut];
+            break;
+        }else{
+            [UIView transitionWithView:toolTipUIView duration:3 options:UIViewAnimationOptionTransitionNone animations:^{
+                toolTipUIView.alpha = toolTipUIView.alpha - 0.2;
+            } completion:^(BOOL finished){
+                if (toolTipUIView.alpha < 0.21) {
+                    [toolTipUIView setFrame:tooltipOriginalPosition];
+                    toolTipUIView.alpha = 1;
+                }
+            }];
+        }
+    }
+}*/
+
+-(void)hideTooltip:(int)countInfo{
+    NSLog(@"Starting fade-out. Alpha = %f",toolTipUIView.alpha);
+    if (toolTipUIView.alpha == 0 || countInfo == 0) {
+        [toolTipUIView setFrame:tooltipOriginalPosition];
+        toolTipUIView.alpha = 1;
+        return;
+    }else{
+        if (cancelTooltipFadeOut) {
+            NSLog(@"Fade out cancelled");
+            [UIView transitionWithView:toolTipUIView duration:.1 options:UIViewAnimationOptionTransitionNone animations:^{
+                toolTipUIView.alpha = 1;
+            } completion:NULL];
+            [self restartTooltipFadeOut];
+            return;
+        }else{
+            [UIView transitionWithView:toolTipUIView duration:.3 options:UIViewAnimationOptionTransitionNone animations:^{
+                toolTipUIView.alpha = toolTipUIView.alpha - 0.1;
+            } completion:^(BOOL finished){
+                dispatch_async(dispatch_get_main_queue(),^{
+                    [self hideTooltip:countInfo-1];
+                });
+            }];
+        }
+    }
 }
 
 - (void)viewDidLoad
@@ -119,20 +168,28 @@
     for (IndicatorSection *section in sectionsArray) {
         UITabBarItem *item = [[UITabBarItem alloc]init];
         item.title = section.title;
-        NSString *iconURL, *selectedURL;
+        NSString *iconURL, *selectedURL, *iconHash, *selectedHash;
         if ([Util GetCurrentDeviceStyle].isRetina) {
             iconURL = section.retinaIconUrl;
+            iconHash = section.retinaIconHash;
             selectedURL = section.retinaSelectedIconUrl;
+            selectedHash = section.retinaSelectedIconHash;
         }else{
             iconURL = section.regularIconUrl;
+            iconHash = section.regularIconHash;
             selectedURL = section.regularSelectedIconUrl;
+            selectedHash = section.regularSelectedIconHash;
         }
-        [Util loadImageFromURL:iconURL imageHash:nil subscriberContext:interaction.currentSubscriberContext finishBlock:^(BasicImageInfo *imageResult){
-            item.image = imageResult.Image;
+        [Util loadImageFromURL:iconURL imageHash:iconHash subscriberContext:interaction.currentSubscriberContext finishBlock:^(BasicImageInfo *imageResult){
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                item.image = imageResult.Image;
+            });
         }];
         if (selectedURL) {
-            [Util loadImageFromURL:selectedURL imageHash:nil subscriberContext:interaction.currentSubscriberContext finishBlock:^(BasicImageInfo *imageResult){
-                item.selectedImage = imageResult.Image;
+            [Util loadImageFromURL:selectedURL imageHash:selectedHash subscriberContext:interaction.currentSubscriberContext finishBlock:^(BasicImageInfo *imageResult){
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    item.selectedImage = imageResult.Image;
+                });
             }];
         }
         [items addObject:item];
@@ -286,7 +343,6 @@
 }
 - (IBAction)assistedModeClicked:(id)sender {
     [self presentTooltip];
-    
 }
 
 - (IBAction)handleTap:(UITapGestureRecognizer *)sender {

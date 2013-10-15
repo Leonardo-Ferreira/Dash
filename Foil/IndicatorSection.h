@@ -13,9 +13,13 @@
 @property (nonatomic,readonly) NSString *title;
 @property (nonatomic,readonly) NSString *uniqueId;
 @property (nonatomic,readonly) NSString *regularIconUrl;
+@property (nonatomic,readonly) NSString *regularIconHash;
 @property (nonatomic,readonly) NSString *regularSelectedIconUrl;
+@property (nonatomic,readonly) NSString *regularSelectedIconHash;
 @property (nonatomic,readonly) NSString *retinaIconUrl;
+@property (nonatomic,readonly) NSString *retinaIconHash;
 @property (nonatomic,readonly) NSString *retinaSelectedIconUrl;
+@property (nonatomic,readonly) NSString *retinaSelectedIconHash;
 @property (nonatomic,readonly) NSInteger preferredOrder;
 
 -(id)initWithJsonDictionary:(NSDictionary *)jsonDictionary;

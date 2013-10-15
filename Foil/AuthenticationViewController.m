@@ -59,7 +59,7 @@
     NSLog(@"login clicked. Preparing to exibit next view");
     [self.buttonLogin setTitle:@"" forState:UIControlStateNormal];
     [self.loginActivity startAnimating];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
     SubscriberContextSelectionViewController *viewController = (SubscriberContextSelectionViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ContextSelectionView"];
     
@@ -71,6 +71,6 @@
     [self presentViewController:viewController animated:YES completion:nil];
     [self.loginActivity stopAnimating];
     [self.buttonLogin setTitle:@"Login" forState:UIControlStateNormal];
-    });
+    //});
 }
 @end
