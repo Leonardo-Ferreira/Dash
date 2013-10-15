@@ -21,6 +21,9 @@
     __weak IBOutlet UIView *toolTipUIView;
     __weak IBOutlet UILabel *toolTipUILabel;
     CGRect tooltipOriginalPosition;
+    BOOL tooltipPresented;
+    BOOL tooltipFadingOut;
+    __weak IBOutlet UIBarButtonItem *assistedModeButton;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -283,11 +286,9 @@
 }
 - (IBAction)assistedModeClicked:(id)sender {
     [self presentTooltip];
-}
-
--(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{
     
 }
+
 - (IBAction)handleTap:(UITapGestureRecognizer *)sender {
     [self unhighlight:selectedCell];
     interaction.selectedIndicator = nil;

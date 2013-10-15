@@ -8,7 +8,7 @@
 
 #import "SubscriberContextSelectionViewController.h"
 
-@interface SubscriberContextSelectionViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate>
+@interface SubscriberContextSelectionViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate,UINavigationBarDelegate>
 
 @end
 
@@ -54,7 +54,6 @@
         NSLog(@"Contexts already loaded.");
     }
     contexts = interact.allContextsForCurrentUser;
-    [self.loadingView removeFromSuperview];
     return contexts.count;
     //return 3;
 }
@@ -66,6 +65,10 @@
 -(void)viewDidAppear:(BOOL)animated{
     NSLog(@"View did appear");
     [self becomeFirstResponder];
+    [self.colletionView reloadData];
+    [self.loadingView removeFromSuperview];
+    [UIView transitionWithView:_loadingView duration:.1 options:UIViewAnimationOptionTransitionNone animations:^{
+        _loadingView.alpha = 0;} completion:NULL];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
