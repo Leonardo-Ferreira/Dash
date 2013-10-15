@@ -35,6 +35,7 @@
 @synthesize availibleIndicators = _indicators;
 @synthesize availibleIndicatorsDiscovered = _availibleIndicatorsDiscovered;
 @synthesize selectedIndicator;
+@synthesize isAssistedModeOn;
 
 static Interaction *sharedInstance = nil;
 

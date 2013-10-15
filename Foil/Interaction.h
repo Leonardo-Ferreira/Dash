@@ -34,6 +34,7 @@
 @property (nonatomic,readonly) NSArray *availibleIndicators;
 @property (nonatomic,readonly) BOOL availibleIndicatorsDiscovered;
 @property (atomic, readwrite) Indicator *selectedIndicator;
+@property (nonatomic, readwrite) BOOL isAssistedModeOn;
 
 -(void)addAction:(ActionPerformed*) action;
 -(void)publishInteraction;

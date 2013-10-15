@@ -18,6 +18,9 @@
     dispatch_queue_t concurrentQueue;
     IndicatorDisplayCell *selectedCell;
     UIRefreshControl *refreshControl;
+    __weak IBOutlet UIView *toolTipUIView;
+    __weak IBOutlet UILabel *toolTipUILabel;
+    CGRect tooltipOriginalPosition;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -64,6 +67,33 @@
 
 -(BOOL)prefersStatusBarHidden{
     return YES;
+}
+
+-(void)presentTooltip{
+    if (CGRectIsEmpty(tooltipOriginalPosition)) {
+        tooltipOriginalPosition = toolTipUIView.frame;
+    }
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:1.0];
+    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:[self view] cache:YES];
+    CGRect rect = toolTipUIView.frame;
+    CGRect newRect = CGRectMake(rect.origin.x, rect.origin.y - rect.size.height, rect.size.width, rect.size.height);
+    [toolTipUIView setFrame:newRect];
+    [UIView commitAnimations];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [NSThread sleepForTimeInterval:2];
+        dispatch_async(dispatch_get_main_queue(),^{
+            [self hideTooltip];});
+    });
+}
+
+-(void)hideTooltip{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:1.0];
+    toolTipUIView.alpha = 0;
+    [UIView commitAnimations];
+    toolTipUIView.alpha = 1;
+    [toolTipUIView setFrame:tooltipOriginalPosition];
 }
 
 - (void)viewDidLoad
@@ -248,6 +278,9 @@
         [cell setSelected:YES];
         selectedCell = cell;
     }
+}
+- (IBAction)assistedModeClicked:(id)sender {
+    [self presentTooltip];
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath{

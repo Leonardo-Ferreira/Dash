@@ -419,21 +419,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tabBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JTs-0L-nin">
-                                <rect key="frame" x="0.0" y="431" width="320" height="49"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="49" id="dHR-Gm-u3v"/>
-                                </constraints>
-                                <items>
-                                    <tabBarItem systemItem="favorites" id="HrK-ZF-4Ao"/>
-                                    <tabBarItem systemItem="more" id="hkS-5e-PmQ"/>
-                                </items>
-                                <connections>
-                                    <outlet property="delegate" destination="HiJ-oo-Xsm" id="JGk-y5-CIm"/>
-                                </connections>
-                            </tabBar>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jdb-pP-Dlv">
+                                <rect key="frame" x="20" y="431" width="280" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="xCM-vg-dAK">
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="90"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <string key="text">Indicador X - Esse indicador mostra o quanto X o Y fez nas ultimas 24 horas. Eu preciso de um texto mais longo. E olha só como a fonte diminiu porque o texto está muito grande. </string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8WK-jV-Mab">
                                 <rect key="frame" x="0.0" y="44" width="320" height="387"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -496,8 +495,8 @@
                                     <outlet property="delegate" destination="HiJ-oo-Xsm" id="EEM-Mh-GZd"/>
                                 </connections>
                             </collectionView>
-                            <navigationBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2tq-Ar-4CV">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                            <navigationBar contentMode="scaleToFill" ambiguous="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2tq-Ar-4CV">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="7x2-5z-yNJ"/>
@@ -512,12 +511,33 @@
                                         <barButtonItem key="leftBarButtonItem" image="NavBackButton" style="done" id="Bgc-x0-hO7">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" image="AssistedModeButton" id="7fz-Eh-Jqg">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <action selector="assistedModeClicked:" destination="HiJ-oo-Xsm" id="uur-u3-CYa"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                                 <connections>
                                     <outlet property="delegate" destination="HiJ-oo-Xsm" id="f3t-z1-WuY"/>
                                 </connections>
                             </navigationBar>
+                            <tabBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JTs-0L-nin">
+                                <rect key="frame" x="0.0" y="431" width="320" height="49"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="dHR-Gm-u3v"/>
+                                </constraints>
+                                <items>
+                                    <tabBarItem systemItem="favorites" id="HrK-ZF-4Ao"/>
+                                    <tabBarItem systemItem="more" id="hkS-5e-PmQ"/>
+                                </items>
+                                <connections>
+                                    <outlet property="delegate" destination="HiJ-oo-Xsm" id="JGk-y5-CIm"/>
+                                </connections>
+                            </tabBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -528,9 +548,12 @@
                             <constraint firstAttribute="bottom" secondItem="JTs-0L-nin" secondAttribute="bottom" id="aRV-5u-A0C"/>
                         </constraints>
                     </view>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="collectionViewIndicatorsDisplay" destination="8WK-jV-Mab" id="daa-79-PCY"/>
                         <outlet property="rootTabBar" destination="JTs-0L-nin" id="KR1-AM-EQb"/>
+                        <outlet property="toolTipUILabel" destination="xCM-vg-dAK" id="cgX-OV-wjb"/>
+                        <outlet property="toolTipUIView" destination="jdb-pP-Dlv" id="LwH-Ie-Mcj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aXt-WH-2yT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -539,6 +562,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="AssistedModeButton" width="22" height="22"/>
         <image name="NavBackButton" width="12" height="22"/>
         <image name="dash" width="208" height="114"/>
         <image name="hospitale" width="120" height="23"/>
