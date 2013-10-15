@@ -80,16 +80,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "403198567.82817"
+            timestampString = "403530435.537473"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "237"
-            endingLineNumber = "237"
-            landmarkName = "-handleTap:"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
+            landmarkName = "-highlight:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

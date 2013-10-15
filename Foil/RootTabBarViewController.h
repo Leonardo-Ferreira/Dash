@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "Interaction.h"
 #import "DefaultChartViewController.h"
 #import "IndicatorDisplayCell.h"

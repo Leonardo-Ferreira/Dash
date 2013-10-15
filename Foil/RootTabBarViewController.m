@@ -70,30 +70,32 @@
 }
 
 -(void)presentTooltip{
+    toolTipUIView.viewForBaselineLayout.layer.cornerRadius = 5;
+    toolTipUIView.viewForBaselineLayout.layer.masksToBounds = YES;
+    
     if (CGRectIsEmpty(tooltipOriginalPosition)) {
         tooltipOriginalPosition = toolTipUIView.frame;
     }
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:1.0];
-    [UIView setAnimationTransition:UIViewAnimationTransitionNone forView:[self view] cache:YES];
     CGRect rect = toolTipUIView.frame;
     CGRect newRect = CGRectMake(rect.origin.x, rect.origin.y - rect.size.height, rect.size.width, rect.size.height);
-    [toolTipUIView setFrame:newRect];
-    [UIView commitAnimations];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [NSThread sleepForTimeInterval:2];
-        dispatch_async(dispatch_get_main_queue(),^{
-            [self hideTooltip];});
-    });
+    
+    [UIView transitionWithView:toolTipUIView duration:1 options:UIViewAnimationOptionTransitionNone animations:^{
+        [toolTipUIView setFrame:newRect];
+    } completion:^(BOOL completed){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [NSThread sleepForTimeInterval:2];
+            dispatch_async(dispatch_get_main_queue(),^{
+                [self hideTooltip];
+            });
+        });
+    }];
+    
 }
 
 -(void)hideTooltip{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:1.0];
-    toolTipUIView.alpha = 0;
-    [UIView commitAnimations];
-    toolTipUIView.alpha = 1;
-    [toolTipUIView setFrame:tooltipOriginalPosition];
+    [UIView transitionWithView:toolTipUIView duration:3 options:UIViewAnimationOptionTransitionNone animations:^{
+        toolTipUIView.alpha = 0;} completion:^(BOOL finished){[toolTipUIView setFrame:tooltipOriginalPosition];
+            toolTipUIView.alpha = 1;}];
 }
 
 - (void)viewDidLoad
