@@ -125,7 +125,6 @@
 }*/
 
 -(void)hideTooltip:(int)countInfo{
-    NSLog(@"Starting fade-out. Alpha = %f",toolTipUIView.alpha);
     if (toolTipUIView.alpha == 0 || countInfo == 0) {
         [toolTipUIView setFrame:tooltipOriginalPosition];
         toolTipUIView.alpha = 1;

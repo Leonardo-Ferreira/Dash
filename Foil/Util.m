@@ -42,7 +42,7 @@
 
 -(id)init{
     if(self = [super init]){
-        _data=[[NSMutableData alloc]init];
+        _data = [[NSMutableData alloc]init];
     }
     return self;
 }
@@ -61,7 +61,8 @@
     [request setHTTPBody:[content dataUsingEncoding:NSUTF8StringEncoding]];
     
     BOOL contentLengthSet, hostSet = NO;
-    for (NSString *key in [headers allKeys]) {
+    NSArray *keys = [headers allKeys];
+    for (NSString *key in keys) {
         NSString *value = [headers objectForKey:key];
         [request addValue:value forHTTPHeaderField:key];
         if ([key caseInsensitiveCompare:@"content-length"] == NSOrderedSame) {
@@ -222,7 +223,9 @@
     }else{
         NSLog(@"cache HIT!");
         if (_finishBlock) {
-            _finishBlock(result);
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                _finishBlock(result);
+            });
         }
     }
 }

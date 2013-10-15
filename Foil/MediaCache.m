@@ -71,13 +71,14 @@ static MediaCache *sharedMediaCacheInstance;
 -(NSString *)generateFilePath:(SubscriberContext *)context imageHash:(NSString *)imageHash {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
-    NSString *filePath = [documentsPath stringByAppendingPathComponent:@"images"]; //Add the file name
+    NSString *filePath = @"";
     if(context){
+        filePath = [documentsPath stringByAppendingPathComponent:@"images"];
         filePath = [filePath stringByAppendingPathComponent:context.ContextDomain];
         filePath = [filePath stringByAppendingPathComponent:context.ContextName];
     }
     else{
-        filePath = [filePath stringByAppendingPathComponent:@"globalImages"];
+        filePath = [filePath stringByAppendingPathComponent:@"generalimages"];
     }
     filePath = [filePath stringByAppendingPathComponent:imageHash];
     filePath = [filePath stringByAppendingPathExtension:@"png"];
@@ -85,6 +86,10 @@ static MediaCache *sharedMediaCacheInstance;
 }
 
 -(void)cacheData:(BasicImageInfo *)imageInfo imageContext:(SubscriberContext *)context{
+    if (!imageInfo.Image) {
+        NSLog(@"The Image is 'nil'. Returning");
+        return;
+    }
     NSData *data = UIImagePNGRepresentation(imageInfo.Image);
     NSString *auxFilePath = [self generateFilePath:context imageHash:imageInfo.ImageHash];
     NSString *directory = [auxFilePath stringByDeletingLastPathComponent];
@@ -93,8 +98,12 @@ static MediaCache *sharedMediaCacheInstance;
     
     NSString *filePath = [self generateFilePath:context imageHash:imageInfo.ImageHash];
     if([[NSFileManager defaultManager] createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil]){
-        if([data writeToFile:filePath atomically:YES]){//Write the file
+        NSError *error;
+        if([data writeToFile:filePath options:NSDataWritingAtomic error:&error]){//Write the file
             NSLog(@"File written to disk");
+        }
+        else{
+            NSLog(@"File NOT written! ERROR = %@",[error description]);
         }
     }
 }

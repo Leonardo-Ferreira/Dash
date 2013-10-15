@@ -28,38 +28,38 @@
     _title = [jsonDictionary objectForKey:@"Title"];
     _uniqueId = [jsonDictionary objectForKey:@"UniqueId"];
     id auxNSNULL = [jsonDictionary objectForKey:@"RegularIconUrl"];
-    if (auxNSNULL != (NSString *)[NSNull null]) {
+    if (auxNSNULL != (NSString *)[NSNull null] && ![auxNSNULL isEqualToString:@"\"\""]) {
         _regularIconUrl = auxNSNULL;
     }
     auxNSNULL = [jsonDictionary objectForKey:@"RegularIconHash"];
-    if (auxNSNULL != (NSString *)[NSNull null]) {
+    if (auxNSNULL != (NSString *)[NSNull null] && ![auxNSNULL isEqualToString:@"\"\""]) {
         _regularIconHash = auxNSNULL;
     }
     
     auxNSNULL = [jsonDictionary objectForKey:@"SelectedRegularIconUrl"];
-    if (auxNSNULL != (NSString *)[NSNull null]) {
+    if (auxNSNULL != (NSString *)[NSNull null] && ![auxNSNULL isEqualToString:@"\"\""]) {
         _regularSelectedIconUrl = auxNSNULL;
     }
     auxNSNULL = [jsonDictionary objectForKey:@"SelectedRegularIconHash"];
-    if (auxNSNULL != (NSString *)[NSNull null]) {
+    if (auxNSNULL != (NSString *)[NSNull null] && ![auxNSNULL isEqualToString:@"\"\""]) {
         _regularSelectedIconHash = auxNSNULL;
     }
     
     auxNSNULL = [jsonDictionary objectForKey:@"RetinaIconUrl"];
-    if (auxNSNULL != (NSString *)[NSNull null]) {
+    if (auxNSNULL != (NSString *)[NSNull null] && ![auxNSNULL isEqualToString:@"\"\""]) {
         _retinaIconUrl = auxNSNULL;
     }
     auxNSNULL = [jsonDictionary objectForKey:@"RetinaIconHash"];
-    if (auxNSNULL != (NSString *)[NSNull null]) {
+    if (auxNSNULL != (NSString *)[NSNull null] && ![auxNSNULL isEqualToString:@"\"\""]) {
         _retinaIconHash = auxNSNULL;
     }
     
     auxNSNULL = [jsonDictionary objectForKey:@"SelectedRetinaIconUrl"];
-    if (auxNSNULL != (NSString *)[NSNull null]) {
+    if (auxNSNULL != (NSString *)[NSNull null] && ![auxNSNULL isEqualToString:@"\"\""]) {
         _retinaSelectedIconUrl = auxNSNULL;
     }
     auxNSNULL = [jsonDictionary objectForKey:@"SelectedRetinaIconHash"];
-    if (auxNSNULL != (NSString *)[NSNull null]) {
+    if (auxNSNULL != (NSString *)[NSNull null] && ![auxNSNULL isEqualToString:@"\"\""]) {
         _retinaSelectedIconHash = auxNSNULL;
     }
     
