@@ -204,7 +204,7 @@ static Interaction *sharedInstance = nil;
 }
 
 -(void)loadIndicatorData:(Indicator *)indicatorBase startDate:(NSDate *)startDate finishDate:(NSDate *)finishDate{
-    if ([indicatorBase hasDataForInterval:startDate endDate:finishDate]) {
+    if (![indicatorBase hasDataForInterval:startDate endDate:finishDate]) {
         if(indicatorLoadingQueue == NULL){
             indicatorLoadingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
         }
@@ -236,9 +236,9 @@ static Interaction *sharedInstance = nil;
                            NSString *requestStr =[NSString stringWithFormat:@"%@/indicators?name=%@&resumed=false", [_currentSubscriberContext rootURLForCurrentSubscriberContext], indicatorBase.internalName];
                            NSMutableDictionary *headers = [[NSMutableDictionary alloc]init];
                            [headers setObject:@"application/json; charset=utf-8" forKey:@"content-type"];
-                           [headers setObject:@"http://integrationservices.hospitale.aec.com.br/VerificarUsuario" forKey:@"SOAPAction"];
+                           /*[headers setObject:@"http://integrationservices.hospitale.aec.com.br/VerificarUsuario" forKey:@"SOAPAction"];*/
                            
-                           [Util post:requestStr content:@"" headers:headers successBlock:successBlock errorBlock:^(NSError *error){} completeBlock:completeBlock];
+                           [Util post:requestStr content:@"" headers:headers successBlock:successBlock errorBlock:^(NSError *error){NSLog(@"Error at network stack of 'loadIndicatorData'. Error = %@",[error description]);} completeBlock:completeBlock];
                            /*[Util Post:[_currentSubscriberContext rootURLForCurrentSubscriberContext] content:payload headers:headers successBlock:successBlock errorBlock:^(NSError *error){indicatorBase.dataFinishedLoadingSuccessfully = NO;} completeBlock:completeBlock];*/
                            
                            while (!indicatorBase.dataFinishedLoading) {

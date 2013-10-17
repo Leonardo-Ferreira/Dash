@@ -79,9 +79,9 @@
 -(BOOL)hasDataForInterval:(NSDate *)startDate endDate:(NSDate *)endDate{
     BOOL result = NO;
     if (!startDate || !endDate) {
-        result = (indicatorData != nil) || ([indicatorData count] == 0);
+        result = (indicatorData != nil) && ([indicatorData count] != 0);
     }else{
-        result = NO;
+            //TODO: finish implementation
     }
     return result;
 }
