@@ -21,6 +21,12 @@ typedef NS_ENUM(NSInteger, IndicatorChartType){
     BarChart = 3
 };
 
+typedef NS_ENUM(NSInteger, IndicatorValueType){
+    Free = 0,
+    Monetary = 1,
+    Percentage = 2
+};
+
 @property (nonatomic,readonly) IndicatorSection *section;
 @property (nonatomic,readonly) NSString *internalName;
 @property (nonatomic,readonly) NSString *title;
@@ -35,6 +41,7 @@ typedef NS_ENUM(NSInteger, IndicatorChartType){
 @property (atomic,readwrite) BOOL dataFinishedLoading;
 @property (atomic,readwrite) BOOL dataFinishedLoadingSuccessfully;
 @property (nonatomic, readonly) IndicatorChartType chartType;
+@property (nonatomic, readonly) IndicatorValueType valueType;
 
 +(Indicator *)mountIndicator :(NSString *)title indicatorValue:(NSString *)value;
 -(void)dataDidLoad:(IndicatorData *)data;

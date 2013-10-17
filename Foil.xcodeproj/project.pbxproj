@@ -10,7 +10,6 @@
 		884E17FD17EA101100300649 /* IndicatorDisplayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 884E17FC17EA101100300649 /* IndicatorDisplayCell.m */; };
 		8858945217E33B5C00D999BC /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8858945117E33B5C00D999BC /* Reachability.m */; };
 		8858945417E34A9B00D999BC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8858945317E34A9B00D999BC /* SystemConfiguration.framework */; };
-		885BC04E17ECCE4000B7FD62 /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 885BC04B17ECCDD500B7FD62 /* libCorePlot-CocoaTouch.a */; };
 		885BC05017ECCED200B7FD62 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 885BC04F17ECCED200B7FD62 /* QuartzCore.framework */; };
 		88623CBE17E23044007742BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88623CBD17E23044007742BB /* Images.xcassets */; };
 		88BCA5E217E0A6A40066DE2C /* RootTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BCA5E117E0A6A40066DE2C /* RootTabBarViewController.m */; };
@@ -41,28 +40,16 @@
 		B3A43E3F17A3084600D3FF44 /* AuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A43E3E17A3084600D3FF44 /* AuthenticationViewController.m */; };
 		B3A5BDE31802EFF000C5B4B0 /* NetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A5BDE21802EFF000C5B4B0 /* NetworkOperation.m */; };
 		B3AB94CA17C853FE008CA59E /* SubscriberContextSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3AB94C917C853FE008CA59E /* SubscriberContextSelectionViewController.m */; };
+		B3D3CBBD18105C1A000C6AA0 /* ShinobiCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D3CBBC18105C1A000C6AA0 /* ShinobiCharts.framework */; };
+		B3D3CBBF18105C74000C6AA0 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D3CBBE18105C74000C6AA0 /* OpenGLES.framework */; };
+		B3D3CBC118105C81000C6AA0 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D3CBC018105C81000C6AA0 /* CoreText.framework */; };
+		B3D3CBC318105C8C000C6AA0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D3CBC218105C8C000C6AA0 /* libstdc++.dylib */; };
+		B3D3CBC518105C96000C6AA0 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D3CBC418105C96000C6AA0 /* Security.framework */; };
 		B3E8143017FF0DC70088A802 /* IndicatorSection.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E8142F17FF0DC70088A802 /* IndicatorSection.m */; };
 		B3ED7DFA17A6F4DF00977A76 /* SubscriberContext.m in Sources */ = {isa = PBXBuildFile; fileRef = B3ED7DF917A6F4DF00977A76 /* SubscriberContext.m */; };
 		B3ED7DFD17A6F8FA00977A76 /* ContextServices.m in Sources */ = {isa = PBXBuildFile; fileRef = B3ED7DFC17A6F8FA00977A76 /* ContextServices.m */; };
 		B3ED7E0017A6F9CC00977A76 /* SubscriberContextExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = B3ED7DFF17A6F9CC00977A76 /* SubscriberContextExtension.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		885BC04A17ECCDD500B7FD62 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 885BC04417ECCDD500B7FD62 /* CorePlot-CocoaTouch.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BC9B83470FB8A0A40035D8DA;
-			remoteInfo = "CorePlot-CocoaTouch";
-		};
-		885BC04C17ECCDF600B7FD62 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 885BC04417ECCDD500B7FD62 /* CorePlot-CocoaTouch.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = BC9B83460FB8A0A40035D8DA;
-			remoteInfo = "CorePlot-CocoaTouch";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		884E17FB17EA101100300649 /* IndicatorDisplayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorDisplayCell.h; sourceTree = "<group>"; };
@@ -70,7 +57,6 @@
 		8858945017E33B5C00D999BC /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		8858945117E33B5C00D999BC /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		8858945317E34A9B00D999BC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		885BC04417ECCDD500B7FD62 /* CorePlot-CocoaTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CorePlot-CocoaTouch.xcodeproj"; path = "CorePlot_1.3/Source/framework/CorePlot-CocoaTouch.xcodeproj"; sourceTree = "<group>"; };
 		885BC04F17ECCED200B7FD62 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		88623CBD17E23044007742BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		88BCA5E017E0A6A40066DE2C /* RootTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTabBarViewController.h; sourceTree = "<group>"; };
@@ -124,6 +110,11 @@
 		B3A5BDE21802EFF000C5B4B0 /* NetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkOperation.m; sourceTree = "<group>"; };
 		B3AB94C817C853FE008CA59E /* SubscriberContextSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriberContextSelectionViewController.h; sourceTree = "<group>"; };
 		B3AB94C917C853FE008CA59E /* SubscriberContextSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriberContextSelectionViewController.m; sourceTree = "<group>"; };
+		B3D3CBBC18105C1A000C6AA0 /* ShinobiCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ShinobiCharts.framework; path = Library/Frameworks/ShinobiCharts.framework; sourceTree = DEVELOPER_DIR; };
+		B3D3CBBE18105C74000C6AA0 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		B3D3CBC018105C81000C6AA0 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		B3D3CBC218105C8C000C6AA0 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		B3D3CBC418105C96000C6AA0 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B3E8142E17FF0DC70088A802 /* IndicatorSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorSection.h; sourceTree = "<group>"; };
 		B3E8142F17FF0DC70088A802 /* IndicatorSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorSection.m; sourceTree = "<group>"; };
 		B3ED7DF817A6F4DF00977A76 /* SubscriberContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriberContext.h; sourceTree = "<group>"; };
@@ -139,27 +130,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3D3CBC518105C96000C6AA0 /* Security.framework in Frameworks */,
+				B3D3CBC318105C8C000C6AA0 /* libstdc++.dylib in Frameworks */,
+				B3D3CBC118105C81000C6AA0 /* CoreText.framework in Frameworks */,
+				B3D3CBBF18105C74000C6AA0 /* OpenGLES.framework in Frameworks */,
+				B3D3CBBD18105C1A000C6AA0 /* ShinobiCharts.framework in Frameworks */,
 				885BC05017ECCED200B7FD62 /* QuartzCore.framework in Frameworks */,
 				8858945417E34A9B00D999BC /* SystemConfiguration.framework in Frameworks */,
 				B321A6CA17A32D82000A7BB7 /* CoreLocation.framework in Frameworks */,
 				B3A43E0617A1ABD400D3FF44 /* UIKit.framework in Frameworks */,
 				B3A43E0817A1ABD400D3FF44 /* Foundation.framework in Frameworks */,
 				B3A43E0A17A1ABD400D3FF44 /* CoreGraphics.framework in Frameworks */,
-				885BC04E17ECCE4000B7FD62 /* libCorePlot-CocoaTouch.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		885BC04517ECCDD500B7FD62 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				885BC04B17ECCDD500B7FD62 /* libCorePlot-CocoaTouch.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		B314B34117C9858F004612CD /* Util */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,7 +242,6 @@
 				B3A43E0B17A1ABD400D3FF44 /* Foil */,
 				B3A43E0417A1ABD400D3FF44 /* Frameworks */,
 				B3A43E0317A1ABD400D3FF44 /* Products */,
-				885BC04417ECCDD500B7FD62 /* CorePlot-CocoaTouch.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -270,6 +256,11 @@
 		B3A43E0417A1ABD400D3FF44 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B3D3CBC418105C96000C6AA0 /* Security.framework */,
+				B3D3CBC218105C8C000C6AA0 /* libstdc++.dylib */,
+				B3D3CBC018105C81000C6AA0 /* CoreText.framework */,
+				B3D3CBBE18105C74000C6AA0 /* OpenGLES.framework */,
+				B3D3CBBC18105C1A000C6AA0 /* ShinobiCharts.framework */,
 				885BC04F17ECCED200B7FD62 /* QuartzCore.framework */,
 				8858945317E34A9B00D999BC /* SystemConfiguration.framework */,
 				B321A6C917A32D82000A7BB7 /* CoreLocation.framework */,
@@ -319,7 +310,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				885BC04D17ECCDF600B7FD62 /* PBXTargetDependency */,
 			);
 			name = Foil;
 			productName = Foil;
@@ -351,28 +341,12 @@
 			mainGroup = B3A43DF917A1ABD400D3FF44;
 			productRefGroup = B3A43E0317A1ABD400D3FF44 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 885BC04517ECCDD500B7FD62 /* Products */;
-					ProjectRef = 885BC04417ECCDD500B7FD62 /* CorePlot-CocoaTouch.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				B3A43E0117A1ABD400D3FF44 /* Foil */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		885BC04B17ECCDD500B7FD62 /* libCorePlot-CocoaTouch.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libCorePlot-CocoaTouch.a";
-			remoteRef = 885BC04A17ECCDD500B7FD62 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B3A43E0017A1ABD400D3FF44 /* Resources */ = {
@@ -424,14 +398,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		885BC04D17ECCDF600B7FD62 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "CorePlot-CocoaTouch";
-			targetProxy = 885BC04C17ECCDF600B7FD62 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B3A43E0E17A1ABD400D3FF44 /* InfoPlist.strings */ = {
@@ -526,13 +492,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Foil/Foil-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)/**",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"/Users/AeC/Desktop/Hospitale/Foil/**",
-					"/Users/Shared/Projects/Dash/**",
 				);
 				INFOPLIST_FILE = "Foil/Foil-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
@@ -551,13 +519,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Foil/Foil-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)/**",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"/Users/AeC/Desktop/Hospitale/Foil/**",
-					"/Users/Shared/Projects/Dash/**",
 				);
 				INFOPLIST_FILE = "Foil/Foil-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;

@@ -20,10 +20,11 @@
 @synthesize obtainedOn = _obtainedOn;
 @synthesize value = _value;
 @synthesize chartType = _chartType;
-@synthesize section=_section;
+@synthesize section = _section;
 @synthesize internalName = _internalName;
-@synthesize valuePrefix=_valuePrefix;
-@synthesize valueSufix=_valueSufix;
+@synthesize valuePrefix = _valuePrefix;
+@synthesize valueSufix = _valueSufix;
+@synthesize valueType = _valueType;
 
 +(Indicator *)mountIndicator:(NSString *)title indicatorValue:(NSString *)value{
     return [[self alloc]initWithInfo:title indicatorValue:value];
@@ -62,7 +63,8 @@
     _section = [[IndicatorSection alloc]initWithJsonDictionary: [jsonDictionary objectForKey:@"Section"]];
     _title = [jsonDictionary objectForKey:@"IndicatorTitle"];
     _internalName = [jsonDictionary objectForKey:@"InternalName"];
-    _chartType = (IndicatorChartType)[jsonDictionary objectForKey:@"ChartType"];
+    _chartType = (IndicatorChartType)[[jsonDictionary objectForKey:@"ChartType"] integerValue];
+    _valueType = (IndicatorValueType)[[jsonDictionary objectForKey:@"ValueType"] integerValue];
     id aux = [jsonDictionary objectForKey:@"PrefixText"];
     if ([aux class] != [NSNull class]) {
         _valuePrefix = aux;

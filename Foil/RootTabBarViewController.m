@@ -101,29 +101,6 @@
     });
 }
 
-/*-(void)hideTooltip{
-    NSLog(@"Starting fade-out");
-    for (int i = 0; i < 5; i++) {
-        if (cancelTooltipFadeOut) {
-            NSLog(@"Fade out cancelled");
-            [UIView transitionWithView:toolTipUIView duration:.1 options:UIViewAnimationOptionTransitionNone animations:^{
-                toolTipUIView.alpha = 1;
-            } completion:NULL];
-            [self restartTooltipFadeOut];
-            break;
-        }else{
-            [UIView transitionWithView:toolTipUIView duration:3 options:UIViewAnimationOptionTransitionNone animations:^{
-                toolTipUIView.alpha = toolTipUIView.alpha - 0.2;
-            } completion:^(BOOL finished){
-                if (toolTipUIView.alpha < 0.21) {
-                    [toolTipUIView setFrame:tooltipOriginalPosition];
-                    toolTipUIView.alpha = 1;
-                }
-            }];
-        }
-    }
-}*/
-
 -(void)hideTooltip:(int)countInfo{
     if (toolTipUIView.alpha == 0 || countInfo == 0) {
         [toolTipUIView setFrame:tooltipOriginalPosition];

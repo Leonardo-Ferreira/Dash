@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CorePlot-CocoaTouch.h"
 #import "Indicator.h"
 #import "Interaction.h"
+#import <ShinobiCharts/ShinobiCharts.h>
 
-@interface DefaultChartViewController : UIViewController<CPTPlotDataSource,UIActionSheetDelegate>
+@interface DefaultChartViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *renderActivityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *renderLabel;

@@ -164,7 +164,7 @@ static Interaction *sharedInstance = nil;
         completeBlock_t completeBlock =
         ^{
             indicator.isLoadingData = NO;
-            indicator.dataFinishedLoading=YES;
+            indicator.dataFinishedLoading = YES;
             NSLog(@"Operation completed.");
         };
         
