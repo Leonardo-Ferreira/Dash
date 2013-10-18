@@ -10,7 +10,6 @@
 #import <ShinobiCharts/ShinobiChart.h>
 
 @interface DefaultChartViewController ()<SChartDatasource>
-
 @end
 
 @implementation DefaultChartViewController{
@@ -20,6 +19,7 @@
     UIActivityIndicatorView *wheel;
     NSNumber *maxValueY,*minValueY;
     ShinobiChart *chart;
+    NSMutableOrderedSet *orderedKeys;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -76,11 +76,30 @@
     chart.title = referencedIndicator.title;
     chart.licenseKey = @"Wxk+ejvrO/iQH86MjAxMzExMTZpbmZvQHNoaW5vYmljb250cm9scy5jb20=DkfcPmQ4d+jutfumEIzOpsfnEgJjp/2SYZEoTKAxrteGtDA1SiX1oprxJ0Q4ic5B79SAU5UThnW2uUL6oDrGAWx8wJ7wh61bQaEjnEOox2oT84JamUBSeMPKwVdBm7eBb04CKLtvcVAuNWLyVXNLtcJ18OWA=BQxSUisl3BaWf/7myRmmlIjRnMU2cA7q+/03ZX9wdj30RzapYANf51ee3Pi8m2rVW6aD7t6Hi4Qy5vv9xpaQYXF5T7XzsafhzS3hbBokp36BoJZg8IrceBj742nQajYyV7trx5GIw9jy/V6r0bvctKYwTim7Kzq+YPWGMtqtQoU=PFJTQUtleVZhbHVlPjxNb2R1bHVzPnh6YlRrc2dYWWJvQUh5VGR6dkNzQXUrUVAxQnM5b2VrZUxxZVdacnRFbUx3OHZlWStBK3pteXg4NGpJbFkzT2hGdlNYbHZDSjlKVGZQTTF4S2ZweWZBVXBGeXgxRnVBMThOcDNETUxXR1JJbTJ6WXA3a1YyMEdYZGU3RnJyTHZjdGhIbW1BZ21PTTdwMFBsNWlSKzNVMDg5M1N4b2hCZlJ5RHdEeE9vdDNlMD08L01vZHVsdXM+PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU+";
     chart.autoresizingMask =  ~UIViewAutoresizingNone;
-    SChartNumberAxis *xAxis = [[SChartNumberAxis alloc] init];
-    chart.xAxis = xAxis;
+    SChartAxis *xAxis;
+    SChartAxis *yAxis;
     
-    SChartNumberAxis *yAxis = [[SChartNumberAxis alloc] init];
+    switch (referencedIndicator.xAxisType) {
+        case IndicatorValueTypeDateTime:
+            xAxis = [[SChartDateTimeAxis alloc]init];
+            break;
+        default:
+            xAxis = [[SChartNumberAxis alloc]init];
+            break;
+    }
+    switch (referencedIndicator.yAxisType) {
+        case IndicatorValueTypeDateTime:
+            yAxis = [[SChartDateTimeAxis alloc]init];
+            break;
+        default:
+            yAxis = [[SChartNumberAxis alloc]init];
+            break;
+    }
+    
+    
+    chart.xAxis = xAxis;
     chart.yAxis = yAxis;
+    
     chart.datasource = self;
     [self.view addSubview:chart];
 }
@@ -118,7 +137,8 @@
 
 - (int)numberOfSeriesInSChart:(ShinobiChart *)chart {
     NSInteger num = [referencedIndicator.data count];
-    return num;
+        //return num;
+    return 1;
 }
 
 -(SChartSeries *)sChart:(ShinobiChart *)chart seriesAtIndex:(int)index {
@@ -132,7 +152,9 @@
 }
 
 - (int)sChart:(ShinobiChart *)chart numberOfDataPointsForSeriesAtIndex:(int)seriesIndex {
-    return [[((IndicatorData*)[referencedIndicator.data objectAtIndex:(NSUInteger)index]).indicatorSeriesData allKeys] count];
+    IndicatorData *data = (IndicatorData*)[referencedIndicator.data objectAtIndex:(NSUInteger)seriesIndex];
+    NSArray *allKeys = [data.indicatorSeriesData allKeys];
+    return [allKeys count];
 }
 
 - (id<SChartData>)sChart:(ShinobiChart *)chart dataPointAtIndex:(int)dataIndex forSeriesAtIndex:(int)seriesIndex {
@@ -140,10 +162,31 @@
     SChartDataPoint *datapoint = [[SChartDataPoint alloc] init];
     IndicatorData *refData = [referencedIndicator.data objectAtIndex:(NSUInteger)seriesIndex];
     NSArray *auxKeys = [refData.indicatorSeriesData allKeys];
-        // both functions share the same x-values
-    datapoint.xValue = [auxKeys objectAtIndex:dataIndex];
-    
-        // compute the y-value for each series
+    if (!orderedKeys) {
+        orderedKeys = [[NSMutableOrderedSet alloc]init];
+        if (referencedIndicator.xAxisType == IndicatorValueTypeDateTime) {
+            
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"MM/dd/yyyy HH:mm:SS"];
+            
+            for (NSString *auxKey in auxKeys) {
+                NSDate *dateFromString = [[NSDate alloc] init];
+                dateFromString = [dateFormatter dateFromString:auxKey];
+                [orderedKeys addObject:dateFromString];
+            }
+        }else if (referencedIndicator.xAxisType == IndicatorValueTypeNumeric || referencedIndicator.xAxisType == IndicatorValueTypeMonetary){
+            for (NSString *auxKey in auxKeys) {
+                [orderedKeys addObject: [NSNumber numberWithFloat:[auxKey floatValue]]];
+            }
+        }
+        [orderedKeys sortUsingComparator:^NSComparisonResult(id obj1, id obj2){
+            NSDate *date1 = (NSDate *)obj1;
+            NSDate *date2 = (NSDate *)obj2;
+            return [date1 compare:date2];
+        }];
+    }
+    id xValue = [orderedKeys objectAtIndex:dataIndex];
+    datapoint.xValue = xValue;
     datapoint.yValue = [refData.indicatorSeriesData objectForKey:[auxKeys objectAtIndex:dataIndex]];
     
     return datapoint;

@@ -22,9 +22,12 @@ typedef NS_ENUM(NSInteger, IndicatorChartType){
 };
 
 typedef NS_ENUM(NSInteger, IndicatorValueType){
-    Free = 0,
-    Monetary = 1,
-    Percentage = 2
+    IndicatorValueTypeFree = 0,
+    IndicatorValueTypeMonetary = 1,
+    IndicatorValueTypePercentage = 2,
+    IndicatorValueTypeNumeric = 3,
+    IndicatorValueTypeDateTime = 4,
+    IndicatorValueTypeDateTimeOffset = 5
 };
 
 @property (nonatomic,readonly) IndicatorSection *section;
@@ -42,6 +45,8 @@ typedef NS_ENUM(NSInteger, IndicatorValueType){
 @property (atomic,readwrite) BOOL dataFinishedLoadingSuccessfully;
 @property (nonatomic, readonly) IndicatorChartType chartType;
 @property (nonatomic, readonly) IndicatorValueType valueType;
+@property (nonatomic, readonly) IndicatorValueType xAxisType;
+@property (nonatomic, readonly) IndicatorValueType yAxisType;
 
 +(Indicator *)mountIndicator :(NSString *)title indicatorValue:(NSString *)value;
 -(void)dataDidLoad:(IndicatorData *)data;

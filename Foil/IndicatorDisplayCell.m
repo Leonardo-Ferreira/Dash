@@ -36,7 +36,7 @@
     }
     if (referencedIndicator.dataFinishedLoadingSuccessfully) {
         NSString *finalVal = referencedIndicator.value;
-        if (referencedIndicator.valueType == Monetary) {
+        if (referencedIndicator.valueType == IndicatorValueTypeMonetary) {
             float auxVal = [referencedIndicator.value floatValue];
             int ref = 1;
             while ((auxVal/10) > 1) {

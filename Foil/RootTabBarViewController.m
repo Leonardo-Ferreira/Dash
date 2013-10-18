@@ -25,6 +25,7 @@
     BOOL tooltipFadingOut;
     __weak IBOutlet UIBarButtonItem *assistedModeButton;
     BOOL cancelTooltipFadeOut;
+    NSString *lastKnowSelectedTabBarItem;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -204,7 +205,13 @@
 }
 
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
-    [self.collectionViewIndicatorsDisplay reloadData];
+    if (lastKnowSelectedTabBarItem == nil || [lastKnowSelectedTabBarItem compare:item.title] != NSOrderedSame) {
+        if (selectedCell) {
+            [self collectionView:self.collectionViewIndicatorsDisplay didSelectItemAtIndexPath:[self.collectionViewIndicatorsDisplay indexPathForCell:selectedCell]];
+        }
+        [self.collectionViewIndicatorsDisplay reloadData];
+        lastKnowSelectedTabBarItem = item.title;
+    }
 }
 
 -(BOOL)shouldAutorotate{
@@ -275,7 +282,7 @@
     
     UIColor *backcolor = [UIColor colorWithRed:18.0/255.0 green:146.0/255.0 blue:208.0/255.0 alpha:1.0f];
     UIColor *textColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
-    UIColor *bottomBarColor = [UIColor colorWithRed:0.0/255.0 green:126.0/255.0 blue:188.0/255.0 alpha:1.0f];
+    UIColor *bottomBarColor = [UIColor colorWithRed:0.0f green:126.0f/255.0f blue:188.0f/255.0f alpha:1.0f];
     
     cell.indicatorTitle.backgroundColor = backcolor;
     cell.indicatorTitle.textColor = textColor;
@@ -289,7 +296,7 @@
 - (void)unhighlight:(IndicatorDisplayCell *)cell {
     
     UIColor *backcolor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
-    UIColor *textColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f];
+    UIColor *textColor = [UIColor colorWithRed:18.0f/256.0f green:147.0f/256.0f blue:209.0f/256.0f alpha:1.0f];
     UIColor *bottomBarColor = [UIColor colorWithRed:189.0/255.0 green:195.0/255.0 blue:199.0/255.0 alpha:1.0f];
     
     cell.indicatorTitle.backgroundColor = backcolor;
@@ -314,6 +321,9 @@
         [interaction loadIndicatorData:cell.referencedIndicator startDate:nil finishDate:nil];
         interaction.selectedIndicator = cell.referencedIndicator;
         [cell setSelected:YES];
+        if (selectedCell) {
+            [self unhighlight:selectedCell];
+        }
         selectedCell = cell;
     }
 }

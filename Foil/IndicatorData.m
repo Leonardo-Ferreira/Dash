@@ -14,13 +14,13 @@
     NSMutableDictionary *_indicatorSeriesData;
 }
 
-@synthesize serieInfo=_serieInfo;
+@synthesize serieInfo = _serieInfo;
 @synthesize indicatorSeriesData = _indicatorSeriesData;
 @synthesize loaded = _loaded;
 
 -(id)init{
-    self=[super init];
-    _indicatorSeriesData=[[NSMutableDictionary alloc]init];
+    self = [super init];
+    _indicatorSeriesData = [[NSMutableDictionary alloc]init];
     return self;
 }
 
@@ -28,6 +28,10 @@
     if (![_indicatorSeriesData objectForKey:key]) {
         [_indicatorSeriesData setValue:value forKey:key];
     }
+}
+
+-(NSString *)description{
+    return [NSString stringWithFormat:@"%@ -> %@",[_serieInfo description],[_indicatorSeriesData description]];
 }
 
 @end

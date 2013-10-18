@@ -25,6 +25,8 @@
 @synthesize valuePrefix = _valuePrefix;
 @synthesize valueSufix = _valueSufix;
 @synthesize valueType = _valueType;
+@synthesize xAxisType = _xAxisType;
+@synthesize yAxisType = _yAxisType;
 
 +(Indicator *)mountIndicator:(NSString *)title indicatorValue:(NSString *)value{
     return [[self alloc]initWithInfo:title indicatorValue:value];
@@ -65,6 +67,8 @@
     _internalName = [jsonDictionary objectForKey:@"InternalName"];
     _chartType = (IndicatorChartType)[[jsonDictionary objectForKey:@"ChartType"] integerValue];
     _valueType = (IndicatorValueType)[[jsonDictionary objectForKey:@"ValueType"] integerValue];
+    _xAxisType = (IndicatorValueType)[[jsonDictionary objectForKey:@"XAxisType"] integerValue];
+    _yAxisType = (IndicatorValueType)[[jsonDictionary objectForKey:@"YAxisType"] integerValue];
     id aux = [jsonDictionary objectForKey:@"PrefixText"];
     if ([aux class] != [NSNull class]) {
         _valuePrefix = aux;
@@ -105,18 +109,20 @@
     
     NSMutableDictionary *indicatorSeries = [[NSMutableDictionary alloc]init];
     
-    for (int index = 0; index < [[dic allKeys]count]; index++) {
+    for (int index = 0; index < [allKeys count]; index++) {
         NSString *key = [allKeys objectAtIndex:index];
         NSDictionary *subDic = [dic objectForKey:key];
-        for (NSString *title in [subDic allKeys]) {
-            SerieInformation *info = [[SerieInformation alloc]initWithJsonString:title];
-            IndicatorData *serie = [indicatorSeries objectForKey:info];
+        NSArray *subDicAllKeys = [subDic allKeys];
+        for (NSString *title in subDicAllKeys) {
+            SerieInformation *info = [[SerieInformation alloc] initWithJsonString:title];
+            IndicatorData *serie = [indicatorSeries objectForKey:info.title];
             if (!serie) {
-                serie = [[IndicatorData alloc]init];
+                serie = [[IndicatorData alloc] init];
                 serie.serieInfo = info;
-                [indicatorSeries setObject:serie forKey:info];
+                [indicatorSeries setObject:serie forKey:info.title];
             }
-            [serie feedObject:key value:[subDic objectForKey:title]];
+            id objectValueToFeed = [subDic objectForKey:title];
+            [serie feedObject:key value:objectValueToFeed];
         }
     }
     return [indicatorSeries allValues];

@@ -35,8 +35,9 @@
     CGFloat red=0,green=0,blue=0,alpha=0;
     [color getRed:&red green:&green blue:&blue alpha:&alpha];
         //"\"SeriesTitle\":\"Serie 1\",\"ZIndex\":0,\"ARGBColor\":\"255,255,255,255\""
-    NSString *result = [NSString stringWithFormat:@"\"SeriesTitle\":\"%@\",\"ZIndex\":%d,\"ARGBColor\":\"%.0f,%.0f,%.0f,%.0f\"",title,zIndex,alpha*255,red*255,green*255,blue*255];
+        //NSString *result = [NSString stringWithFormat:@"\"SeriesTitle\":\"%@\",\"ZIndex\":%d,\"ARGBColor\":\"%.0f,%.0f,%.0f,%.0f\"",title,zIndex,alpha*255,red*255,green*255,blue*255];
         //NSLog(@"Description is '%@'", result);
+    NSString *result = title;
     return result;
 }
 
@@ -53,8 +54,8 @@
 }
 
 -(BOOL)isEqual:(id)object{
-    BOOL res=NO;
-    if ([object class]==[self class]) {
+    BOOL res = NO;
+    if ([object class] == [self class]) {
         res = [((SerieInformation *)object).title isEqualToString:self.title];
     }
     return res;
