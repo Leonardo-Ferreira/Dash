@@ -137,8 +137,7 @@
 
 - (int)numberOfSeriesInSChart:(ShinobiChart *)chart {
     NSInteger num = [referencedIndicator.data count];
-        //return num;
-    return 1;
+    return num;
 }
 
 -(SChartSeries *)sChart:(ShinobiChart *)chart seriesAtIndex:(int)index {
