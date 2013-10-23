@@ -8,8 +8,9 @@
 
 #import "DefaultChartViewController.h"
 #import <ShinobiCharts/ShinobiChart.h>
+#import <ShinobiGrids/ShinobiDataGrid.h>
 
-@interface DefaultChartViewController ()<SChartDatasource>
+@interface DefaultChartViewController ()<SChartDatasource,SDataGridDataSource>
 @end
 
 @implementation DefaultChartViewController{
@@ -19,6 +20,7 @@
     UIActivityIndicatorView *wheel;
     NSNumber *maxValueY,*minValueY;
     ShinobiChart *chart;
+    ShinobiDataGrid* dataGrid;
     NSMutableOrderedSet *orderedKeys;
 }
 
@@ -37,6 +39,63 @@
 	// Do any additional setup after loading the view.
     
     referencedIndicator = [Interaction getInstance].selectedIndicator;
+}
+
+- (void)setupDataGrid{
+    dataGrid = [[ShinobiDataGrid alloc] initWithFrame:CGRectInset(self.view.bounds, 40,40)];
+    dataGrid.licenseKey = @"Wxk+ejvrO/iQH86MjAxMzExMTZpbmZvQHNoaW5vYmljb250cm9scy5jb20=DkfcPmQ4d+jutfumEIzOpsfnEgJjp/2SYZEoTKAxrteGtDA1SiX1oprxJ0Q4ic5B79SAU5UThnW2uUL6oDrGAWx8wJ7wh61bQaEjnEOox2oT84JamUBSeMPKwVdBm7eBb04CKLtvcVAuNWLyVXNLtcJ18OWA=BQxSUisl3BaWf/7myRmmlIjRnMU2cA7q+/03ZX9wdj30RzapYANf51ee3Pi8m2rVW6aD7t6Hi4Qy5vv9xpaQYXF5T7XzsafhzS3hbBokp36BoJZg8IrceBj742nQajYyV7trx5GIw9jy/V6r0bvctKYwTim7Kzq+YPWGMtqtQoU=PFJTQUtleVZhbHVlPjxNb2R1bHVzPnh6YlRrc2dYWWJvQUh5VGR6dkNzQXUrUVAxQnM5b2VrZUxxZVdacnRFbUx3OHZlWStBK3pteXg4NGpJbFkzT2hGdlNYbHZDSjlKVGZQTTF4S2ZweWZBVXBGeXgxRnVBMThOcDNETUxXR1JJbTJ6WXA3a1YyMEdYZGU3RnJyTHZjdGhIbW1BZ21PTTdwMFBsNWlSKzNVMDg5M1N4b2hCZlJ5RHdEeE9vdDNlMD08L01vZHVsdXM+PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU+";
+    SDataGridColumn *defaultColumn = [[SDataGridColumn alloc] initWithTitle:@"Data"];
+    [dataGrid addColumn:defaultColumn];
+    
+    NSArray *auxData = referencedIndicator.data;
+    for (IndicatorData *dataSerie in auxData) {
+        SDataGridColumn *column = [[SDataGridColumn alloc] initWithTitle:dataSerie.serieInfo.title];
+        [dataGrid addColumn:column];
+    }
+    
+    [self.view addSubview:dataGrid];
+}
+
+- (void)setupChart {
+    CGFloat margin = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? 10.0 : 50.0;
+    chart = [[ShinobiChart alloc] initWithFrame:CGRectInset(self.view.bounds, margin, margin)];
+    chart.title = referencedIndicator.title;
+    chart.licenseKey = @"Wxk+ejvrO/iQH86MjAxMzExMTZpbmZvQHNoaW5vYmljb250cm9scy5jb20=DkfcPmQ4d+jutfumEIzOpsfnEgJjp/2SYZEoTKAxrteGtDA1SiX1oprxJ0Q4ic5B79SAU5UThnW2uUL6oDrGAWx8wJ7wh61bQaEjnEOox2oT84JamUBSeMPKwVdBm7eBb04CKLtvcVAuNWLyVXNLtcJ18OWA=BQxSUisl3BaWf/7myRmmlIjRnMU2cA7q+/03ZX9wdj30RzapYANf51ee3Pi8m2rVW6aD7t6Hi4Qy5vv9xpaQYXF5T7XzsafhzS3hbBokp36BoJZg8IrceBj742nQajYyV7trx5GIw9jy/V6r0bvctKYwTim7Kzq+YPWGMtqtQoU=PFJTQUtleVZhbHVlPjxNb2R1bHVzPnh6YlRrc2dYWWJvQUh5VGR6dkNzQXUrUVAxQnM5b2VrZUxxZVdacnRFbUx3OHZlWStBK3pteXg4NGpJbFkzT2hGdlNYbHZDSjlKVGZQTTF4S2ZweWZBVXBGeXgxRnVBMThOcDNETUxXR1JJbTJ6WXA3a1YyMEdYZGU3RnJyTHZjdGhIbW1BZ21PTTdwMFBsNWlSKzNVMDg5M1N4b2hCZlJ5RHdEeE9vdDNlMD08L01vZHVsdXM+PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU+";
+    chart.autoresizingMask =  ~UIViewAutoresizingNone;
+    SChartAxis *xAxis;
+    SChartAxis *yAxis;
+    
+    switch (referencedIndicator.xAxisType) {
+        case IndicatorValueTypeDateTime:
+            xAxis = [[SChartDateTimeAxis alloc]init];
+            xAxis.title = @"Data";
+            break;
+        default:
+            xAxis = [[SChartNumberAxis alloc]init];
+            break;
+    }
+    switch (referencedIndicator.yAxisType) {
+        case IndicatorValueTypeDateTime:
+            yAxis = [[SChartDateTimeAxis alloc]init];
+            break;
+        default:
+            yAxis = [[SChartNumberAxis alloc]init];
+            yAxis.title = referencedIndicator.title;
+            yAxis.rangePaddingLow = @(0.1);
+            yAxis.rangePaddingHigh = @(0.1);
+            break;
+    }
+    
+    yAxis.enableGesturePanning = YES;
+    yAxis.enableGestureZooming = YES;
+    xAxis.enableGesturePanning = YES;
+    xAxis.enableGestureZooming = YES;
+    
+    chart.xAxis = xAxis;
+    chart.yAxis = yAxis;
+    
+    chart.datasource = self;
+    [self.view addSubview:chart];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -70,38 +129,10 @@
         modalView = nil;
         textLabel = nil;
     }
-    
-    CGFloat margin = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? 10.0 : 50.0;
-    chart = [[ShinobiChart alloc] initWithFrame:CGRectInset(self.view.bounds, margin, margin)];
-    chart.title = referencedIndicator.title;
-    chart.licenseKey = @"Wxk+ejvrO/iQH86MjAxMzExMTZpbmZvQHNoaW5vYmljb250cm9scy5jb20=DkfcPmQ4d+jutfumEIzOpsfnEgJjp/2SYZEoTKAxrteGtDA1SiX1oprxJ0Q4ic5B79SAU5UThnW2uUL6oDrGAWx8wJ7wh61bQaEjnEOox2oT84JamUBSeMPKwVdBm7eBb04CKLtvcVAuNWLyVXNLtcJ18OWA=BQxSUisl3BaWf/7myRmmlIjRnMU2cA7q+/03ZX9wdj30RzapYANf51ee3Pi8m2rVW6aD7t6Hi4Qy5vv9xpaQYXF5T7XzsafhzS3hbBokp36BoJZg8IrceBj742nQajYyV7trx5GIw9jy/V6r0bvctKYwTim7Kzq+YPWGMtqtQoU=PFJTQUtleVZhbHVlPjxNb2R1bHVzPnh6YlRrc2dYWWJvQUh5VGR6dkNzQXUrUVAxQnM5b2VrZUxxZVdacnRFbUx3OHZlWStBK3pteXg4NGpJbFkzT2hGdlNYbHZDSjlKVGZQTTF4S2ZweWZBVXBGeXgxRnVBMThOcDNETUxXR1JJbTJ6WXA3a1YyMEdYZGU3RnJyTHZjdGhIbW1BZ21PTTdwMFBsNWlSKzNVMDg5M1N4b2hCZlJ5RHdEeE9vdDNlMD08L01vZHVsdXM+PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU+";
-    chart.autoresizingMask =  ~UIViewAutoresizingNone;
-    SChartAxis *xAxis;
-    SChartAxis *yAxis;
-    
-    switch (referencedIndicator.xAxisType) {
-        case IndicatorValueTypeDateTime:
-            xAxis = [[SChartDateTimeAxis alloc]init];
-            break;
-        default:
-            xAxis = [[SChartNumberAxis alloc]init];
-            break;
+    if (referencedIndicator.chartType == IndicatorChartNone) {
+        
     }
-    switch (referencedIndicator.yAxisType) {
-        case IndicatorValueTypeDateTime:
-            yAxis = [[SChartDateTimeAxis alloc]init];
-            break;
-        default:
-            yAxis = [[SChartNumberAxis alloc]init];
-            break;
-    }
-    
-    
-    chart.xAxis = xAxis;
-    chart.yAxis = yAxis;
-    
-    chart.datasource = self;
-    [self.view addSubview:chart];
+    [self setupChart];
 }
 
 - (void) orientationChanged:(NSNotification *)note
@@ -150,10 +181,37 @@
     return lineSeries;
 }
 
-- (int)sChart:(ShinobiChart *)chart numberOfDataPointsForSeriesAtIndex:(int)seriesIndex {
+- (NSInteger)numberOfItemsInSection:(NSInteger)seriesIndex {
     IndicatorData *data = (IndicatorData*)[referencedIndicator.data objectAtIndex:(NSUInteger)seriesIndex];
     NSArray *allKeys = [data.indicatorSeriesData allKeys];
     return [allKeys count];
+}
+
+- (int)sChart:(ShinobiChart *)chart numberOfDataPointsForSeriesAtIndex:(int)seriesIndex {
+    return [self numberOfItemsInSection:seriesIndex];
+}
+
+-(NSUInteger)shinobiDataGrid:(ShinobiDataGrid *)grid numberOfRowsInSection:(int)sectionIndex
+{
+    return [self numberOfItemsInSection:sectionIndex];
+}
+
+- (void)shinobiDataGrid:(ShinobiDataGrid *)grid prepareCellForDisplay:(SDataGridCell *)cell
+{
+    SDataGridTextCell* textCell = (SDataGridTextCell*)cell;
+
+    IndicatorData *auxData = ((IndicatorData *)referencedIndicator.data[cell.coordinate.column.displayIndex]);
+    
+    NSArray *auxKeysArray = [auxData.indicatorSeriesData allKeys];
+    
+    if (cell.coordinate.column.displayIndex == 0)
+    {
+        textCell.textField.text = auxKeysArray[cell.coordinate.row.rowIndex];
+    }
+    else
+    {
+        textCell.textField.text = [auxData.indicatorSeriesData valueForKey:auxKeysArray[cell.coordinate.row.rowIndex]];
+    }
 }
 
 - (id<SChartData>)sChart:(ShinobiChart *)chart dataPointAtIndex:(int)dataIndex forSeriesAtIndex:(int)seriesIndex {

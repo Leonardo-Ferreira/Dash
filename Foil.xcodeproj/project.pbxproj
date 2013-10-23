@@ -25,6 +25,7 @@
 		B321A6C817A328BC000A7BB7 /* ActionPerformed.m in Sources */ = {isa = PBXBuildFile; fileRef = B321A6C717A328BC000A7BB7 /* ActionPerformed.m */; };
 		B321A6CA17A32D82000A7BB7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B321A6C917A32D82000A7BB7 /* CoreLocation.framework */; };
 		B325C0E41801EAA90055722C /* MediaCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B325C0E31801EAA90055722C /* MediaCache.m */; };
+		B35287D11817669500D161F6 /* ShinobiGrids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B35287D01817669500D161F6 /* ShinobiGrids.framework */; };
 		B3603ED717FB4B4D00349B55 /* SerieInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = B3603ED617FB4B4D00349B55 /* SerieInformation.m */; };
 		B36775F317D4D3EB009FBE7F /* DeviceStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = B36775F217D4D3EB009FBE7F /* DeviceStyle.m */; };
 		B36775F617D4DBAB009FBE7F /* BasicImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B36775F517D4DBAB009FBE7F /* BasicImageInfo.m */; };
@@ -84,6 +85,7 @@
 		B321A6C917A32D82000A7BB7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B325C0E21801EAA90055722C /* MediaCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaCache.h; sourceTree = "<group>"; };
 		B325C0E31801EAA90055722C /* MediaCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaCache.m; sourceTree = "<group>"; };
+		B35287D01817669500D161F6 /* ShinobiGrids.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ShinobiGrids.framework; path = Library/Frameworks/ShinobiGrids.framework; sourceTree = DEVELOPER_DIR; };
 		B3603ED517FB4B4D00349B55 /* SerieInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerieInformation.h; sourceTree = "<group>"; };
 		B3603ED617FB4B4D00349B55 /* SerieInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerieInformation.m; sourceTree = "<group>"; };
 		B36775F117D4D3EB009FBE7F /* DeviceStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceStyle.h; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B35287D11817669500D161F6 /* ShinobiGrids.framework in Frameworks */,
 				B3D3CBC518105C96000C6AA0 /* Security.framework in Frameworks */,
 				B3D3CBC318105C8C000C6AA0 /* libstdc++.dylib in Frameworks */,
 				B3D3CBC118105C81000C6AA0 /* CoreText.framework in Frameworks */,
@@ -256,6 +259,7 @@
 		B3A43E0417A1ABD400D3FF44 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B35287D01817669500D161F6 /* ShinobiGrids.framework */,
 				B3D3CBC418105C96000C6AA0 /* Security.framework */,
 				B3D3CBC218105C8C000C6AA0 /* libstdc++.dylib */,
 				B3D3CBC018105C81000C6AA0 /* CoreText.framework */,

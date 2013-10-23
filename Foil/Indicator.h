@@ -15,10 +15,10 @@
 @interface Indicator : NSObject
 
 typedef NS_ENUM(NSInteger, IndicatorChartType){
-    NoChart = 0,
-    PieChart = 1,
-    LineChart = 2,
-    BarChart = 3
+    IndicatorChartNone = 0,
+    IndicatorChartPie = 1,
+    IndicatorChartLine = 2,
+    IndicatorChartBar = 3
 };
 
 typedef NS_ENUM(NSInteger, IndicatorValueType){
