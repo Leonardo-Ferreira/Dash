@@ -31,4 +31,5 @@ typedef void (^ finishBlock)(BasicImageInfo *imageResult);
 +(void)loadImageFromURL:(NSString *)imageURL imageHash:(NSString *)imageHash subscriberContext:(SubscriberContext *)context finishBlock:(finishBlock)finishBlock;
 +(UIView *)retrieveFirstResponder:(UIView *)topView;
 
+
 @end

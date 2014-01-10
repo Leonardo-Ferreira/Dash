@@ -18,10 +18,9 @@
 @synthesize userValidated=_userValidated;
 
 -(void)validateCredentialsAsync:(NSString *)userName password:(NSString *)password{
-    NSString *packageXML = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body><VerificarUsuario xmlns=\"http://integrationservices.hospitale.aec.com.br/\"><pLogin>%@</pLogin><pSenha>%@</pSenha></VerificarUsuario></soap:Body></soap:Envelope>", userName, password];
+    NSString *packageXML = [NSString stringWithFormat: @"{\"username\":\"%@\", \"password\":\"%@\"}", userName, password];
     NSMutableDictionary *headers = [[NSMutableDictionary alloc]init];
-    [headers setObject:@"text/xml; charset=utf-8" forKey:@"content-type"];
-    [headers setObject:@"http://integrationservices.hospitale.aec.com.br/VerificarUsuario" forKey:@"SOAPAction"];
+    [headers setObject:@"application/Json; charset=utf-8" forKey:@"content-type"];
     [headers setObject:[[NSURL URLWithString:validateAgainstURL] host] forKey:@"Host"];
     
     //192.168.245.205/hospitaleintegrationservices/corporativo.asmx
@@ -32,7 +31,14 @@
         completeXML = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         [parser parse];
         NSLog(@"Parsing started. Wait for parsing events");
-    } errorBlock:^(NSError *error){} completeBlock:^{_validationDone=YES;}];
+    } errorBlock:^(NSError *error){
+        NSLog(@"Erro: %@",error);
+    } completeBlock:^{
+        _validationDone = YES;
+        NSArray *auxT = [[[NetworkOperation getInstance] getToken] componentsSeparatedByString:@";"];
+        _userValidated = [[auxT objectAtIndex:1] isEqual:@"True"];
+        NSLog(@"validationDone = %s", _validationDone ? "true" : "false");
+    }];
 }
 
 -(User *)getUserIdentity:(NSString *)userName{

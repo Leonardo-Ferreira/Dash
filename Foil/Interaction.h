@@ -40,7 +40,7 @@
 -(void)publishInteraction;
 -(void)loadAllContextsForUser:(NSString *)username;
 -(void)discoverIndicators;
--(void)loadIndicatorBaseValue:(Indicator *)indicator;
+-(void)loadIndicatorBaseValue:(Indicator **)indicator;
 -(void)loadIndicatorData :(Indicator *)indicatorBase startDate:(NSDate *)startDate finishDate:(NSDate *)finishDate;
 -(BOOL)shouldAskToEnableLocation;
 -(void)interactionFinished;
@@ -48,7 +48,7 @@
 -(BOOL)validateUser:(NSString *)username password:(NSString *)password againstContext:(SubscriberContext *)context;
 -(NSArray *)getIndicatorsSections:(BOOL)waitForIndicatorsDiscover;
 -(void)reloadIndicators:(NSArray *)indicators;
-
+-(NSString *)getShinobiKey;
 
 +(Interaction *)getInstance;
 

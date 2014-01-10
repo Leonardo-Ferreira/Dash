@@ -7,6 +7,7 @@
 //
 
 #import "RootTabBarViewController.h"
+#import "SlidoutController.h"
 
 @interface RootTabBarViewController ()
 
@@ -21,11 +22,13 @@
     __weak IBOutlet UIView *toolTipUIView;
     __weak IBOutlet UILabel *toolTipUILabel;
     CGRect tooltipOriginalPosition;
-    BOOL tooltipPresented;
-    BOOL tooltipFadingOut;
     __weak IBOutlet UIBarButtonItem *assistedModeButton;
-    BOOL cancelTooltipFadeOut;
+    
+    TooltipState thisTooltip;
+    BOOL stopTooltip;
+    
     NSString *lastKnowSelectedTabBarItem;
+    NSThread *tooltipThread;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -60,13 +63,14 @@
     Indicator *refIndicator = [currentIndicators objectAtIndex:indexPath.item];
     cell.indicatorTitle.text = refIndicator.title;
     
-    [interaction loadIndicatorBaseValue:refIndicator];
+    [interaction loadIndicatorBaseValue:&refIndicator];
     /*dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSLog(@"Indicator Value being updated");
         [cell setReferencedIndicator:refIndicator];
     });*/
     [cell setReferencedIndicator:refIndicator];
     [cell.indicatorTitle setFont:[UIFont systemFontOfSize:17.0f]];
+
     return cell;
 }
 
@@ -74,7 +78,10 @@
     return YES;
 }
 
+////////////////////////// TOOLTIP CONTROLLER ///////////////////////////////
+
 -(void)presentTooltip{
+    toolTipUIView.alpha = 1;
     toolTipUIView.viewForBaselineLayout.layer.cornerRadius = 5;
     toolTipUIView.viewForBaselineLayout.layer.masksToBounds = YES;
     
@@ -82,56 +89,93 @@
         tooltipOriginalPosition = toolTipUIView.frame;
     }
     CGRect rect = toolTipUIView.frame;
+    NSLog(@"originx %f, originy %f", rect.origin.x, rect.origin.y);
     CGRect newRect = CGRectMake(rect.origin.x, rect.origin.y - rect.size.height, rect.size.width, rect.size.height);
     
-    [UIView transitionWithView:toolTipUIView duration:1 options:UIViewAnimationOptionTransitionNone animations:^{
+    [UIView transitionWithView:toolTipUIView duration:0.3 options:UIViewAnimationOptionTransitionNone animations:^{
         [toolTipUIView setFrame:newRect];
     } completion:^(BOOL completed){
+        thisTooltip = TooltipPresented;
         [self restartTooltipFadeOut];
     }];
     
 }
 
 -(void)restartTooltipFadeOut{
-    cancelTooltipFadeOut = NO;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [NSThread sleepForTimeInterval:2];
-        dispatch_async(dispatch_get_main_queue(),^{
-            [self hideTooltip:10];
-        });
+        
+        int tooltipDurationInSec = 5;
+        
+        tooltipThread = [NSThread currentThread];
+        for (int i = 0; i < tooltipDurationInSec; i++) {
+            [NSThread sleepForTimeInterval:1];
+            if (stopTooltip == YES) {
+                NSLog(@"the tooltip was cancelled");
+                stopTooltip = NO;
+                break;
+            }
+            if (thisTooltip == TooltipPresented) {
+                if (i == tooltipDurationInSec - 1) {
+                    dispatch_async(dispatch_get_main_queue(),^{
+                            [self hideTooltip:2];
+                    });
+                }
+            }
+        }
     });
 }
 
--(void)hideTooltip:(int)countInfo{
-    if (toolTipUIView.alpha == 0 || countInfo == 0) {
-        [toolTipUIView setFrame:tooltipOriginalPosition];
-        toolTipUIView.alpha = 1;
-        return;
-    }else{
-        if (cancelTooltipFadeOut) {
-            NSLog(@"Fade out cancelled");
-            [UIView transitionWithView:toolTipUIView duration:.1 options:UIViewAnimationOptionTransitionNone animations:^{
-                toolTipUIView.alpha = 1;
-            } completion:NULL];
-            [self restartTooltipFadeOut];
-            return;
-        }else{
-            [UIView transitionWithView:toolTipUIView duration:.3 options:UIViewAnimationOptionTransitionNone animations:^{
-                toolTipUIView.alpha = toolTipUIView.alpha - 0.1;
-            } completion:^(BOOL finished){
-                dispatch_async(dispatch_get_main_queue(),^{
-                    [self hideTooltip:countInfo-1];
-                });
-            }];
-        }
+
+-(void)hideTooltip:(float)countInfo{
+    CGRect rect = toolTipUIView.frame;
+    CGRect newRect = CGRectMake(rect.origin.x, self.view.frame.size.height - 49, rect.size.width, rect.size.height);
+    
+    [UIView animateWithDuration:countInfo animations:^{
+        thisTooltip = TooltipFading;
+        toolTipUIView.alpha = 0;
+    }completion:^(BOOL completed){
+        NSLog(@"tooltip is now gone");
+        thisTooltip = TooltipGone;
+        [toolTipUIView setFrame:newRect];
+    }];
+}
+
+- (IBAction)assistedModeClicked:(id)sender {
+    NSLog(@"%i", thisTooltip);
+    if (thisTooltip == TooltipGone && stopTooltip == NO) {  //The stoptooltip is a way to prevent user from
+        thisTooltip = TooltipClicked;                       //creating multiple threads, which would cause
+        [self presentTooltip];                              //the tooltip to hide before the expected time.
+    }
+    if (thisTooltip == TooltipFading) {
+        NSLog(@"waiting for tooltip to fade");
+    }
+    if (thisTooltip == TooltipPresented) {
+        stopTooltip = YES;
+        [self hideTooltip:1];
     }
 }
+
+////////////////////////// ------------------- ///////////////////////////////
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     //[self tabBar:self.rootTabBar didSelectItem:self.rootTabBar.selectedItem];
+    
+    //SWIPE GESTURE FOR SLIDE OUT MENU
+    UISwipeGestureRecognizer *openSlideout = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeIn:)];
+    openSlideout.direction = UISwipeGestureRecognizerDirectionRight;
+    
+    UISwipeGestureRecognizer *closeSlideout = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeOut:)];
+    closeSlideout.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    [self.view addGestureRecognizer:openSlideout];
+    [self.view addGestureRecognizer:closeSlideout];
+    
+    //---------------------------------
+    
     interaction = [Interaction getInstance];
     
     NSArray *sectionsArray = [interaction getIndicatorsSections:YES];
@@ -171,10 +215,36 @@
         }
         [items addObject:item];
     }
+    thisTooltip = TooltipGone;
     self.rootTabBar.items = items;
     self.rootTabBar.selectedItem = items.firstObject;
     [self tabBar:self.rootTabBar didSelectItem:items.firstObject];
 }
+
+//SWIPE GESTURES METHODS FOR THE SLIDE OUT MENU
+
+-(void)handleSwipeIn:(UISwipeGestureRecognizer*)swipeIn{
+    SlidoutController *controller = [[SlidoutController alloc] init];
+    [controller openSlideOut];
+    stopTooltip = YES;
+    [self hideTooltip:0];
+    [_collectionViewIndicatorsDisplay setUserInteractionEnabled:NO];
+    NSLog(@"Swipe In working as intended.");
+}
+
+-(void)handleSwipeOut:(UISwipeGestureRecognizer*)swipeOut{
+    stopTooltip = NO;
+    [_collectionViewIndicatorsDisplay setUserInteractionEnabled:YES];
+    [self swipeOut];
+    NSLog(@"Swipe Out working as intended.");
+}
+
+-(void)swipeOut{
+    SlidoutController *controller = [[SlidoutController alloc] init];
+    [controller closeSlideOut];
+}
+
+//---------------------------------------------//
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -215,7 +285,7 @@
 }
 
 -(BOOL)shouldAutorotate{
-    return interaction.selectedIndicator != nil;
+    return NO;
 }
 
 - (void) orientationChanged:(NSNotification *)note
@@ -231,6 +301,17 @@
             default:
                 break;
         };
+    }else{
+        UIDevice * device = note.object;
+        switch(device.orientation)
+        {
+            case UIDeviceOrientationLandscapeLeft:
+            case UIDeviceOrientationLandscapeRight:
+                [self pushTipView];
+                break;
+            default:
+                break;
+        };
     }
 }
 
@@ -239,6 +320,22 @@
     UIStoryboard *b = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
     
     DefaultChartViewController *control = [b instantiateViewControllerWithIdentifier:@"ChartView"];
+    
+    //THIS time we are using present, instead of push, because not only do we not need this viewcontroller to be
+    //in our navigation controller, but we also need both presented view and dismissed view to keep track of its
+    //orientation, and presenting automatically do that job for us.
+    [self presentViewController:control animated:YES completion:nil];
+}
+
+-(void)pushTipView{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
+    UIStoryboard *b = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
+    
+    DefaultChartViewController *control = [b instantiateViewControllerWithIdentifier:@"NoIndicatorSelected"];
+    
+    //THIS time we are using present, instead of push, because not only do we not need this viewcontroller to be
+    //in our navigation controller, but we also need both presented view and dismissed view to keep track of its
+    //orientation, and presenting automatically do that job for us.
     [self presentViewController:control animated:YES completion:nil];
 }
 
@@ -260,9 +357,9 @@
 -(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
     if (event.subtype  == UIEventSubtypeMotionShake) {
         if ([self isKindOfClass:[UIViewController class]]) {
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self goBack];
         }else{
-            [((UIViewController *)self.nextResponder) dismissViewControllerAnimated:YES completion:nil];
+            [((UIViewController *)self.nextResponder).navigationController popViewControllerAnimated:YES];
         }
     }
     if([super respondsToSelector:@selector(motionEnded:withEvent:)]){
@@ -275,7 +372,8 @@
     
     CGFloat topCorret = (textView.bounds.size.height - textView.contentSize.height * textView.zoomScale)/2.0;
     topCorret = (topCorret <0.0 ?0.0:topCorret);
-    textView.contentOffset = (CGPoint){.x=0, .y=-topCorret};
+    //textView.contentOffSet = (CGPoint){.x=0, .y=-topCorret};
+    [textView setContentInset:UIEdgeInsetsMake(topCorret, 0, 0, 0)];
 }
 
 - (void)highlight:(IndicatorDisplayCell *)cell {
@@ -296,13 +394,14 @@
 - (void)unhighlight:(IndicatorDisplayCell *)cell {
     
     UIColor *backcolor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
-    UIColor *textColor = [UIColor colorWithRed:18.0f/256.0f green:147.0f/256.0f blue:209.0f/256.0f alpha:1.0f];
+    UIColor *textColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f];
+    UIColor *valueTextColor = [UIColor colorWithRed:18.0f/256.0f green:147.0f/256.0f blue:209.0f/256.0f alpha:1.0f];
     UIColor *bottomBarColor = [UIColor colorWithRed:189.0/255.0 green:195.0/255.0 blue:199.0/255.0 alpha:1.0f];
     
     cell.indicatorTitle.backgroundColor = backcolor;
     cell.indicatorTitle.textColor = textColor;
     cell.backgroundColor = backcolor;
-    cell.indicatorValueLabel.textColor = textColor;
+    cell.indicatorValueLabel.textColor = valueTextColor;
     cell.bottomBarUIView.backgroundColor = bottomBarColor;
     
     cell.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
@@ -327,9 +426,12 @@
         selectedCell = cell;
     }
 }
-- (IBAction)assistedModeClicked:(id)sender {
-    [self presentTooltip];
+
+
+- (void)goBack {
+    [self.navigationController popViewControllerAnimated:YES];
 }
+
 
 - (IBAction)handleTap:(UITapGestureRecognizer *)sender {
     [self unhighlight:selectedCell];
@@ -343,4 +445,7 @@
     return YES;
 }
 
+- (IBAction)backButton:(UIBarButtonItem *)sender {
+    [self goBack];
+}
 @end

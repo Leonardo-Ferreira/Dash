@@ -7,16 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8804AD77185A326F00C6A8E5 /* FoilNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8804AD76185A326F00C6A8E5 /* FoilNavigationController.m */; };
+		884259F61864AF340044D782 /* TooltipController.m in Sources */ = {isa = PBXBuildFile; fileRef = 884259F51864AF340044D782 /* TooltipController.m */; };
 		884E17FD17EA101100300649 /* IndicatorDisplayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 884E17FC17EA101100300649 /* IndicatorDisplayCell.m */; };
 		8858945217E33B5C00D999BC /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8858945117E33B5C00D999BC /* Reachability.m */; };
 		8858945417E34A9B00D999BC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8858945317E34A9B00D999BC /* SystemConfiguration.framework */; };
+		885AFD2B184E6638001E3B49 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 885AFD2A184E6638001E3B49 /* TutorialViewController.m */; };
+		885AFD2E184E6652001E3B49 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 885AFD2D184E6652001E3B49 /* AboutViewController.m */; };
+		885AFD33184E667A001E3B49 /* SlideoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 885AFD30184E667A001E3B49 /* SlideoutViewController.m */; };
+		885AFD34184E667A001E3B49 /* SlidoutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 885AFD32184E667A001E3B49 /* SlidoutController.m */; };
 		885BC05017ECCED200B7FD62 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 885BC04F17ECCED200B7FD62 /* QuartzCore.framework */; };
 		88623CBE17E23044007742BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88623CBD17E23044007742BB /* Images.xcassets */; };
+		888655F91875B3DC00B433FF /* SVBackstageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 888655F81875B3DB00B433FF /* SVBackstageViewController.m */; };
+		888FCEE018638AA200D9ED0C /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 888FCEDF18638AA200D9ED0C /* KeychainItemWrapper.m */; };
 		88BCA5E217E0A6A40066DE2C /* RootTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BCA5E117E0A6A40066DE2C /* RootTabBarViewController.m */; };
 		88BCA5E517E0A8DD0066DE2C /* DefaultChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BCA5E417E0A8DD0066DE2C /* DefaultChartViewController.m */; };
 		88BCA5E817E0B7520066DE2C /* Indicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BCA5E717E0B7520066DE2C /* Indicator.m */; };
 		88BCA5EB17E0EABF0066DE2C /* IndicatorData.m in Sources */ = {isa = PBXBuildFile; fileRef = 88BCA5EA17E0EABF0066DE2C /* IndicatorData.m */; };
-		B312A274180C37890070CC0E /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B312A273180C37890070CC0E /* TutorialViewController.m */; };
+		88D07AB2187EB7ED00E90050 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D3CBC418105C96000C6AA0 /* Security.framework */; };
+		88D07AC0187EC67C00E90050 /* ShinobiCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D3CBBC18105C1A000C6AA0 /* ShinobiCharts.framework */; };
+		88D07AC1187EC68200E90050 /* ShinobiGrids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B35287D01817669500D161F6 /* ShinobiGrids.framework */; };
+		88D07AC3187EC69300E90050 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D07AC2187EC69300E90050 /* libc++.dylib */; };
+		88D3D405186C9102000A5D19 /* NoIndicatorSelectedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D3D404186C9102000A5D19 /* NoIndicatorSelectedVC.m */; };
 		B314B34017C86274004612CD /* SubscriberContextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B314B33F17C86274004612CD /* SubscriberContextCell.m */; };
 		B314B34417C985AA004612CD /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = B314B34317C985AA004612CD /* Util.m */; };
 		B321A6BE17A31B01000A7BB7 /* IdentityServices.m in Sources */ = {isa = PBXBuildFile; fileRef = B321A6BD17A31B01000A7BB7 /* IdentityServices.m */; };
@@ -25,7 +37,6 @@
 		B321A6C817A328BC000A7BB7 /* ActionPerformed.m in Sources */ = {isa = PBXBuildFile; fileRef = B321A6C717A328BC000A7BB7 /* ActionPerformed.m */; };
 		B321A6CA17A32D82000A7BB7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B321A6C917A32D82000A7BB7 /* CoreLocation.framework */; };
 		B325C0E41801EAA90055722C /* MediaCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B325C0E31801EAA90055722C /* MediaCache.m */; };
-		B35287D11817669500D161F6 /* ShinobiGrids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B35287D01817669500D161F6 /* ShinobiGrids.framework */; };
 		B3603ED717FB4B4D00349B55 /* SerieInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = B3603ED617FB4B4D00349B55 /* SerieInformation.m */; };
 		B36775F317D4D3EB009FBE7F /* DeviceStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = B36775F217D4D3EB009FBE7F /* DeviceStyle.m */; };
 		B36775F617D4DBAB009FBE7F /* BasicImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B36775F517D4DBAB009FBE7F /* BasicImageInfo.m */; };
@@ -41,11 +52,9 @@
 		B3A43E3F17A3084600D3FF44 /* AuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A43E3E17A3084600D3FF44 /* AuthenticationViewController.m */; };
 		B3A5BDE31802EFF000C5B4B0 /* NetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A5BDE21802EFF000C5B4B0 /* NetworkOperation.m */; };
 		B3AB94CA17C853FE008CA59E /* SubscriberContextSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3AB94C917C853FE008CA59E /* SubscriberContextSelectionViewController.m */; };
-		B3D3CBBD18105C1A000C6AA0 /* ShinobiCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D3CBBC18105C1A000C6AA0 /* ShinobiCharts.framework */; };
 		B3D3CBBF18105C74000C6AA0 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D3CBBE18105C74000C6AA0 /* OpenGLES.framework */; };
 		B3D3CBC118105C81000C6AA0 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D3CBC018105C81000C6AA0 /* CoreText.framework */; };
 		B3D3CBC318105C8C000C6AA0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D3CBC218105C8C000C6AA0 /* libstdc++.dylib */; };
-		B3D3CBC518105C96000C6AA0 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D3CBC418105C96000C6AA0 /* Security.framework */; };
 		B3E8143017FF0DC70088A802 /* IndicatorSection.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E8142F17FF0DC70088A802 /* IndicatorSection.m */; };
 		B3ED7DFA17A6F4DF00977A76 /* SubscriberContext.m in Sources */ = {isa = PBXBuildFile; fileRef = B3ED7DF917A6F4DF00977A76 /* SubscriberContext.m */; };
 		B3ED7DFD17A6F8FA00977A76 /* ContextServices.m in Sources */ = {isa = PBXBuildFile; fileRef = B3ED7DFC17A6F8FA00977A76 /* ContextServices.m */; };
@@ -53,13 +62,29 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8804AD75185A326F00C6A8E5 /* FoilNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoilNavigationController.h; sourceTree = "<group>"; };
+		8804AD76185A326F00C6A8E5 /* FoilNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoilNavigationController.m; sourceTree = "<group>"; };
+		884259F41864AF340044D782 /* TooltipController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TooltipController.h; sourceTree = "<group>"; };
+		884259F51864AF340044D782 /* TooltipController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TooltipController.m; sourceTree = "<group>"; };
 		884E17FB17EA101100300649 /* IndicatorDisplayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorDisplayCell.h; sourceTree = "<group>"; };
 		884E17FC17EA101100300649 /* IndicatorDisplayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorDisplayCell.m; sourceTree = "<group>"; };
 		8858945017E33B5C00D999BC /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		8858945117E33B5C00D999BC /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		8858945317E34A9B00D999BC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		885AFD29184E6638001E3B49 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
+		885AFD2A184E6638001E3B49 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
+		885AFD2C184E6652001E3B49 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		885AFD2D184E6652001E3B49 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		885AFD2F184E667A001E3B49 /* SlideoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideoutViewController.h; sourceTree = "<group>"; };
+		885AFD30184E667A001E3B49 /* SlideoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideoutViewController.m; sourceTree = "<group>"; };
+		885AFD31184E667A001E3B49 /* SlidoutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlidoutController.h; sourceTree = "<group>"; };
+		885AFD32184E667A001E3B49 /* SlidoutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlidoutController.m; sourceTree = "<group>"; };
 		885BC04F17ECCED200B7FD62 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		88623CBD17E23044007742BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		888655F71875B3DB00B433FF /* SVBackstageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBackstageViewController.h; sourceTree = "<group>"; };
+		888655F81875B3DB00B433FF /* SVBackstageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBackstageViewController.m; sourceTree = "<group>"; };
+		888FCEDE18638AA200D9ED0C /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		888FCEDF18638AA200D9ED0C /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		88BCA5E017E0A6A40066DE2C /* RootTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTabBarViewController.h; sourceTree = "<group>"; };
 		88BCA5E117E0A6A40066DE2C /* RootTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootTabBarViewController.m; sourceTree = "<group>"; };
 		88BCA5E317E0A8DD0066DE2C /* DefaultChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultChartViewController.h; sourceTree = "<group>"; };
@@ -68,8 +93,9 @@
 		88BCA5E717E0B7520066DE2C /* Indicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Indicator.m; sourceTree = "<group>"; };
 		88BCA5E917E0EABF0066DE2C /* IndicatorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorData.h; sourceTree = "<group>"; };
 		88BCA5EA17E0EABF0066DE2C /* IndicatorData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorData.m; sourceTree = "<group>"; };
-		B312A272180C37890070CC0E /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
-		B312A273180C37890070CC0E /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
+		88D07AC2187EC69300E90050 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		88D3D403186C9102000A5D19 /* NoIndicatorSelectedVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoIndicatorSelectedVC.h; sourceTree = "<group>"; };
+		88D3D404186C9102000A5D19 /* NoIndicatorSelectedVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoIndicatorSelectedVC.m; sourceTree = "<group>"; };
 		B314B33E17C86274004612CD /* SubscriberContextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriberContextCell.h; sourceTree = "<group>"; };
 		B314B33F17C86274004612CD /* SubscriberContextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriberContextCell.m; sourceTree = "<group>"; };
 		B314B34217C985AA004612CD /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
@@ -132,13 +158,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B35287D11817669500D161F6 /* ShinobiGrids.framework in Frameworks */,
-				B3D3CBC518105C96000C6AA0 /* Security.framework in Frameworks */,
-				B3D3CBC318105C8C000C6AA0 /* libstdc++.dylib in Frameworks */,
-				B3D3CBC118105C81000C6AA0 /* CoreText.framework in Frameworks */,
-				B3D3CBBF18105C74000C6AA0 /* OpenGLES.framework in Frameworks */,
-				B3D3CBBD18105C1A000C6AA0 /* ShinobiCharts.framework in Frameworks */,
+				88D07AC3187EC69300E90050 /* libc++.dylib in Frameworks */,
+				88D07AC1187EC68200E90050 /* ShinobiGrids.framework in Frameworks */,
+				88D07AC0187EC67C00E90050 /* ShinobiCharts.framework in Frameworks */,
+				88D07AB2187EB7ED00E90050 /* Security.framework in Frameworks */,
 				885BC05017ECCED200B7FD62 /* QuartzCore.framework in Frameworks */,
+				B3D3CBBF18105C74000C6AA0 /* OpenGLES.framework in Frameworks */,
+				B3D3CBC118105C81000C6AA0 /* CoreText.framework in Frameworks */,
+				B3D3CBC318105C8C000C6AA0 /* libstdc++.dylib in Frameworks */,
 				8858945417E34A9B00D999BC /* SystemConfiguration.framework in Frameworks */,
 				B321A6CA17A32D82000A7BB7 /* CoreLocation.framework in Frameworks */,
 				B3A43E0617A1ABD400D3FF44 /* UIKit.framework in Frameworks */,
@@ -161,6 +188,16 @@
 				B325C0E31801EAA90055722C /* MediaCache.m */,
 				B3A5BDE11802EFF000C5B4B0 /* NetworkOperation.h */,
 				B3A5BDE21802EFF000C5B4B0 /* NetworkOperation.m */,
+				884259F41864AF340044D782 /* TooltipController.h */,
+				884259F51864AF340044D782 /* TooltipController.m */,
+				888FCEDE18638AA200D9ED0C /* KeychainItemWrapper.h */,
+				888FCEDF18638AA200D9ED0C /* KeychainItemWrapper.m */,
+				888655F71875B3DB00B433FF /* SVBackstageViewController.h */,
+				888655F81875B3DB00B433FF /* SVBackstageViewController.m */,
+				885AFD2F184E667A001E3B49 /* SlideoutViewController.h */,
+				885AFD30184E667A001E3B49 /* SlideoutViewController.m */,
+				885AFD31184E667A001E3B49 /* SlidoutController.h */,
+				885AFD32184E667A001E3B49 /* SlidoutController.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -177,6 +214,10 @@
 		B321A6BA17A31956000A7BB7 /* Interface Package */ = {
 			isa = PBXGroup;
 			children = (
+				885AFD2C184E6652001E3B49 /* AboutViewController.h */,
+				885AFD2D184E6652001E3B49 /* AboutViewController.m */,
+				885AFD29184E6638001E3B49 /* TutorialViewController.h */,
+				885AFD2A184E6638001E3B49 /* TutorialViewController.m */,
 				B3A43E1417A1ABD400D3FF44 /* FoilAppDelegate.h */,
 				B3A43E1517A1ABD400D3FF44 /* FoilAppDelegate.m */,
 				B3A43E2317A1ABD400D3FF44 /* EntranceViewController.h */,
@@ -193,8 +234,10 @@
 				88BCA5E417E0A8DD0066DE2C /* DefaultChartViewController.m */,
 				884E17FB17EA101100300649 /* IndicatorDisplayCell.h */,
 				884E17FC17EA101100300649 /* IndicatorDisplayCell.m */,
-				B312A272180C37890070CC0E /* TutorialViewController.h */,
-				B312A273180C37890070CC0E /* TutorialViewController.m */,
+				8804AD75185A326F00C6A8E5 /* FoilNavigationController.h */,
+				8804AD76185A326F00C6A8E5 /* FoilNavigationController.m */,
+				88D3D403186C9102000A5D19 /* NoIndicatorSelectedVC.h */,
+				88D3D404186C9102000A5D19 /* NoIndicatorSelectedVC.m */,
 			);
 			name = "Interface Package";
 			sourceTree = "<group>";
@@ -259,12 +302,13 @@
 		B3A43E0417A1ABD400D3FF44 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				88D07AC2187EC69300E90050 /* libc++.dylib */,
+				B3D3CBBC18105C1A000C6AA0 /* ShinobiCharts.framework */,
 				B35287D01817669500D161F6 /* ShinobiGrids.framework */,
 				B3D3CBC418105C96000C6AA0 /* Security.framework */,
 				B3D3CBC218105C8C000C6AA0 /* libstdc++.dylib */,
 				B3D3CBC018105C81000C6AA0 /* CoreText.framework */,
 				B3D3CBBE18105C74000C6AA0 /* OpenGLES.framework */,
-				B3D3CBBC18105C1A000C6AA0 /* ShinobiCharts.framework */,
 				885BC04F17ECCED200B7FD62 /* QuartzCore.framework */,
 				8858945317E34A9B00D999BC /* SystemConfiguration.framework */,
 				B321A6C917A32D82000A7BB7 /* CoreLocation.framework */,
@@ -376,15 +420,21 @@
 				B3A43E2517A1ABD400D3FF44 /* EntranceViewController.m in Sources */,
 				B3A43E3F17A3084600D3FF44 /* AuthenticationViewController.m in Sources */,
 				B321A6BE17A31B01000A7BB7 /* IdentityServices.m in Sources */,
+				885AFD33184E667A001E3B49 /* SlideoutViewController.m in Sources */,
+				8804AD77185A326F00C6A8E5 /* FoilNavigationController.m in Sources */,
 				B314B34417C985AA004612CD /* Util.m in Sources */,
 				B321A6C217A325AD000A7BB7 /* User.m in Sources */,
 				B314B34017C86274004612CD /* SubscriberContextCell.m in Sources */,
 				B321A6C517A32899000A7BB7 /* Interaction.m in Sources */,
 				B3AB94CA17C853FE008CA59E /* SubscriberContextSelectionViewController.m in Sources */,
+				888FCEE018638AA200D9ED0C /* KeychainItemWrapper.m in Sources */,
+				885AFD2E184E6652001E3B49 /* AboutViewController.m in Sources */,
 				8858945217E33B5C00D999BC /* Reachability.m in Sources */,
-				B312A274180C37890070CC0E /* TutorialViewController.m in Sources */,
+				885AFD2B184E6638001E3B49 /* TutorialViewController.m in Sources */,
 				B3603ED717FB4B4D00349B55 /* SerieInformation.m in Sources */,
+				888655F91875B3DC00B433FF /* SVBackstageViewController.m in Sources */,
 				B321A6C817A328BC000A7BB7 /* ActionPerformed.m in Sources */,
+				88D3D405186C9102000A5D19 /* NoIndicatorSelectedVC.m in Sources */,
 				B3E8143017FF0DC70088A802 /* IndicatorSection.m in Sources */,
 				B36775F317D4D3EB009FBE7F /* DeviceStyle.m in Sources */,
 				B325C0E41801EAA90055722C /* MediaCache.m in Sources */,
@@ -393,6 +443,8 @@
 				B36775F617D4DBAB009FBE7F /* BasicImageInfo.m in Sources */,
 				88BCA5E517E0A8DD0066DE2C /* DefaultChartViewController.m in Sources */,
 				88BCA5E217E0A6A40066DE2C /* RootTabBarViewController.m in Sources */,
+				884259F61864AF340044D782 /* TooltipController.m in Sources */,
+				885AFD34184E667A001E3B49 /* SlidoutController.m in Sources */,
 				B3ED7DFA17A6F4DF00977A76 /* SubscriberContext.m in Sources */,
 				88BCA5E817E0B7520066DE2C /* Indicator.m in Sources */,
 				88BCA5EB17E0EABF0066DE2C /* IndicatorData.m in Sources */,
@@ -499,6 +551,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/AeC/Desktop,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Foil/Foil-Prefix.pch";
@@ -526,6 +579,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/AeC/Desktop,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Foil/Foil-Prefix.pch";

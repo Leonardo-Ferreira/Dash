@@ -7,12 +7,27 @@
 //
 
 #import "FoilAppDelegate.h"
+#import "EntranceViewController.h"
+#import "FoilNavigationController.h"
 
 @implementation FoilAppDelegate
+@synthesize navigationController = _navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    /*EntranceViewController *viewController = [[EntranceViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    self.window.rootViewController = navController;
+    [self.window makeKeyAndVisible];*/
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
+    EntranceViewController *evc = [storyboard instantiateViewControllerWithIdentifier:@"EntranceView"];
+    _navigationController = [[FoilNavigationController alloc] initWithRootViewController:evc];
+    _tutorialPage = 0;
+    
+    self.window.rootViewController = _navigationController;
+    [self.window makeKeyAndVisible];
     return YES;
 }
 							

@@ -73,7 +73,8 @@
         //Transition to the Login View
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
     AuthenticationViewController *viewController = (AuthenticationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"AuthenticationView"];
-    [self presentViewController:viewController animated:YES completion:nil];
+    [self.navigationController pushViewController:viewController animated:YES];
+    //[self presentViewController:viewController animated:YES completion:nil];
 }
 
 @end

@@ -43,7 +43,9 @@
 
 - (void)setupDataGrid{
     dataGrid = [[ShinobiDataGrid alloc] initWithFrame:CGRectInset(self.view.bounds, 40,40)];
-    dataGrid.licenseKey = @"Wxk+ejvrO/iQH86MjAxMzExMTZpbmZvQHNoaW5vYmljb250cm9scy5jb20=DkfcPmQ4d+jutfumEIzOpsfnEgJjp/2SYZEoTKAxrteGtDA1SiX1oprxJ0Q4ic5B79SAU5UThnW2uUL6oDrGAWx8wJ7wh61bQaEjnEOox2oT84JamUBSeMPKwVdBm7eBb04CKLtvcVAuNWLyVXNLtcJ18OWA=BQxSUisl3BaWf/7myRmmlIjRnMU2cA7q+/03ZX9wdj30RzapYANf51ee3Pi8m2rVW6aD7t6Hi4Qy5vv9xpaQYXF5T7XzsafhzS3hbBokp36BoJZg8IrceBj742nQajYyV7trx5GIw9jy/V6r0bvctKYwTim7Kzq+YPWGMtqtQoU=PFJTQUtleVZhbHVlPjxNb2R1bHVzPnh6YlRrc2dYWWJvQUh5VGR6dkNzQXUrUVAxQnM5b2VrZUxxZVdacnRFbUx3OHZlWStBK3pteXg4NGpJbFkzT2hGdlNYbHZDSjlKVGZQTTF4S2ZweWZBVXBGeXgxRnVBMThOcDNETUxXR1JJbTJ6WXA3a1YyMEdYZGU3RnJyTHZjdGhIbW1BZ21PTTdwMFBsNWlSKzNVMDg5M1N4b2hCZlJ5RHdEeE9vdDNlMD08L01vZHVsdXM+PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU+";
+    //dataGrid.licenseKey = [[Interaction getInstance] getShinobiKey];
+    NSString *auxk = [[Interaction getInstance] getShinobiKey];
+    dataGrid.licenseKey = auxk;
     SDataGridColumn *defaultColumn = [[SDataGridColumn alloc] initWithTitle:@"Data"];
     [dataGrid addColumn:defaultColumn];
     
@@ -60,7 +62,8 @@
     CGFloat margin = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? 10.0 : 50.0;
     chart = [[ShinobiChart alloc] initWithFrame:CGRectInset(self.view.bounds, margin, margin)];
     chart.title = referencedIndicator.title;
-    chart.licenseKey = @"Wxk+ejvrO/iQH86MjAxMzExMTZpbmZvQHNoaW5vYmljb250cm9scy5jb20=DkfcPmQ4d+jutfumEIzOpsfnEgJjp/2SYZEoTKAxrteGtDA1SiX1oprxJ0Q4ic5B79SAU5UThnW2uUL6oDrGAWx8wJ7wh61bQaEjnEOox2oT84JamUBSeMPKwVdBm7eBb04CKLtvcVAuNWLyVXNLtcJ18OWA=BQxSUisl3BaWf/7myRmmlIjRnMU2cA7q+/03ZX9wdj30RzapYANf51ee3Pi8m2rVW6aD7t6Hi4Qy5vv9xpaQYXF5T7XzsafhzS3hbBokp36BoJZg8IrceBj742nQajYyV7trx5GIw9jy/V6r0bvctKYwTim7Kzq+YPWGMtqtQoU=PFJTQUtleVZhbHVlPjxNb2R1bHVzPnh6YlRrc2dYWWJvQUh5VGR6dkNzQXUrUVAxQnM5b2VrZUxxZVdacnRFbUx3OHZlWStBK3pteXg4NGpJbFkzT2hGdlNYbHZDSjlKVGZQTTF4S2ZweWZBVXBGeXgxRnVBMThOcDNETUxXR1JJbTJ6WXA3a1YyMEdYZGU3RnJyTHZjdGhIbW1BZ21PTTdwMFBsNWlSKzNVMDg5M1N4b2hCZlJ5RHdEeE9vdDNlMD08L01vZHVsdXM+PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU+";
+    NSString *auxk = [[Interaction getInstance] getShinobiKey];
+    chart.licenseKey = auxk;
     chart.autoresizingMask =  ~UIViewAutoresizingNone;
     SChartAxis *xAxis;
     SChartAxis *yAxis;
@@ -235,6 +238,9 @@
             for (NSString *auxKey in auxKeys) {
                 [orderedKeys addObject: [NSNumber numberWithFloat:[auxKey floatValue]]];
             }
+        }
+        else{
+            [orderedKeys addObjectsFromArray:auxKeys];
         }
         [orderedKeys sortUsingComparator:^NSComparisonResult(id obj1, id obj2){
             NSDate *date1 = (NSDate *)obj1;

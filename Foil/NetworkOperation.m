@@ -10,9 +10,17 @@
 
 @implementation NetworkOperation{
     NSUInteger networkActivityCounter;
+    NSString *token;
+}
+static NetworkOperation *sharedInstance;
+
+-(NSString *)getToken{
+    return token;
 }
 
-static NetworkOperation *sharedInstance;
+-(void)setToken:(NSString *)newToken{
+    token = newToken;
+}
 
 -(void)StartOperation{
     if (sharedInstance == nil) {
@@ -46,4 +54,23 @@ static NetworkOperation *sharedInstance;
         }
     }
 }
+
++(NetworkOperation *)getInstance{
+    if (!sharedInstance) {
+        sharedInstance = [[super allocWithZone:NULL] init];
+    }
+    return sharedInstance;
+}
 @end
+
+
+
+
+
+
+
+
+
+
+
+

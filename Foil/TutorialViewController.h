@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SlideoutViewController.h"
 
 @interface TutorialViewController : UIViewController
-
+@property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @end

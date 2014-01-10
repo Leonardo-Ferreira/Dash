@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface NetworkOperation : NSObject
+
+-(void)setToken:(NSString*)newToken;
+-(NSString *)getToken;
 -(void)StartOperation;
 -(void)FinishOperation;
+
++(NetworkOperation *)getInstance;
 @end

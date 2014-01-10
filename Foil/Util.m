@@ -60,7 +60,9 @@
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[content dataUsingEncoding:NSUTF8StringEncoding]];
     
-    BOOL contentLengthSet, hostSet = NO;
+    //BOOL contentLengthSet, hostSet = NO;  //contentLenghtSet still YES
+    BOOL hostSet = NO;
+    BOOL contentLengthSet = NO;
     NSArray *keys = [headers allKeys];
     for (NSString *key in keys) {
         NSString *value = [headers objectForKey:key];
@@ -79,7 +81,8 @@
     if (!hostSet) {
         [request addValue:[[NSURL URLWithString:resourceURL] host] forHTTPHeaderField:@"Host"];
     }
-
+    [request addValue:[[NetworkOperation getInstance] getToken] forHTTPHeaderField:@"dash-Token"];
+    
     NSURLConnection *_conn = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
     if (_conn) {
         NSLog(@"Post Started");
@@ -87,7 +90,7 @@
         NSLog(@"Connection is nil.");
     }
     //[_conn scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
-    //[_conn start];
+    [_conn start];
 }
 
 -(void)get:(NSString *)resourceURL successBlock:(successBlock_t)successBlock errorBlock:(errorBlock_t)errorBlock completeBlock:(completeBlock_t)completeBlock;{
@@ -97,7 +100,12 @@
     _errorBlock = [errorBlock copy];
     
     NSURL *url = [NSURL URLWithString:resourceURL];
-    NSMutableURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSString *val =  [[NetworkOperation getInstance] getToken];
+    if (!val) {
+        val = @"";
+    }
+    [request addValue:val forHTTPHeaderField:@"dash-Token"];
     NSURLConnection *_conn = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
     
     //[_conn scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
@@ -107,6 +115,14 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    NSHTTPURLResponse *httpResp = (NSHTTPURLResponse *)response;
+    NSDictionary *headers = [httpResp allHeaderFields];
+    if ([[headers allKeys]containsObject:@"dash-Token"]) {
+        NSString *tokenVal = [headers objectForKey:@"dash-Token"];
+        if (tokenVal) {
+            [[NetworkOperation getInstance] setToken:tokenVal];
+        }
+    }
     if (!_data) {
         _data = [[NSMutableData alloc]init];
     }
@@ -194,7 +210,7 @@
 +(void)loadImageFromURL:(NSString *)imageURL imageHash:(NSString *)imageHash subscriberContext:(SubscriberContext *)context finishBlock:(finishBlock)block{
     Util *ref = [[Util alloc]init];
     [ref loadImageFromURL:imageURL imageHash:imageHash subscriberContext:context finishBlock:block];
-
+    
 }
 
 -(void)loadImageFromURL:(NSString *)imageURL imageHash:(NSString *)imageHash subscriberContext:(SubscriberContext *)context finishBlock:(finishBlock)block{
@@ -229,6 +245,8 @@
         }
     }
 }
+
+
 
 
 

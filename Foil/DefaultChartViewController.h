@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Indicator.h"
 #import "Interaction.h"
-#import <ShinobiCharts/ShinobiCharts.h>
+#import <ShinobiCharts/ShinobiChart.h>
 
 @interface DefaultChartViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *errorLabel;

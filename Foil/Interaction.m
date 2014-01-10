@@ -7,6 +7,8 @@
 //
 
 #import "Interaction.h"
+#import "Reachability.h"
+#import "NetworkOperation.h"
 
 @implementation Interaction{
     NSMutableArray *_indicators;
@@ -17,6 +19,8 @@
     dispatch_queue_t contextsLoaderQueue;
     dispatch_queue_t imageDownloadingQueue;
     NSMutableDictionary *_loadedIndicatorsDictionary;
+    NSTimer *timer;
+    NSString *_chartKey;
 }
 
 #define DAYS_BETWEEN_REQUEST 7
@@ -72,15 +76,17 @@ static Interaction *sharedInstance = nil;
 }
 
 -(void)loadAllContextsForUser:(NSString *)username{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    
     userNameAux = username;
     _loadingContextsCompleted = NO;
+    
     if (contextsLoaderQueue == NULL) {
         contextsLoaderQueue = dispatch_queue_create("contextsLoaderQueue", NULL);
     }
     
     dispatch_async(contextsLoaderQueue, ^{
         NSLog(@"Loading all contexts block started");
-        
         Util *ref = [Util get:[NSString stringWithFormat:@"%@/userContext?username=%@", Util.azureBaseUrl, [username stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]
                  successBlock:^(NSData *data, id jsonData){
                      NSLog(@"Loading all contexts block succeeded");
@@ -94,11 +100,24 @@ static Interaction *sharedInstance = nil;
                      _loadingContextsCompleted = YES;
                  }];
         //Keep Thread alive without blocking. This is not equal to
+        int count = 20;
         while (!ref.operationCompleted) {
+            NetworkStatus internetStatus = [reachability currentReachabilityStatus];
+            if (internetStatus == NotReachable) {
+                NSLog(@"Internet connection not available. Will try %d more times",count);
+                [NSThread sleepForTimeInterval:.5];
+                count--;
+                _allContextsForCurrentUser = nil;
+                if (count == 0) {
+                    break;
+                }
+            }
+            //[[NSRunLoop currentRunLoop]runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
             [[NSRunLoop currentRunLoop]runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
         }
     });
     NSLog(@"Load All Contexts Dispatched. It should start at any moment if it not already.");
+    
 }
 
 
@@ -129,7 +148,7 @@ static Interaction *sharedInstance = nil;
 
 -(BOOL)validateUser:(NSString *)username password:(NSString *)password againstContext:(SubscriberContext *)context{
     IdentityServices *service = [[IdentityServices alloc]init];
-    service.validateAgainstURL = [NSString stringWithFormat:@"%@/authentication?operation=authenticate", context.rootURLForCurrentSubscriberContext];
+    service.validateAgainstURL = [NSString stringWithFormat:@"%@/authentication?operation=authenticateV2", context.rootURLForCurrentSubscriberContext];
     if (contextsLoaderQueue == NULL) {
         NSLog(@"contextsLoaderQueue is NULL");
     }
@@ -143,41 +162,42 @@ static Interaction *sharedInstance = nil;
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
         NSLog(@"validation not done. zzzZZZzzzZZZzzz");
     }
-    if (service.userValidated) {
+    if(service.userValidated)
+    {
         _currentSubscriberContext = context;
     }
     return service.userValidated;
 }
 
--(void)loadIndicatorBaseValue:(Indicator *)indicator{
+-(void)loadIndicatorBaseValue:(Indicator **)indicator{
     if (!_loadedIndicatorsDictionary) {
         _loadedIndicatorsDictionary = [[NSMutableDictionary alloc]init];
     }
-    if (![_loadedIndicatorsDictionary objectForKey:indicator.title]) {
-        indicator.isLoadingData = YES;
-        indicator.dataFinishedLoading = NO;
-        indicator.dataFinishedLoadingSuccessfully = NO;
+    if (![_loadedIndicatorsDictionary objectForKey:[*indicator title]]) {
+        (*indicator).isLoadingData = YES;
+        (*indicator).dataFinishedLoading = NO;
+        (*indicator).dataFinishedLoadingSuccessfully = NO;
         if(indicatorLoadingQueue == NULL){
             indicatorLoadingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
         }
         
         completeBlock_t completeBlock =
         ^{
-            indicator.isLoadingData = NO;
-            indicator.dataFinishedLoading = YES;
+            (*indicator).isLoadingData = NO;
+            (*indicator).dataFinishedLoading = YES;
             NSLog(@"Operation completed.");
         };
         
         successBlock_t successBlock = ^(NSData *data, id jsonData){
-            indicator.dataFinishedLoadingSuccessfully = YES;
-                //NSString *value = [jsonData objectForKey:@"value"];
-            [indicator dataDictionaryDidLoad:jsonData];
-            [_loadedIndicatorsDictionary setValue:indicator forKey:indicator.title];
+            (*indicator).dataFinishedLoadingSuccessfully = YES;
+            //NSString *value = [jsonData objectForKey:@"value"];
+            [(*indicator) dataDictionaryDidLoad:jsonData];
+            [_loadedIndicatorsDictionary setValue:(*indicator) forKey:(*indicator).title];
         };
         
         dispatch_async(indicatorLoadingQueue, ^{
-            [_loadedIndicatorsDictionary removeObjectForKey:indicator.title];
-            NSString *requestStr =[NSString stringWithFormat:@"%@/indicators?name=%@", [_currentSubscriberContext rootURLForCurrentSubscriberContext],indicator.internalName];
+            [_loadedIndicatorsDictionary removeObjectForKey:(*indicator).title];
+            NSString *requestStr =[NSString stringWithFormat:@"%@/indicators?name=%@", [_currentSubscriberContext rootURLForCurrentSubscriberContext],(*indicator).internalName];
             
             Util *refOp = [Util get:requestStr successBlock:successBlock errorBlock:^(NSError *error){} completeBlock:completeBlock];
             
@@ -185,20 +205,26 @@ static Interaction *sharedInstance = nil;
                 [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
             }
         });
-    }else{
+    }
+    else{
+        Indicator *auxI = [_loadedIndicatorsDictionary objectForKey:(*indicator).title];
+        *indicator = auxI;
         NSLog(@"Indicator already loaded. Cache HIT!");
     }
 }
 
 -(void)reloadIndicators:(NSArray *)indicators{
     NSArray *keys = [_loadedIndicatorsDictionary allKeys];
+    int c=0;
     for (Indicator *item in indicators) {
         if ([keys containsObject:item.title]) {
             NSLog(@"Reseting indicator %@",item.title);
             [item resetData];
             [_loadedIndicatorsDictionary removeObjectForKey:item.title];
-            [self loadIndicatorBaseValue:item];
+            Indicator *auxRef = (Indicator *)[indicators objectAtIndex:c];
+            [self loadIndicatorBaseValue: &auxRef];
         }
+        c++;
     }
     
 }
@@ -228,8 +254,8 @@ static Interaction *sharedInstance = nil;
             indicatorBase.dataFinishedLoadingSuccessfully = YES;
         };
         
-            //NSString *payload = @"";
-            //NSDictionary *headers = [[NSDictionary alloc]init];
+        //NSString *payload = @"";
+        //NSDictionary *headers = [[NSDictionary alloc]init];
         
         dispatch_async(indicatorLoadingQueue, ^
                        {
@@ -266,18 +292,18 @@ static Interaction *sharedInstance = nil;
         //indicatorLoadingQueue = dispatch_queue_create("loaderQ", NULL);
     }
     dispatch_async(indicatorLoadingQueue, ^
-    {
-        [_indicators removeAllObjects];
-        _availibleIndicatorsDiscovered = NO;
-        NSLog(@"%@/indicator",_currentSubscriberContext.ExternalBaseURL);
-        [Util get:[NSString stringWithFormat:@"%@/indicators",[_currentSubscriberContext rootURLForCurrentSubscriberContext]] successBlock:succeded errorBlock:^(NSError *error){
-            NSLog(@"%@" , error.description);
-        } completeBlock:completed];
-        while (!_availibleIndicatorsDiscovered) {
-            //[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
-            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
-        }
-    });
+                   {
+                       [_indicators removeAllObjects];
+                       _availibleIndicatorsDiscovered = NO;
+                       NSLog(@"%@/indicator",_currentSubscriberContext.ExternalBaseURL);
+                       [Util get:[NSString stringWithFormat:@"%@/indicators",[_currentSubscriberContext rootURLForCurrentSubscriberContext]] successBlock:succeded errorBlock:^(NSError *error){
+                           NSLog(@"%@" , error.description);
+                       } completeBlock:completed];
+                       while (!_availibleIndicatorsDiscovered) {
+                           //[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
+                           [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
+                       }
+                   });
 }
 
 -(NSArray *)getIndicatorsSections:(BOOL)waitForIndicatorsDiscover{
@@ -291,6 +317,35 @@ static Interaction *sharedInstance = nil;
         }
     }
     return result;
+}
+
+-(NSString *)getShinobiKey{
+    if (!_chartKey) {
+        if (_currentSubscriberContext) {
+            dispatch_async(contextsLoaderQueue, ^{
+                [Util get:[NSString stringWithFormat:@"%@/chartinghelper?key=shinobikey", [_currentSubscriberContext rootURLForCurrentSubscriberContext]]
+             successBlock:^(NSData *data, id jsonData) {
+                 NSString *auxStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                 _chartKey = [auxStr substringWithRange:NSMakeRange(1, auxStr.length-2)];
+             }
+               errorBlock:^(NSError *error) {
+                   _chartKey = error.description;
+               }
+            completeBlock:^{
+            }];
+                while (!_chartKey) {
+                    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
+                }
+            });
+            while (!_chartKey) {
+                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
+            }
+        }
+        else{
+            return nil;
+        }
+    }
+    return _chartKey;
 }
 
 @end
