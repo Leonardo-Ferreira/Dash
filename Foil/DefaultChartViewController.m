@@ -9,6 +9,7 @@
 #import "DefaultChartViewController.h"
 #import <ShinobiCharts/ShinobiChart.h>
 #import <ShinobiGrids/ShinobiDataGrid.h>
+#import "objc/message.h"
 
 @interface DefaultChartViewController ()<SChartDatasource,SDataGridDataSource>
 @end
@@ -56,6 +57,10 @@
     }
     
     [self.view addSubview:dataGrid];
+}
+
+-(BOOL)shouldAutorotate{
+    return YES;
 }
 
 - (void)setupChart {
@@ -160,6 +165,7 @@
 
 -(void)pushView{
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
+    objc_msgSend([UIDevice currentDevice], @selector(setOrientation:), UIInterfaceOrientationPortrait);
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
