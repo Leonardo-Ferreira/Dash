@@ -49,6 +49,7 @@
         [[backStage view] bringSubviewToFront:slideout.view];
         
         
+        
         //This block of code will create the frames that will be shown to the user.
         CGRect frame = [[currentRootVC view] frame];
         CGRect rootFrame = [[currentRootVC view] frame];

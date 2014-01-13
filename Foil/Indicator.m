@@ -27,6 +27,7 @@
 @synthesize valueType = _valueType;
 @synthesize xAxisType = _xAxisType;
 @synthesize yAxisType = _yAxisType;
+@synthesize quickToolTip = _quickToolTip;
 
 +(Indicator *)mountIndicator:(NSString *)title indicatorValue:(NSString *)value{
     return [[self alloc]initWithInfo:title indicatorValue:value];
@@ -66,6 +67,7 @@
     _title = [jsonDictionary objectForKey:@"IndicatorTitle"];
     _internalName = [jsonDictionary objectForKey:@"InternalName"];
     _chartType = (IndicatorChartType)[[jsonDictionary objectForKey:@"ChartType"] integerValue];
+    _quickToolTip = (NSString *)[jsonDictionary objectForKey:@"QuickTooltip"];
     _valueType = (IndicatorValueType)[[jsonDictionary objectForKey:@"ValueType"] integerValue];
     _xAxisType = (IndicatorValueType)[[jsonDictionary objectForKey:@"XAxisType"] integerValue];
     _yAxisType = (IndicatorValueType)[[jsonDictionary objectForKey:@"YAxisType"] integerValue];

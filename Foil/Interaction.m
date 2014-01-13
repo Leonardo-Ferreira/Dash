@@ -173,7 +173,7 @@ static Interaction *sharedInstance = nil;
     if (!_loadedIndicatorsDictionary) {
         _loadedIndicatorsDictionary = [[NSMutableDictionary alloc]init];
     }
-    if (![_loadedIndicatorsDictionary objectForKey:[*indicator title]]) {
+    if (![_loadedIndicatorsDictionary objectForKey:(*indicator).title]) {
         (*indicator).isLoadingData = YES;
         (*indicator).dataFinishedLoading = NO;
         (*indicator).dataFinishedLoadingSuccessfully = NO;
@@ -181,23 +181,23 @@ static Interaction *sharedInstance = nil;
             indicatorLoadingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
         }
         
+        __block Indicator *auxRef = *indicator;
         completeBlock_t completeBlock =
         ^{
-            (*indicator).isLoadingData = NO;
-            (*indicator).dataFinishedLoading = YES;
+            auxRef.isLoadingData = NO;
+            auxRef.dataFinishedLoading = YES;
             NSLog(@"Operation completed.");
         };
         
         successBlock_t successBlock = ^(NSData *data, id jsonData){
-            (*indicator).dataFinishedLoadingSuccessfully = YES;
+            auxRef.dataFinishedLoadingSuccessfully = YES;
             //NSString *value = [jsonData objectForKey:@"value"];
-            [(*indicator) dataDictionaryDidLoad:jsonData];
-            [_loadedIndicatorsDictionary setValue:(*indicator) forKey:(*indicator).title];
+            [auxRef dataDictionaryDidLoad:jsonData];
+            [_loadedIndicatorsDictionary setValue:auxRef forKey:auxRef.title];
         };
         
         dispatch_async(indicatorLoadingQueue, ^{
-            [_loadedIndicatorsDictionary removeObjectForKey:(*indicator).title];
-            NSString *requestStr =[NSString stringWithFormat:@"%@/indicators?name=%@", [_currentSubscriberContext rootURLForCurrentSubscriberContext],(*indicator).internalName];
+            NSString *requestStr = [NSString stringWithFormat:@"%@/indicators?name=%@", [_currentSubscriberContext rootURLForCurrentSubscriberContext],auxRef.internalName];
             
             Util *refOp = [Util get:requestStr successBlock:successBlock errorBlock:^(NSError *error){} completeBlock:completeBlock];
             
@@ -215,13 +215,13 @@ static Interaction *sharedInstance = nil;
 
 -(void)reloadIndicators:(NSArray *)indicators{
     NSArray *keys = [_loadedIndicatorsDictionary allKeys];
-    int c=0;
-    for (Indicator *item in indicators) {
-        if ([keys containsObject:item.title]) {
-            NSLog(@"Reseting indicator %@",item.title);
-            [item resetData];
-            [_loadedIndicatorsDictionary removeObjectForKey:item.title];
-            Indicator *auxRef = (Indicator *)[indicators objectAtIndex:c];
+    int c = 0;
+    for (NSString *item in indicators) {
+        if ([keys containsObject:item]) {
+            NSLog(@"Reseting indicator %@",item);
+            Indicator *auxRef = (Indicator *)[_loadedIndicatorsDictionary objectForKey:item];
+            [_loadedIndicatorsDictionary removeObjectForKey:item];
+            [auxRef resetData];
             [self loadIndicatorBaseValue: &auxRef];
         }
         c++;

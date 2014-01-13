@@ -649,11 +649,11 @@ fechar o menu.</string>
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jdb-pP-Dlv">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jdb-pP-Dlv" userLabel="tooltip">
                                 <rect key="frame" x="20" y="431" width="280" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="xCM-vg-dAK">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="clip" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="xCM-vg-dAK" userLabel="Tooltip Label">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <string key="text">Indicador X - Esse indicador mostra o quanto X o Y fez nas ultimas 24 horas. Eu preciso de um texto mais longo. E olha só como a fonte diminiu porque o texto está muito grande. </string>
@@ -793,6 +793,7 @@ fechar o menu.</string>
                         <outlet property="rootTabBar" destination="JTs-0L-nin" id="KR1-AM-EQb"/>
                         <outlet property="toolTipUILabel" destination="xCM-vg-dAK" id="cgX-OV-wjb"/>
                         <outlet property="toolTipUIView" destination="jdb-pP-Dlv" id="LwH-Ie-Mcj"/>
+                        <outlet property="tooltipLabel" destination="xCM-vg-dAK" id="g2o-ZM-M2D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aXt-WH-2yT" userLabel="First Responder" sceneMemberID="firstResponder"/>

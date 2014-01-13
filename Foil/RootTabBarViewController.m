@@ -70,7 +70,6 @@
     });*/
     [cell setReferencedIndicator:refIndicator];
     [cell.indicatorTitle setFont:[UIFont systemFontOfSize:17.0f]];
-
     return cell;
 }
 
@@ -84,6 +83,11 @@
     toolTipUIView.alpha = 1;
     toolTipUIView.viewForBaselineLayout.layer.cornerRadius = 5;
     toolTipUIView.viewForBaselineLayout.layer.masksToBounds = YES;
+    if (interaction.selectedIndicator != nil) {
+        self.tooltipLabel.text = interaction.selectedIndicator.quickToolTip;
+    }else{
+        self.tooltipLabel.text = @"Selecione um indicador.";
+    }
     
     if (CGRectIsEmpty(tooltipOriginalPosition)) {
         tooltipOriginalPosition = toolTipUIView.frame;
@@ -263,15 +267,17 @@
 }
 
 -(void)refreshControlAction{
+    NSLog(@"Refresh started.");
     NSMutableArray *indicatorsAux = [[NSMutableArray alloc]init];
     NSArray *indexes = self.collectionViewIndicatorsDisplay.indexPathsForVisibleItems;
     for (NSIndexPath *index in indexes) {
         IndicatorDisplayCell *cell = (IndicatorDisplayCell *)[self.collectionViewIndicatorsDisplay cellForItemAtIndexPath:index];
-        [indicatorsAux addObject:cell.referencedIndicator];
+        [indicatorsAux addObject:cell.referencedIndicator.title];
     }
     [interaction reloadIndicators:indicatorsAux];
     [self.collectionViewIndicatorsDisplay reloadData];
     [refreshControl endRefreshing];
+    NSLog(@"Refresh Concluded");
 }
 
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{

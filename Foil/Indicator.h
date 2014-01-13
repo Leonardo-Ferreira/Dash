@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger, IndicatorValueType){
 @property (nonatomic,readonly) NSString *title;
 @property (nonatomic,readonly) NSString *valuePrefix;
 @property (nonatomic,readonly) NSString *valueSufix;
+@property (nonatomic,readonly) NSString *quickToolTip;
 @property (nonatomic,readonly) NSDate *obtainedOn;
 @property (nonatomic,readonly) NSString *value;
 @property (nonatomic,readonly) NSArray *data;

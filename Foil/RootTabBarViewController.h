@@ -15,6 +15,7 @@
 @interface RootTabBarViewController : UIViewController<UITabBarDelegate, UITabBarControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UINavigationBarDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UITabBar *rootTabBar;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionViewIndicatorsDisplay;
+@property (weak, nonatomic) IBOutlet UILabel *tooltipLabel;
 - (IBAction)backButton:(UIBarButtonItem *)sender;
 typedef NS_ENUM(NSInteger, TooltipState){
     TooltipClicked,
