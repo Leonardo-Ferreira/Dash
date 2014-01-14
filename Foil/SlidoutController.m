@@ -21,7 +21,7 @@
     
     if (myAppDelegate.slideoutMenuPresented == NO) {
         //Gets the currently RootView
-        id currentRootVC = [[[[[UIApplication sharedApplication] keyWindow] subviews] objectAtIndex:0] nextResponder];
+        id currentRootVC = myAppDelegate.navigationController.visibleViewController;
         [[currentRootVC view] setTag:2];
         if ([currentRootVC isKindOfClass:[AuthenticationViewController class]]) {
             [[currentRootVC view] setTag:3];
@@ -36,7 +36,9 @@
         
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
         SVBackstageViewController *backStage = [[SVBackstageViewController alloc]init];
-        [currentRootVC presentViewController:backStage animated:NO completion:Nil];
+        //[currentRootVC presentViewController:backStage animated:NO completion:Nil];
+        [currentRootVC willMoveToParentViewController:backStage];
+        [myAppDelegate.navigationController pushViewController:backStage animated:NO];
         //[backStage addChildViewController:currentRootVC];
         [currentRootVC didMoveToParentViewController:backStage];
         [backStage.view addSubview:[currentRootVC view]];
@@ -87,7 +89,7 @@
     FoilAppDelegate* myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
     
     if (myAppDelegate.slideoutMenuPresented == YES) {
-        id currentRootVC = [[[[[UIApplication sharedApplication] keyWindow] subviews] objectAtIndex:0] nextResponder];
+        id currentRootVC = myAppDelegate.navigationController.visibleViewController;;
         
         for (UIView *subview in [[currentRootVC view] subviews]) {
             if (subview.tag == 1) {
@@ -117,7 +119,10 @@
                                  animations:^{
                                      [subview setFrame:frame];
                                  }completion:^(BOOL finished){
-                                     [((UIViewController *)currentRootVC) dismissViewControllerAnimated:NO completion:nil];
+                                     //[((UIViewController *)currentRootVC) dismissViewControllerAnimated:NO completion:nil];
+                                     [myAppDelegate.navigationController popViewControllerAnimated:NO];
+                                     
+                                     //NSLog(@"%@", myAppDelegate.navigationController.visibleViewController);
                                  }
                  ];
                 

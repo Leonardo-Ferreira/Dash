@@ -38,6 +38,7 @@
 @synthesize loadedIndicatorsDictionary = _loadedIndicatorsDictionary;
 @synthesize availibleIndicators = _indicators;
 @synthesize availibleIndicatorsDiscovered = _availibleIndicatorsDiscovered;
+@synthesize availibleIndicatorsDiscoverySucceeded = _availibleIndicatorsDiscoverySucceeded;
 @synthesize selectedIndicator;
 @synthesize isAssistedModeOn;
 
@@ -182,6 +183,8 @@ static Interaction *sharedInstance = nil;
         }
         
         __block Indicator *auxRef = *indicator;
+        __block Util *refOp;
+        
         completeBlock_t completeBlock =
         ^{
             auxRef.isLoadingData = NO;
@@ -190,16 +193,24 @@ static Interaction *sharedInstance = nil;
         };
         
         successBlock_t successBlock = ^(NSData *data, id jsonData){
-            auxRef.dataFinishedLoadingSuccessfully = YES;
-            //NSString *value = [jsonData objectForKey:@"value"];
-            [auxRef dataDictionaryDidLoad:jsonData];
-            [_loadedIndicatorsDictionary setValue:auxRef forKey:auxRef.title];
+            if (refOp.operationStatusCode == 200) {
+                auxRef.dataFinishedLoadingSuccessfully = YES;
+                [auxRef dataDictionaryDidLoad:jsonData];
+                [_loadedIndicatorsDictionary setValue:auxRef forKey:auxRef.title];
+            }
+            else{
+                auxRef.dataFinishedLoadingSuccessfully = NO;
+            }
+        };
+        
+        errorBlock_t errorBlock = ^(NSError *error){
+            NSLog(@"%@",error.description);
         };
         
         dispatch_async(indicatorLoadingQueue, ^{
             NSString *requestStr = [NSString stringWithFormat:@"%@/indicators?name=%@", [_currentSubscriberContext rootURLForCurrentSubscriberContext],auxRef.internalName];
             
-            Util *refOp = [Util get:requestStr successBlock:successBlock errorBlock:^(NSError *error){} completeBlock:completeBlock];
+            refOp = [Util get:requestStr successBlock:successBlock errorBlock:errorBlock completeBlock:completeBlock];
             
             while (!refOp.operationCompleted) {
                 [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
@@ -226,7 +237,10 @@ static Interaction *sharedInstance = nil;
         }
         c++;
     }
-    
+}
+
+-(void)reloadAllIndicators{
+    [_loadedIndicatorsDictionary removeAllObjects];
 }
 
 -(void)loadIndicatorData:(Indicator *)indicatorBase startDate:(NSDate *)startDate finishDate:(NSDate *)finishDate{
@@ -241,6 +255,8 @@ static Interaction *sharedInstance = nil;
         indicatorBase.isLoadingData = YES;
         indicatorBase.dataFinishedLoading = NO;
         
+        __block Util *refOp;
+        
         completeBlock_t completeBlock =
         ^{
             NSLog(@"Operation completed.");
@@ -249,25 +265,26 @@ static Interaction *sharedInstance = nil;
         };
         
         successBlock_t successBlock = ^(NSData *data, id jsonData){
-            [indicatorBase dataDictionaryDidLoad:jsonData];
+            if (refOp.operationStatusCode == 200) {
+                [indicatorBase dataDictionaryDidLoad:jsonData];
+                
+                indicatorBase.dataFinishedLoadingSuccessfully = YES;
+            }
+            else{
+                indicatorBase.dataFinishedLoadingSuccessfully = NO;
+            }
             
-            indicatorBase.dataFinishedLoadingSuccessfully = YES;
         };
-        
-        //NSString *payload = @"";
-        //NSDictionary *headers = [[NSDictionary alloc]init];
         
         dispatch_async(indicatorLoadingQueue, ^
                        {
                            NSString *requestStr =[NSString stringWithFormat:@"%@/indicators?name=%@&resumed=false", [_currentSubscriberContext rootURLForCurrentSubscriberContext], indicatorBase.internalName];
                            NSMutableDictionary *headers = [[NSMutableDictionary alloc]init];
                            [headers setObject:@"application/json; charset=utf-8" forKey:@"content-type"];
-                           /*[headers setObject:@"http://integrationservices.hospitale.aec.com.br/VerificarUsuario" forKey:@"SOAPAction"];*/
                            
-                           [Util post:requestStr content:@"" headers:headers successBlock:successBlock errorBlock:^(NSError *error){NSLog(@"Error at network stack of 'loadIndicatorData'. Error = %@",[error description]);} completeBlock:completeBlock];
-                           /*[Util Post:[_currentSubscriberContext rootURLForCurrentSubscriberContext] content:payload headers:headers successBlock:successBlock errorBlock:^(NSError *error){indicatorBase.dataFinishedLoadingSuccessfully = NO;} completeBlock:completeBlock];*/
+                           refOp = [Util post:requestStr content:@"" headers:headers successBlock:successBlock errorBlock:^(NSError *error){NSLog(@"Error at network stack of 'loadIndicatorData'. Error = %@",[error description]);} completeBlock:completeBlock];
                            
-                           while (!indicatorBase.dataFinishedLoading) {
+                           while (!refOp.operationCompleted) {
                                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
                            }
                        });
@@ -275,6 +292,7 @@ static Interaction *sharedInstance = nil;
 }
 
 -(void)discoverIndicators{
+    __block Util *refOp;
     completeBlock_t completed =
     ^{
         NSLog(@"Indicators discovery completed.");
@@ -282,10 +300,21 @@ static Interaction *sharedInstance = nil;
     };
     
     successBlock_t succeded = ^(NSData *data, id jsonData){
-        for (int i=0; i<[jsonData count]; i++) {
-            Indicator *item = [[Indicator alloc]initWithJsonDictionary:[jsonData objectAtIndex:i]];
-            [_indicators addObject:item];
+        if (refOp.operationStatusCode == 200) {
+            for (int i = 0; i < [jsonData count]; i++) {
+                Indicator *item = [[Indicator alloc]initWithJsonDictionary:[jsonData objectAtIndex:i]];
+                [_indicators addObject:item];
+            }
+            _availibleIndicatorsDiscoverySucceeded = YES;
         }
+        else if (refOp.operationStatusCode >= 500){
+            _availibleIndicatorsDiscoverySucceeded = NO;
+        }
+        
+    };
+    
+    errorBlock_t errorBlock = ^(NSError *error){
+        NSLog(@"%@" , error.description);
     };
     if (!indicatorLoadingQueue) {
         indicatorLoadingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -296,10 +325,8 @@ static Interaction *sharedInstance = nil;
                        [_indicators removeAllObjects];
                        _availibleIndicatorsDiscovered = NO;
                        NSLog(@"%@/indicator",_currentSubscriberContext.ExternalBaseURL);
-                       [Util get:[NSString stringWithFormat:@"%@/indicators",[_currentSubscriberContext rootURLForCurrentSubscriberContext]] successBlock:succeded errorBlock:^(NSError *error){
-                           NSLog(@"%@" , error.description);
-                       } completeBlock:completed];
-                       while (!_availibleIndicatorsDiscovered) {
+                       refOp = [Util get:[NSString stringWithFormat:@"%@/indicators",[_currentSubscriberContext rootURLForCurrentSubscriberContext]] successBlock:succeded errorBlock:errorBlock completeBlock:completed];
+                       while (!refOp.operationCompleted) {
                            //[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
                            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
                        }
@@ -308,9 +335,6 @@ static Interaction *sharedInstance = nil;
 
 -(NSArray *)getIndicatorsSections:(BOOL)waitForIndicatorsDiscover{
     NSMutableArray *result = [[NSMutableArray alloc]init];
-    while (waitForIndicatorsDiscover && !_availibleIndicatorsDiscovered) {
-        [NSThread sleepForTimeInterval:.3];
-    }
     for (Indicator *indicator in _indicators) {
         if (![result containsObject:indicator.section]) {
             [result addObject:indicator.section];

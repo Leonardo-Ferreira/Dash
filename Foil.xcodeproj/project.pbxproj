@@ -232,12 +232,12 @@
 				88BCA5E117E0A6A40066DE2C /* RootTabBarViewController.m */,
 				88BCA5E317E0A8DD0066DE2C /* DefaultChartViewController.h */,
 				88BCA5E417E0A8DD0066DE2C /* DefaultChartViewController.m */,
+				88D3D403186C9102000A5D19 /* NoIndicatorSelectedVC.h */,
+				88D3D404186C9102000A5D19 /* NoIndicatorSelectedVC.m */,
 				884E17FB17EA101100300649 /* IndicatorDisplayCell.h */,
 				884E17FC17EA101100300649 /* IndicatorDisplayCell.m */,
 				8804AD75185A326F00C6A8E5 /* FoilNavigationController.h */,
 				8804AD76185A326F00C6A8E5 /* FoilNavigationController.m */,
-				88D3D403186C9102000A5D19 /* NoIndicatorSelectedVC.h */,
-				88D3D404186C9102000A5D19 /* NoIndicatorSelectedVC.m */,
 			);
 			name = "Interface Package";
 			sourceTree = "<group>";

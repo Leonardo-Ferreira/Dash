@@ -7,6 +7,7 @@
 //
 
 #import "NoIndicatorSelectedVC.h"
+#import "objc/message.h"
 
 @interface NoIndicatorSelectedVC ()
 
@@ -62,6 +63,7 @@
 
 -(void)pushView{
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
+    objc_msgSend([UIDevice currentDevice], @selector(setOrientation:), UIInterfaceOrientationPortrait);
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

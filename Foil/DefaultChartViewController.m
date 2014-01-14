@@ -88,7 +88,7 @@
             break;
         default:
             yAxis = [[SChartNumberAxis alloc]init];
-            yAxis.title = referencedIndicator.title;
+            //yAxis.title = referencedIndicator.title;
             yAxis.rangePaddingLow = @(0.1);
             yAxis.rangePaddingHigh = @(0.1);
             break;
@@ -224,7 +224,6 @@
 }
 
 - (id<SChartData>)sChart:(ShinobiChart *)chart dataPointAtIndex:(int)dataIndex forSeriesAtIndex:(int)seriesIndex {
-    
     SChartDataPoint *datapoint = [[SChartDataPoint alloc] init];
     IndicatorData *refData = [referencedIndicator.data objectAtIndex:(NSUInteger)seriesIndex];
     NSArray *auxKeys = [refData.indicatorSeriesData allKeys];

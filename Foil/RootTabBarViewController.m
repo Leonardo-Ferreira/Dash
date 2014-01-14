@@ -58,18 +58,26 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     IndicatorDisplayCell *cell = [self.collectionViewIndicatorsDisplay dequeueReusableCellWithReuseIdentifier:@"IndicatorBox" forIndexPath:indexPath];
-    [cell.indicatorTitle addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+    if(!cell.indicatorTitle.observationInfo){
+        [cell.indicatorTitle addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+        [cell.indicatorTitle setFont:[UIFont systemFontOfSize:17.0f]];
+    }
     
     Indicator *refIndicator = [currentIndicators objectAtIndex:indexPath.item];
     cell.indicatorTitle.text = refIndicator.title;
     
     [interaction loadIndicatorBaseValue:&refIndicator];
-    /*dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSLog(@"Indicator Value being updated");
-        [cell setReferencedIndicator:refIndicator];
-    });*/
+    
     [cell setReferencedIndicator:refIndicator];
-    [cell.indicatorTitle setFont:[UIFont systemFontOfSize:17.0f]];
+    
+    if (refIndicator == interaction.selectedIndicator) {
+        [self highlight:cell];
+    }
+    else{
+        [cell setHighlighted:NO];
+        [cell setSelected:NO];
+        [self unhighlight:cell];
+    }
     return cell;
 }
 
@@ -182,6 +190,20 @@
     
     interaction = [Interaction getInstance];
     
+    while (!interaction.availibleIndicatorsDiscovered) {
+        [NSRunLoop.currentRunLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    }
+    if (!interaction.availibleIndicatorsDiscoverySucceeded) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Ops! Não era pra ser assim!"
+                                                        message:@"Algo aconteceu e não foi possivel carregar os indicadores. Tente novamente mais tarde."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [self removeFromParentViewController];
+        return;
+    }
+    
     NSArray *sectionsArray = [interaction getIndicatorsSections:YES];
     NSOrderedSet *ordered = [NSOrderedSet orderedSetWithArray:sectionsArray];
     sectionsArray = [ordered sortedArrayUsingComparator:^(id obj1, id obj2){
@@ -266,16 +288,35 @@
     self.collectionViewIndicatorsDisplay.alwaysBounceVertical = YES;
 }
 
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [refreshControl removeFromSuperview];
+}
+
 -(void)refreshControlAction{
     NSLog(@"Refresh started.");
+    NSString *selectedIndicatorTitle;
+    if (selectedCell) {
+        selectedIndicatorTitle = selectedCell.referencedIndicator.title;
+        [self unhighlight:selectedCell];
+    }
     NSMutableArray *indicatorsAux = [[NSMutableArray alloc]init];
     NSArray *indexes = self.collectionViewIndicatorsDisplay.indexPathsForVisibleItems;
     for (NSIndexPath *index in indexes) {
         IndicatorDisplayCell *cell = (IndicatorDisplayCell *)[self.collectionViewIndicatorsDisplay cellForItemAtIndexPath:index];
         [indicatorsAux addObject:cell.referencedIndicator.title];
     }
-    [interaction reloadIndicators:indicatorsAux];
+    [interaction reloadAllIndicators];
     [self.collectionViewIndicatorsDisplay reloadData];
+    /*if (selectedIndicatorTitle) {
+        for (NSIndexPath *index in self.collectionViewIndicatorsDisplay) {
+            IndicatorDisplayCell *cell = (IndicatorDisplayCell *)[self.collectionViewIndicatorsDisplay cellForItemAtIndexPath:index];
+            if ([cell.referencedIndicator.title isEqualToString:selectedIndicatorTitle]) {
+                [self highlight:cell];
+                break;
+            }
+        }
+    }*/
     [refreshControl endRefreshing];
     NSLog(@"Refresh Concluded");
 }
@@ -383,7 +424,7 @@
 }
 
 - (void)highlight:(IndicatorDisplayCell *)cell {
-    
+    NSLog(@"Highlighting cell of indicator '%@'",cell.referencedIndicator.title);
     UIColor *backcolor = [UIColor colorWithRed:18.0/255.0 green:146.0/255.0 blue:208.0/255.0 alpha:1.0f];
     UIColor *textColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
     UIColor *bottomBarColor = [UIColor colorWithRed:0.0f green:126.0f/255.0f blue:188.0f/255.0f alpha:1.0f];
@@ -398,7 +439,7 @@
 }
 
 - (void)unhighlight:(IndicatorDisplayCell *)cell {
-    
+    NSLog(@"Unhighlighting cell of indicator '%@'",cell.referencedIndicator.title);
     UIColor *backcolor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
     UIColor *textColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f];
     UIColor *valueTextColor = [UIColor colorWithRed:18.0f/256.0f green:147.0f/256.0f blue:209.0f/256.0f alpha:1.0f];
@@ -417,15 +458,17 @@
     IndicatorDisplayCell *cell = (IndicatorDisplayCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
     if (interaction.selectedIndicator == cell.referencedIndicator) {
-        [self unhighlight:(IndicatorDisplayCell *)[collectionView cellForItemAtIndexPath:indexPath]];
+        [self unhighlight:cell];
         interaction.selectedIndicator = nil;
         [cell setSelected:NO];
+        [cell setHighlighted:NO];
         selectedCell = nil;
     }else{
         [self highlight:cell];
         [interaction loadIndicatorData:cell.referencedIndicator startDate:nil finishDate:nil];
         interaction.selectedIndicator = cell.referencedIndicator;
         [cell setSelected:YES];
+        [cell setHighlighted:YES];
         if (selectedCell) {
             [self unhighlight:selectedCell];
         }

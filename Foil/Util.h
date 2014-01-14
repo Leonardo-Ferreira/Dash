@@ -20,6 +20,7 @@ typedef void (^ finishBlock)(BasicImageInfo *imageResult);
 
 @interface Util : NSObject<NSURLConnectionDelegate>
 @property (nonatomic,readonly) BOOL operationCompleted;
+@property (nonatomic,readonly) int operationStatusCode;
 
 +(NSString *)azureBaseUrl;
 +(NSString *)azureBaseBlobUrl;

@@ -18,6 +18,7 @@
 }
 
 @synthesize operationCompleted = _operationCompleted;
+@synthesize operationStatusCode = _operationStatusCode;
 
 +(NSString *)azureBaseUrl{
     return [NSString stringWithFormat:@"http://dashcloudtest.cloudapp.net"];
@@ -116,6 +117,7 @@
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     NSHTTPURLResponse *httpResp = (NSHTTPURLResponse *)response;
+    _operationStatusCode = httpResp.statusCode;
     NSDictionary *headers = [httpResp allHeaderFields];
     if ([[headers allKeys]containsObject:@"dash-Token"]) {
         NSString *tokenVal = [headers objectForKey:@"dash-Token"];

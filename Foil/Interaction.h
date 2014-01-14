@@ -33,6 +33,7 @@
 @property (strong,nonatomic,readonly) NSDictionary *loadedIndicatorsDictionary;
 @property (nonatomic,readonly) NSArray *availibleIndicators;
 @property (nonatomic,readonly) BOOL availibleIndicatorsDiscovered;
+@property (nonatomic,readonly) BOOL availibleIndicatorsDiscoverySucceeded;
 @property (atomic, readwrite) Indicator *selectedIndicator;
 @property (nonatomic, readwrite) BOOL isAssistedModeOn;
 
@@ -48,6 +49,7 @@
 -(BOOL)validateUser:(NSString *)username password:(NSString *)password againstContext:(SubscriberContext *)context;
 -(NSArray *)getIndicatorsSections:(BOOL)waitForIndicatorsDiscover;
 -(void)reloadIndicators:(NSArray *)indicators;
+-(void)reloadAllIndicators;
 -(NSString *)getShinobiKey;
 
 +(Interaction *)getInstance;
