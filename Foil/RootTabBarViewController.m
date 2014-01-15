@@ -8,12 +8,15 @@
 
 #import "RootTabBarViewController.h"
 #import "SlidoutController.h"
+#import "FoilAppDelegate.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface RootTabBarViewController ()
 
 @end
 
 @implementation RootTabBarViewController{
+    FoilAppDelegate *myAppDelegate;
     NSMutableArray *currentIndicators;
     Interaction *interaction;
     dispatch_queue_t concurrentQueue;
@@ -23,6 +26,9 @@
     __weak IBOutlet UILabel *toolTipUILabel;
     CGRect tooltipOriginalPosition;
     __weak IBOutlet UIBarButtonItem *assistedModeButton;
+    
+    BOOL sixthTipStillPresent;
+    BOOL tutorialOnProgress;
     
     TooltipState thisTooltip;
     BOOL stopTooltip;
@@ -101,11 +107,14 @@
         tooltipOriginalPosition = toolTipUIView.frame;
     }
     CGRect rect = toolTipUIView.frame;
+    CGRect sixthTipRect = _sixthTipView.frame;
     NSLog(@"originx %f, originy %f", rect.origin.x, rect.origin.y);
     CGRect newRect = CGRectMake(rect.origin.x, rect.origin.y - rect.size.height, rect.size.width, rect.size.height);
+    CGRect newTipRect = CGRectMake(sixthTipRect.origin.x, sixthTipRect.origin.y - rect.size.height, sixthTipRect.size.width, sixthTipRect.size.height);
     
     [UIView transitionWithView:toolTipUIView duration:0.3 options:UIViewAnimationOptionTransitionNone animations:^{
         [toolTipUIView setFrame:newRect];
+        [_sixthTipView setFrame:newTipRect];
     } completion:^(BOOL completed){
         thisTooltip = TooltipPresented;
         [self restartTooltipFadeOut];
@@ -141,6 +150,8 @@
 -(void)hideTooltip:(float)countInfo{
     CGRect rect = toolTipUIView.frame;
     CGRect newRect = CGRectMake(rect.origin.x, self.view.frame.size.height - 49, rect.size.width, rect.size.height);
+    CGRect sixthTipRect = _sixthTipView.frame;
+    CGRect newTipRect = CGRectMake(sixthTipRect.origin.x, sixthTipRect.origin.y + rect.size.height, sixthTipRect.size.width, sixthTipRect.size.height);
     
     [UIView animateWithDuration:countInfo animations:^{
         thisTooltip = TooltipFading;
@@ -148,6 +159,7 @@
     }completion:^(BOOL completed){
         NSLog(@"tooltip is now gone");
         thisTooltip = TooltipGone;
+        [_sixthTipView setFrame:newTipRect];
         [toolTipUIView setFrame:newRect];
     }];
 }
@@ -157,6 +169,7 @@
     if (thisTooltip == TooltipGone && stopTooltip == NO) {  //The stoptooltip is a way to prevent user from
         thisTooltip = TooltipClicked;                       //creating multiple threads, which would cause
         [self presentTooltip];                              //the tooltip to hide before the expected time.
+        [self dismissSeventhTip];
     }
     if (thisTooltip == TooltipFading) {
         NSLog(@"waiting for tooltip to fade");
@@ -274,6 +287,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    [self showUserInterface];
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter]
      addObserver:self selector:@selector(orientationChanged:)
@@ -286,6 +300,7 @@
     [refreshControl addTarget:self action:@selector(refreshControlAction) forControlEvents:UIControlEventValueChanged];
     [self.collectionViewIndicatorsDisplay addSubview:refreshControl];
     self.collectionViewIndicatorsDisplay.alwaysBounceVertical = YES;
+    [self presentSixthTip];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -343,11 +358,14 @@
         {
             case UIDeviceOrientationLandscapeLeft:
             case UIDeviceOrientationLandscapeRight:
+                [self dismissEighthTip];
                 [self pushView];
                 break;
             default:
                 break;
         };
+    }else if(tutorialOnProgress == YES){
+        return;
     }else{
         UIDevice * device = note.object;
         switch(device.orientation)
@@ -464,6 +482,7 @@
         [cell setHighlighted:NO];
         selectedCell = nil;
     }else{
+        [self dismissSixthTip];
         [self highlight:cell];
         [interaction loadIndicatorData:cell.referencedIndicator startDate:nil finishDate:nil];
         interaction.selectedIndicator = cell.referencedIndicator;
@@ -497,4 +516,213 @@
 - (IBAction)backButton:(UIBarButtonItem *)sender {
     [self goBack];
 }
+
+////////////////////////////// DANGER TUTORIAL AREA BELOW////////////////////////////////////
+
+-(void)hideUserInterface{
+    _tutorialBackground.alpha = 1;
+    [self.rootTabBar setUserInteractionEnabled:NO];
+    self.collectionViewIndicatorsDisplay.scrollEnabled = NO;
+    tutorialOnProgress = YES;
+}
+
+-(void)showUserInterface{
+    if (tutorialOnProgress == YES) {
+        [UIView animateWithDuration:0.3 animations:^{
+            _tutorialBackground.alpha = 0;
+        }completion:^(BOOL completed){
+            tutorialOnProgress = NO;
+            self.collectionViewIndicatorsDisplay.scrollEnabled = YES;
+            [self.rootTabBar setUserInteractionEnabled:YES];
+        }];
+    }
+}
+
+-(void)presentSixthTip{
+    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    if (myAppDelegate.tutorialState == SixthTipPresented && currentIndicators.count > 0 && sixthTipStillPresent == NO) {
+        [self hideUserInterface];
+        sixthTipStillPresent = YES;
+        _sixthTipView.viewForBaselineLayout.layer.cornerRadius = 5;
+        _sixthTipView.viewForBaselineLayout.layer.masksToBounds = YES;
+        [UIView animateWithDuration:0.3 animations:^{
+            _sixthTipView.alpha = 1;
+            _sixthTipText.alpha = 1;
+        }completion:^(BOOL completed){
+            [self sixthTipAnimation];
+        }];
+    }
+}
+
+-(void)dismissSixthTip{
+    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    if (myAppDelegate.tutorialState == SixthTipPresented) {
+        [UIView animateWithDuration:0.3 animations:^{
+            _sixthTipView.alpha = 0;
+            _sixthTipText.alpha = 0;
+            myAppDelegate.tutorialState = SeventhTipPresented;
+        }completion:^(BOOL completed){
+            sixthTipStillPresent = NO;
+            [self presentSeventhTip];
+        }];
+        _sixthTipImage.alpha = 0;
+        
+    }
+}
+
+-(void)sixthTipAnimation{
+    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    [UIView animateWithDuration:0.75 animations:^{
+        _sixthTipImage.alpha = 1;
+    }completion:^(BOOL completed){
+        [UIView animateWithDuration:0.75 animations:^{
+            _sixthTipImage.alpha = 0;
+        }completion:^(BOOL completed){
+            if (myAppDelegate.tutorialState == SixthTipPresented) {
+                [self sixthTipAnimation];
+            }
+        }];
+    }];
+}
+
+-(void)presentSeventhTip{
+    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    if (myAppDelegate.tutorialState == SeventhTipPresented) {
+        _seventhTipView.viewForBaselineLayout.layer.cornerRadius = 5;
+        _seventhTipView.viewForBaselineLayout.layer.masksToBounds = YES;
+        [UIView animateWithDuration:0.3 animations:^{
+            _seventhTipView.alpha = 1;
+            _seventhTipText.alpha = 1;
+        }completion:^(BOOL completed){
+            [self seventhTipAnimation];
+        }];
+    }
+}
+
+-(void)dismissSeventhTip{
+    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    if (myAppDelegate.tutorialState == SeventhTipPresented) {
+        [UIView animateWithDuration:0.3 animations:^{
+            _seventhTipView.alpha = 0;
+            _seventhTipText.alpha = 0;
+            myAppDelegate.tutorialState = EighthTipPresented;
+        }completion:^(BOOL completed){
+            [self presentEighthTip];
+        }];
+        _seventhTipImage.alpha = 0;
+        
+    }
+}
+
+-(void)seventhTipAnimation{
+    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    [UIView animateWithDuration:0.75 animations:^{
+        _seventhTipImage.alpha = 1;
+    }completion:^(BOOL completed){
+        [UIView animateWithDuration:0.75 animations:^{
+            _seventhTipImage.alpha = 0;
+        }completion:^(BOOL completed){
+            if (myAppDelegate.tutorialState == SeventhTipPresented) {
+                [self seventhTipAnimation];
+            }
+        }];
+    }];
+}
+
+-(void)presentEighthTip{
+    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    if (myAppDelegate.tutorialState == EighthTipPresented) {
+        _eighthTipView.viewForBaselineLayout.layer.cornerRadius = 5;
+        _eighthTipView.viewForBaselineLayout.layer.masksToBounds = YES;
+        [UIView animateWithDuration:0.3 animations:^{
+            _eighthTipView.alpha = 1;
+            _eighthTipText.alpha = 1;
+        }completion:^(BOOL completed){
+            [self eighthTipAnimation];
+        }];
+    }
+}
+
+-(void)dismissEighthTip{
+    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    if (myAppDelegate.tutorialState == EighthTipPresented) {
+        [UIView animateWithDuration:0.3 animations:^{
+            _eighthTipView.alpha = 0;
+            _eighthTipText.alpha = 0;
+            myAppDelegate.tutorialState = DisableTutorial;
+        }completion:^(BOOL completed){
+            
+        }];
+        _eighthTipImage.alpha = 0;
+        
+    }
+}
+
+-(void)eighthTipAnimation{
+    NSLog(@"Tip image center location start: X=%f Y=%f",_eighthTipImage.center.x,_eighthTipImage.center.y);
+    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    CGPoint anchorpoint = CGPointMake(0.5, 0.5);
+    //[self setAnchorPoint:anchorpoint forView:_eighthTipImage];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        _eighthTipImage.alpha = 1;
+    }completion:^(BOOL completed){
+        [UIView animateWithDuration:1.75 animations:^{
+            CGAffineTransform t1 = CGAffineTransformMakeRotation(-M_PI/2);
+            CGFloat moveX = _eighthTipImage.bounds.size.height - _eighthTipImage.bounds.size.width;
+            CGAffineTransform t2 = CGAffineTransformMakeTranslation(moveX, moveX*-1);
+            CGAffineTransform t = CGAffineTransformMake(t1.a, t1.b, t1.c, t1.d, t2.tx, t2.ty);
+            _eighthTipImage.transform = t;
+        }completion:^(BOOL completed){
+            [UIView animateWithDuration:0.75 animations:^{
+                _eighthTipImage.alpha = 0;
+                //[NSThread sleepForTimeInterval:1];
+            }completion:^(BOOL completed){
+                [UIView animateWithDuration:0.01 animations:^{
+                    NSLog(@"Tip image center location finish: X=%f Y=%f",_eighthTipImage.center.x,_eighthTipImage.center.y);
+                    _eighthTipImage.transform = CGAffineTransformIdentity;
+                } completion:^(BOOL finished) {
+                    if (myAppDelegate.tutorialState == EighthTipPresented) {
+                        [self eighthTipAnimation];
+                    }
+                }];
+            }];
+        }];
+    }];
+}
+
+-(void)setAnchorPoint:(CGPoint)anchorPoint forView:(UIView *)view{
+    CGPoint oldPoint = CGPointMake(view.bounds.size.width * view.layer.anchorPoint.x, view.bounds.size.height * view.layer.anchorPoint.y);
+    CGPoint newPoint = CGPointMake(view.bounds.size.width * anchorPoint.x, view.bounds.size.height * anchorPoint.y);
+
+    newPoint = CGPointApplyAffineTransform(newPoint, view.transform);
+    oldPoint = CGPointApplyAffineTransform(oldPoint, view.transform);
+    
+    CGPoint position = view.layer.position;
+    
+    position.x -= oldPoint.x;
+    position.x += newPoint.x;
+    
+    position.y -= oldPoint.y;
+    position.y += newPoint.y;
+    
+    view.layer.position = position;
+    view.layer.anchorPoint = anchorPoint;
+}
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+

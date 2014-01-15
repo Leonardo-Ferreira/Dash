@@ -36,10 +36,8 @@
         
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
         SVBackstageViewController *backStage = [[SVBackstageViewController alloc]init];
-        //[currentRootVC presentViewController:backStage animated:NO completion:Nil];
         [currentRootVC willMoveToParentViewController:backStage];
         [myAppDelegate.navigationController pushViewController:backStage animated:NO];
-        //[backStage addChildViewController:currentRootVC];
         [currentRootVC didMoveToParentViewController:backStage];
         [backStage.view addSubview:[currentRootVC view]];
         

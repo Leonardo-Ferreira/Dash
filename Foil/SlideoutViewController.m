@@ -126,13 +126,24 @@
         
     }else if (buttonIndex == 2){
         [myAppDelegate.window makeKeyAndVisible]; // this is important because the UIAlertView runs under its own UIWindow. So whenever I try to close the slideout menu, I cant find it, causing several bugs. By doing that I am forcing my UIWindow back to the top.
-        if (myAppDelegate.userInAppLocation == AuthenticationView) {
+        NSLog(@"%@", [self lastViewController]);
+        if ([[self lastViewController] isKindOfClass:[AuthenticationViewController class]]) {
             AuthenticationViewController *viewController = (AuthenticationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"AuthenticationView"];
             [viewController restartThisPagesTutorialOnly];
-        }else if (myAppDelegate.userInAppLocation == SubscriberContextView){
+        }else if ([[self lastViewController] isKindOfClass:[SubscriberContextSelectionViewController class]]){
             SubscriberContextSelectionViewController *viewController = (SubscriberContextSelectionViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ContextSelectionView"];
             [viewController restartThisPagesTutorialOnly];
         }
+    }
+}
+
+-(UIViewController *)lastViewController{
+    FoilAppDelegate* myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
+    if (numberOfViewControllers < 2) {
+        return nil;
+    }else{
+        return [myAppDelegate.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
     }
 }
 

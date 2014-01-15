@@ -21,13 +21,6 @@
 
 //NOVO TUTORIAL
 
-typedef NS_ENUM(NSInteger, UserInAppLocation){
-    AuthenticationView,
-    SubscriberContextView,
-    RootTabBarView,
-    DefaultChartView
-};
-
 @property (nonatomic, assign) BOOL reviewThisPagesTutorial;
 
 @property (nonatomic, assign) NSInteger userInAppLocation;
@@ -40,6 +33,8 @@ typedef NS_ENUM(NSInteger, TutorialState){
     ForthTipPresented,
     FifthTipPresented,
     SixthTipPresented,
+    SeventhTipPresented,
+    EighthTipPresented,
     ResetTutorial,
     DisableTutorial
 };

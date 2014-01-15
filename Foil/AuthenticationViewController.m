@@ -27,7 +27,6 @@
     [super viewDidLoad];
     userChecked = NO;
     [self loadUserInfo];
-    [self registerUserLocationInApp];
     
     NSLog(@"%i", self.navigationController.viewControllers.count);
 
@@ -228,6 +227,7 @@
         }else if (buttonIndex == 2){
             [self disableTutorial];
             myAppDelegate.tutorialState = ForthTipPresented;
+            myAppDelegate.reviewThisPagesTutorial = NO;
             [self loginAction];
         }
         return;
@@ -240,18 +240,6 @@
             [self presentLogos];
         }
     }
-}
-
--(void)presentTip:(UIView *)viewTip withTextView:(UITextView *)viewText animateWithDuration:(NSInteger)duration {
-    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
-    viewTip.viewForBaselineLayout.layer.cornerRadius = 5;
-    viewTip.viewForBaselineLayout.layer.masksToBounds = YES;
-    [UIView animateWithDuration:duration animations:^{
-        viewTip.alpha = 1;
-        viewText.alpha = 1;
-    }completion:^(BOOL completed){
-        
-    }];
 }
 
 -(void)presentFirstTip{
@@ -417,13 +405,16 @@
 
 -(void)userGaveUpFollowingTheTutorial{
     NSString *text;
+    NSString *thisViewOnly = @"Somente desta tela";
     if (myAppDelegate.tutorialState == FirstTipPresented || myAppDelegate.tutorialState == SecondTipPresented) {
         text = @"Você ainda não conferiu o menu, gostaria de encerrar o tutorial e continuar a navegacão?";
     }else if(myAppDelegate.tutorialState == ThirdTipPresented){
         text = @"Estamos terminando esta página. Gostaria de encerrar o tutorial e continuar a navegacão?";
     }
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:text delegate:self cancelButtonTitle:@"Ainda não" otherButtonTitles:@"Sim", @"Somente desta tela", nil];
+    if (myAppDelegate.reviewThisPagesTutorial == YES) {
+        thisViewOnly = nil;
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:text delegate:self cancelButtonTitle:@"Ainda não" otherButtonTitles:@"Sim", thisViewOnly, nil];
     [alert setTag:1];
     [alert show];
 }
@@ -431,7 +422,7 @@
 -(void)resetTutorial{
     myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
     if (myAppDelegate.tutorialState == ResetTutorial) {
-        myAppDelegate.reviewThisPagesTutorial = NO;
+        //myAppDelegate.reviewThisPagesTutorial = NO;
         [self disableTutorial];
         myAppDelegate.tutorialState = GroundZero;
         _logotipoDash.alpha = 0;
@@ -449,11 +440,6 @@
     myAppDelegate.tutorialState = ResetTutorial;
     [self swipeOut];
     myAppDelegate.reviewThisPagesTutorial = YES;
-}
-
--(void) registerUserLocationInApp{
-    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
-    myAppDelegate.userInAppLocation = AuthenticationView;
 }
 
 

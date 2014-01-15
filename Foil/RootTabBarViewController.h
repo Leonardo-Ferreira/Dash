@@ -24,4 +24,16 @@ typedef NS_ENUM(NSInteger, TooltipState){
     TooltipGone
 };
 
+@property (weak, nonatomic) IBOutlet UIView *tutorialBackground;
+@property (weak, nonatomic) IBOutlet UIView *sixthTipView;
+@property (weak, nonatomic) IBOutlet UILabel *sixthTipText;
+@property (weak, nonatomic) IBOutlet UIImageView *sixthTipImage;
+@property (weak, nonatomic) IBOutlet UIView *seventhTipView;
+@property (weak, nonatomic) IBOutlet UILabel *seventhTipText;
+@property (weak, nonatomic) IBOutlet UIImageView *seventhTipImage;
+@property (weak, nonatomic) IBOutlet UIView *eighthTipView;
+@property (weak, nonatomic) IBOutlet UILabel *eighthTipText;
+@property (weak, nonatomic) IBOutlet UIImageView *eighthTipImage;
+
+
 @end

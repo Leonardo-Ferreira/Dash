@@ -265,6 +265,7 @@
             myAppDelegate.reviewThisPagesTutorial = NO;
             [self disableTutorial];
             myAppDelegate.tutorialState = SixthTipPresented;
+            [self didSelectContextAction];
         }
         return;
     }
@@ -437,6 +438,7 @@
 -(void) restartThisPagesTutorialOnly{
     myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
     myAppDelegate.reviewThisPagesTutorial = YES;
+    [self swipeOut];
 }
 
 -(void) restartAction{
@@ -465,19 +467,17 @@
 
 -(void)userGaveUpFollowingTheTutorial{
     NSString *text = @"Gostaria de encerrar o tutorial e continuar a navegação?";
-    
-    tutorialAlertView = [[UIAlertView alloc] initWithTitle:nil message:text delegate:self cancelButtonTitle:@"Ainda não" otherButtonTitles:@"Sim", @"Somente desta tela", nil];
+    NSString *thisViewOnly = @"Somente desta tela";
+    if (myAppDelegate.reviewThisPagesTutorial == YES) {
+        thisViewOnly = nil;
+    }
+    tutorialAlertView = [[UIAlertView alloc] initWithTitle:nil message:text delegate:self cancelButtonTitle:@"Ainda não" otherButtonTitles:@"Sim", thisViewOnly, nil];
     [tutorialAlertView setTag:1];
     [tutorialAlertView show];
 }
 
 -(void)dismissAlertView:(UIAlertView *) alert{
     [alert dismissWithClickedButtonIndex:0 animated:YES];
-}
-
--(void) registerUserLocationInApp{
-    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
-    myAppDelegate.userInAppLocation = SubscriberContextView;
 }
 
 @end
