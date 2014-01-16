@@ -133,6 +133,9 @@
         }else if ([[self lastViewController] isKindOfClass:[SubscriberContextSelectionViewController class]]){
             SubscriberContextSelectionViewController *viewController = (SubscriberContextSelectionViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ContextSelectionView"];
             [viewController restartThisPagesTutorialOnly];
+        }else if([[self lastViewController] isKindOfClass:[RootTabBarViewController class]]){
+            RootTabBarViewController *viewController = (RootTabBarViewController *)[storyboard instantiateViewControllerWithIdentifier:@"DynamicRootTabBarView"];
+            [viewController restartThisPagesTutorialOnly];
         }
     }
 }

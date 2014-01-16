@@ -84,11 +84,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "411506359.022378"
+            timestampString = "411593092.818819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "471"
-            endingLineNumber = "471"
+            startingLineNumber = "470"
+            endingLineNumber = "470"
             landmarkName = "-unhighlight:"
             landmarkType = "5">
          </BreakpointContent>
@@ -642,11 +642,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/SlideoutViewController.m"
-            timestampString = "411488343.104817"
+            timestampString = "411587135.921196"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "-logOut"
             landmarkType = "5">
          </BreakpointContent>
@@ -658,11 +658,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/SlideoutViewController.m"
-            timestampString = "411488343.104817"
+            timestampString = "411587135.921196"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "-logOut"
             landmarkType = "5">
          </BreakpointContent>
@@ -1036,11 +1036,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "411506359.022378"
+            timestampString = "411593092.818819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "266"
-            endingLineNumber = "266"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
             landmarkName = "-handleSwipeIn:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1100,11 +1100,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "411506359.022378"
+            timestampString = "411593092.818819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "486"
-            endingLineNumber = "486"
+            startingLineNumber = "485"
+            endingLineNumber = "485"
             landmarkName = "-collectionView:didSelectItemAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1116,11 +1116,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "411506359.022378"
+            timestampString = "411593092.818819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "298"
-            endingLineNumber = "298"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
             landmarkName = "-viewDidAppear:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1322,11 +1322,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "411506359.022378"
+            timestampString = "411593092.818819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "476"
-            endingLineNumber = "476"
+            startingLineNumber = "475"
+            endingLineNumber = "475"
             landmarkName = "-collectionView:didSelectItemAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1338,11 +1338,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "411506359.022378"
+            timestampString = "411593092.818819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
+            startingLineNumber = "290"
+            endingLineNumber = "290"
             landmarkName = "-viewDidAppear:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1354,11 +1354,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "411506359.022378"
+            timestampString = "411593092.818819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "289"
-            endingLineNumber = "289"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
             landmarkName = "-viewDidAppear:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1418,11 +1418,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "411506359.022378"
+            timestampString = "411593092.818819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "324"
-            endingLineNumber = "324"
+            startingLineNumber = "323"
+            endingLineNumber = "323"
             landmarkName = "-refreshControlAction"
             landmarkType = "5">
          </BreakpointContent>
@@ -1434,11 +1434,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "411506359.022378"
+            timestampString = "411593092.818819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -1466,11 +1466,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "411506359.022378"
+            timestampString = "411593092.818819"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "312"
-            endingLineNumber = "312"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
             landmarkName = "-refreshControlAction"
             landmarkType = "5">
          </BreakpointContent>
@@ -1514,11 +1514,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "411506359.022378"
+            timestampString = "411600677.483916"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "543"
-            endingLineNumber = "543"
+            startingLineNumber = "554"
+            endingLineNumber = "554"
             landmarkName = "-presentSixthTip"
             landmarkType = "5">
          </BreakpointContent>
@@ -1530,11 +1530,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "411508407.82906"
+            timestampString = "411600677.483916"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "665"
-            endingLineNumber = "665"
+            startingLineNumber = "682"
+            endingLineNumber = "682"
             landmarkName = "-eighthTipAnimation"
             landmarkType = "5">
          </BreakpointContent>
@@ -1546,12 +1546,140 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Foil/RootTabBarViewController.m"
-            timestampString = "411510853.026508"
+            timestampString = "411600734.279127"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "675"
-            endingLineNumber = "675"
-            landmarkName = "-eighthTipAnimation"
+            startingLineNumber = "522"
+            endingLineNumber = "522"
+            landmarkName = "-hideUserInterface"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Foil/RootTabBarViewController.m"
+            timestampString = "411593092.818819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
+            landmarkName = "-assistedModeClicked:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Foil/RootTabBarViewController.m"
+            timestampString = "411593092.818819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "-assistedModeClicked:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Foil/RootTabBarViewController.m"
+            timestampString = "411593092.818819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "-assistedModeClicked:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Foil/RootTabBarViewController.m"
+            timestampString = "411593092.818819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
+            landmarkName = "-swipeOut"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Foil/RootTabBarViewController.m"
+            timestampString = "411593092.818819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "266"
+            endingLineNumber = "266"
+            landmarkName = "-handleSwipeIn:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Foil/RootTabBarViewController.m"
+            timestampString = "411593092.818819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "-assistedModeClicked:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Foil/RootTabBarViewController.m"
+            timestampString = "411593092.818819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
+            landmarkName = "-assistedModeClicked:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Foil/RootTabBarViewController.m"
+            timestampString = "411593092.818819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
+            landmarkName = "-swipeOut"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

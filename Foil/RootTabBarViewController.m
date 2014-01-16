@@ -107,14 +107,11 @@
         tooltipOriginalPosition = toolTipUIView.frame;
     }
     CGRect rect = toolTipUIView.frame;
-    CGRect sixthTipRect = _sixthTipView.frame;
     NSLog(@"originx %f, originy %f", rect.origin.x, rect.origin.y);
     CGRect newRect = CGRectMake(rect.origin.x, rect.origin.y - rect.size.height, rect.size.width, rect.size.height);
-    CGRect newTipRect = CGRectMake(sixthTipRect.origin.x, sixthTipRect.origin.y - rect.size.height, sixthTipRect.size.width, sixthTipRect.size.height);
     
     [UIView transitionWithView:toolTipUIView duration:0.3 options:UIViewAnimationOptionTransitionNone animations:^{
         [toolTipUIView setFrame:newRect];
-        [_sixthTipView setFrame:newTipRect];
     } completion:^(BOOL completed){
         thisTooltip = TooltipPresented;
         [self restartTooltipFadeOut];
@@ -157,6 +154,7 @@
         thisTooltip = TooltipFading;
         toolTipUIView.alpha = 0;
     }completion:^(BOOL completed){
+        [self presentEighthTip];
         NSLog(@"tooltip is now gone");
         thisTooltip = TooltipGone;
         [_sixthTipView setFrame:newTipRect];
@@ -267,12 +265,10 @@
     [controller openSlideOut];
     stopTooltip = YES;
     [self hideTooltip:0];
-    [_collectionViewIndicatorsDisplay setUserInteractionEnabled:NO];
     NSLog(@"Swipe In working as intended.");
 }
 
 -(void)handleSwipeOut:(UISwipeGestureRecognizer*)swipeOut{
-    stopTooltip = NO;
     [_collectionViewIndicatorsDisplay setUserInteractionEnabled:YES];
     [self swipeOut];
     NSLog(@"Swipe Out working as intended.");
@@ -281,12 +277,15 @@
 -(void)swipeOut{
     SlidoutController *controller = [[SlidoutController alloc] init];
     [controller closeSlideOut];
+    stopTooltip = NO;
 }
 
 //---------------------------------------------//
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    [self restartAction];
+    
     [self showUserInterface];
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter]
@@ -526,6 +525,18 @@
     tutorialOnProgress = YES;
 }
 
+-(void)resetAndhideUserInterface{
+    [UIView animateWithDuration:0.3 animations:^{
+        _tutorialBackground.alpha = 1;
+        [[self collectionViewIndicatorsDisplay] scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+    }completion:^(BOOL completed){
+        stopTooltip = NO;
+        [self.rootTabBar setUserInteractionEnabled:NO];
+        self.collectionViewIndicatorsDisplay.scrollEnabled = NO;
+        tutorialOnProgress = YES;
+    }];
+}
+
 -(void)showUserInterface{
     if (tutorialOnProgress == YES) {
         [UIView animateWithDuration:0.3 animations:^{
@@ -541,7 +552,11 @@
 -(void)presentSixthTip{
     myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
     if (myAppDelegate.tutorialState == SixthTipPresented && currentIndicators.count > 0 && sixthTipStillPresent == NO) {
-        [self hideUserInterface];
+        if (myAppDelegate.reviewThisPagesTutorial == NO) {
+            [self hideUserInterface];
+        }else{
+            [self resetAndhideUserInterface];
+        }
         sixthTipStillPresent = YES;
         _sixthTipView.viewForBaselineLayout.layer.cornerRadius = 5;
         _sixthTipView.viewForBaselineLayout.layer.masksToBounds = YES;
@@ -549,6 +564,7 @@
             _sixthTipView.alpha = 1;
             _sixthTipText.alpha = 1;
         }completion:^(BOOL completed){
+            
             [self sixthTipAnimation];
         }];
     }
@@ -608,7 +624,7 @@
             _seventhTipText.alpha = 0;
             myAppDelegate.tutorialState = EighthTipPresented;
         }completion:^(BOOL completed){
-            [self presentEighthTip];
+            [self hideTooltip:3];
         }];
         _seventhTipImage.alpha = 0;
         
@@ -651,6 +667,7 @@
         [UIView animateWithDuration:0.3 animations:^{
             _eighthTipView.alpha = 0;
             _eighthTipText.alpha = 0;
+            myAppDelegate.reviewThisPagesTutorial = NO;
             myAppDelegate.tutorialState = DisableTutorial;
         }completion:^(BOOL completed){
             
@@ -663,13 +680,12 @@
 -(void)eighthTipAnimation{
     NSLog(@"Tip image center location start: X=%f Y=%f",_eighthTipImage.center.x,_eighthTipImage.center.y);
     myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
-    CGPoint anchorpoint = CGPointMake(0.5, 0.5);
-    //[self setAnchorPoint:anchorpoint forView:_eighthTipImage];
+    [self setAnchorPoint:CGPointMake(0.5, 0.5) forView:_eighthTipImage];
     
     [UIView animateWithDuration:0.3 animations:^{
         _eighthTipImage.alpha = 1;
     }completion:^(BOOL completed){
-        [UIView animateWithDuration:1.75 animations:^{
+        /*[UIView animateWithDuration:1.75 animations:^{
             CGAffineTransform t1 = CGAffineTransformMakeRotation(-M_PI/2);
             CGFloat moveX = _eighthTipImage.bounds.size.height - _eighthTipImage.bounds.size.width;
             CGAffineTransform t2 = CGAffineTransformMakeTranslation(moveX, moveX*-1);
@@ -689,7 +705,7 @@
                     }
                 }];
             }];
-        }];
+        }];*/
     }];
 }
 
@@ -710,6 +726,40 @@
     
     view.layer.position = position;
     view.layer.anchorPoint = anchorPoint;
+}
+
+-(void) restartThisPagesTutorialOnly{
+    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    myAppDelegate.reviewThisPagesTutorial = YES;
+    [self swipeOut];
+}
+
+-(void) restartAction{
+    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    if (myAppDelegate.reviewThisPagesTutorial == YES) {
+        [self disableTutorial];
+        myAppDelegate.tutorialState = SixthTipPresented;
+        [self presentSixthTip];
+    }
+    return;
+}
+
+-(void) disableTutorial{
+    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    _sixthTipView.alpha = 0;
+    _sixthTipText.alpha = 0;
+    _sixthTipImage.alpha = 0;
+    _seventhTipView.alpha = 0;
+    _seventhTipText.alpha = 0;
+    _seventhTipImage.alpha = 0;
+    _eighthTipView.alpha = 0;
+    _eighthTipText.alpha = 0;
+    _eighthTipImage.alpha = 0;
+    _tutorialBackground.alpha = 0;
+    sixthTipStillPresent = NO;
+    if (myAppDelegate.reviewThisPagesTutorial == NO) {
+        myAppDelegate.tutorialState = DisableTutorial;
+    }
 }
 
 @end
