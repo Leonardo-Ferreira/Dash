@@ -496,6 +496,8 @@
 
 
 - (void)goBack {
+    myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
+    myAppDelegate.reviewThisPagesTutorial = NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
