@@ -105,10 +105,12 @@
         
         [self logOut];
         
-        ///////////////TEMPORARIO DELETAR////////////////////////
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"HasLaunchedOnce"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        /////////////////////////////////////////////////////////
+        //ENABLE THIS LINES TO TEST AS IF IT WAS THE FIRST TIME THE USER LAUNCHED THE APP.
+        
+        //[[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"HasLaunchedOnce"];
+        //[[NSUserDefaults standardUserDefaults] synchronize];
+        
+        //////////////////////////////////////////////////////////////////////////////////
     }
     
 }

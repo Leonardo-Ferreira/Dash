@@ -738,12 +738,12 @@ fechar o menu.</string>
                                     <outlet property="delegate" destination="HiJ-oo-Xsm" id="EEM-Mh-GZd"/>
                                 </connections>
                             </collectionView>
-                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o9D-6a-0Sd" userLabel="tutorialBackground">
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o9D-6a-0Sd" userLabel="tutorialBackground">
                                 <rect key="frame" x="0.0" y="118" width="320" height="316"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.94509803920000002" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ehj-Sx-iAj" userLabel="SixthTipView">
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ehj-Sx-iAj" userLabel="SixthTipView">
                                 <rect key="frame" x="20" y="120" width="280" height="53"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -756,10 +756,18 @@ fechar o menu.</string>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.086274509799999996" green="0.62745098040000002" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="LP3-t2-ln8"/>
+                                    <constraint firstAttribute="height" constant="53" id="k7s-RN-7qL"/>
+                                </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="touch" translatesAutoresizingMaskIntoConstraints="NO" id="XCq-vw-hED" userLabel="SixthTipImage">
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touch" translatesAutoresizingMaskIntoConstraints="NO" id="XCq-vw-hED" userLabel="SixthTipImage">
                                 <rect key="frame" x="141" y="68" width="38" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="5xZ-O0-Hy6"/>
+                                    <constraint firstAttribute="width" constant="38" id="OGz-MO-3iP"/>
+                                </constraints>
                             </imageView>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2tq-Ar-4CV">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -792,7 +800,7 @@ fechar o menu.</string>
                                     <outlet property="delegate" destination="HiJ-oo-Xsm" id="f3t-z1-WuY"/>
                                 </connections>
                             </navigationBar>
-                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wRp-pt-pdk" userLabel="SeventhTipView">
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wRp-pt-pdk" userLabel="SeventhTipView">
                                 <rect key="frame" x="20" y="119" width="280" height="65"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -807,12 +815,20 @@ obter uma breve descrição.</string>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.086274509799999996" green="0.62745098040000002" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="nlz-Hs-MDE"/>
+                                    <constraint firstAttribute="width" constant="280" id="wuR-if-hrG"/>
+                                </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="lhI-B0-67j" userLabel="SeventhTipImage">
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ArrowIcon" translatesAutoresizingMaskIntoConstraints="NO" id="lhI-B0-67j" userLabel="SeventhTipImage">
                                 <rect key="frame" x="275" y="46" width="38" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="38" id="68t-9p-8fZ"/>
+                                    <constraint firstAttribute="height" constant="38" id="lhi-LE-puT"/>
+                                </constraints>
                             </imageView>
-                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6oL-mt-X2l" userLabel="EighthTipView">
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6oL-mt-X2l" userLabel="EighthTipView">
                                 <rect key="frame" x="20" y="119" width="280" height="79"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -825,10 +841,18 @@ obter uma breve descrição.</string>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.086274509799999996" green="0.62745098040000002" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="79" id="XYd-ef-h1x"/>
+                                    <constraint firstAttribute="width" constant="280" id="vhH-lz-dhg"/>
+                                </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CenterImage" translatesAutoresizingMaskIntoConstraints="NO" id="EV3-6J-o7i" userLabel="EightTipImage">
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CenterImage" translatesAutoresizingMaskIntoConstraints="NO" id="EV3-6J-o7i" userLabel="EightTipImage">
                                 <rect key="frame" x="87" y="213" width="145" height="204"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="204" id="5xY-WV-ufM"/>
+                                    <constraint firstAttribute="width" constant="145" id="faQ-Dh-sJI"/>
+                                </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jdb-pP-Dlv" userLabel="tooltip">
                                 <rect key="frame" x="20" y="431" width="280" height="90"/>
@@ -863,19 +887,35 @@ obter uma breve descrição.</string>
                         <color key="backgroundColor" red="0.94509803920000002" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="o9D-6a-0Sd" firstAttribute="leading" secondItem="Xhz-aJ-TVS" secondAttribute="leading" id="Coc-7M-gu3"/>
+                            <constraint firstAttribute="centerX" secondItem="6oL-mt-X2l" secondAttribute="centerX" id="Eh8-qy-dNX"/>
+                            <constraint firstAttribute="centerX" secondItem="EV3-6J-o7i" secondAttribute="centerX" id="KML-CX-Fe0"/>
+                            <constraint firstAttribute="centerX" secondItem="lhI-B0-67j" secondAttribute="centerX" constant="-134" id="OGG-D3-JfI"/>
                             <constraint firstItem="jdb-pP-Dlv" firstAttribute="top" secondItem="JTs-0L-nin" secondAttribute="top" id="Sks-A8-fum"/>
+                            <constraint firstItem="o9D-6a-0Sd" firstAttribute="top" secondItem="B0M-I8-hDm" secondAttribute="bottom" constant="118" id="Vvg-GX-LX6"/>
+                            <constraint firstAttribute="centerX" secondItem="XCq-vw-hED" secondAttribute="centerX" id="WIi-jI-OBv"/>
                             <constraint firstItem="JTs-0L-nin" firstAttribute="top" secondItem="8WK-jV-Mab" secondAttribute="bottom" id="WKj-al-MAB"/>
                             <constraint firstItem="8WK-jV-Mab" firstAttribute="top" secondItem="2tq-Ar-4CV" secondAttribute="bottom" id="X84-2g-6rz"/>
                             <constraint firstItem="JTs-0L-nin" firstAttribute="leading" secondItem="Xhz-aJ-TVS" secondAttribute="leading" id="XHM-lK-fJG"/>
+                            <constraint firstItem="6oL-mt-X2l" firstAttribute="top" secondItem="B0M-I8-hDm" secondAttribute="bottom" constant="119" id="YHt-pR-AD6"/>
                             <constraint firstAttribute="bottom" secondItem="JTs-0L-nin" secondAttribute="bottom" id="aRV-5u-A0C"/>
                             <constraint firstItem="2tq-Ar-4CV" firstAttribute="top" secondItem="Xhz-aJ-TVS" secondAttribute="top" id="apx-Qg-mEm"/>
                             <constraint firstItem="jdb-pP-Dlv" firstAttribute="leading" secondItem="Xhz-aJ-TVS" secondAttribute="leading" constant="20" symbolic="YES" id="es1-Mv-DXV"/>
+                            <constraint firstItem="dPi-Ug-gXC" firstAttribute="top" secondItem="o9D-6a-0Sd" secondAttribute="bottom" constant="46" id="f6f-Z4-dqC"/>
                             <constraint firstItem="2tq-Ar-4CV" firstAttribute="trailing" secondItem="JTs-0L-nin" secondAttribute="trailing" id="hKN-hm-wN1"/>
+                            <constraint firstAttribute="trailing" secondItem="o9D-6a-0Sd" secondAttribute="trailing" id="hf9-iD-Xfa"/>
                             <constraint firstItem="2tq-Ar-4CV" firstAttribute="trailing" secondItem="8WK-jV-Mab" secondAttribute="trailing" id="kWm-KB-LNI"/>
+                            <constraint firstItem="XCq-vw-hED" firstAttribute="top" secondItem="B0M-I8-hDm" secondAttribute="bottom" constant="68" id="mqV-2e-2W0"/>
+                            <constraint firstItem="Ehj-Sx-iAj" firstAttribute="top" secondItem="B0M-I8-hDm" secondAttribute="bottom" constant="120" id="oIy-8u-lOf"/>
                             <constraint firstItem="2tq-Ar-4CV" firstAttribute="centerX" secondItem="jdb-pP-Dlv" secondAttribute="centerX" id="okQ-Xj-sBo"/>
+                            <constraint firstAttribute="centerX" secondItem="wRp-pt-pdk" secondAttribute="centerX" id="pwI-ma-VGz"/>
+                            <constraint firstAttribute="centerX" secondItem="Ehj-Sx-iAj" secondAttribute="centerX" id="qEq-tJ-D74"/>
                             <constraint firstItem="2tq-Ar-4CV" firstAttribute="leading" secondItem="8WK-jV-Mab" secondAttribute="leading" id="qQd-uc-viU"/>
+                            <constraint firstItem="lhI-B0-67j" firstAttribute="top" secondItem="B0M-I8-hDm" secondAttribute="bottom" constant="46" id="rIk-AB-ysB"/>
                             <constraint firstItem="2tq-Ar-4CV" firstAttribute="leading" secondItem="JTs-0L-nin" secondAttribute="leading" id="rT4-uR-x0x"/>
                             <constraint firstAttribute="bottom" secondItem="jdb-pP-Dlv" secondAttribute="bottom" constant="-41" id="rdH-sX-bKr"/>
+                            <constraint firstItem="wRp-pt-pdk" firstAttribute="top" secondItem="B0M-I8-hDm" secondAttribute="bottom" constant="119" id="sDn-8M-8Gg"/>
+                            <constraint firstAttribute="centerY" secondItem="EV3-6J-o7i" secondAttribute="centerY" constant="-75" id="xhV-Os-sUc"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -918,7 +958,7 @@ obter uma breve descrição.</string>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ovY-9A-etF">
-                                <rect key="frame" x="40" y="131" width="240" height="317"/>
+                                <rect key="frame" x="40" y="131" width="240" height="260"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <string key="text">Dash®
 Versão 1.0.0
@@ -926,15 +966,13 @@ Copyright © 2014 AeC Hospitale
 
 Dash é a mais nova tecnologia de gestão hospitalar, e disponibiliza ferramentas para análise de dados em tempo real dos hospitais gerenciados pelo usuário. Acreditamos em uma navegação rápida objetiva e conclusiva.
 
-Para mais detalhes de como o aplicativo funciona, fique a vontade para conferir nosso tutorial.
-
 Para se registrar, entre em contato com a Hospitale.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NSu-Sl-2EF">
-                                <rect key="frame" x="146" y="449" width="29" height="22"/>
+                                <rect key="frame" x="146" y="420" width="29" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="NavBackButton">
                                     <color key="titleShadowColor" red="0.070588235289999995" green="0.57647058819999997" blue="0.81960784310000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -1007,7 +1045,7 @@ Para se registrar, entre em contato com a Hospitale.</string>
         </scene>
     </scenes>
     <resources>
-        <image name="ArrowIcon" width="28" height="36"/>
+        <image name="ArrowIcon" width="30" height="38"/>
         <image name="AssistedModeButton" width="22" height="22"/>
         <image name="CenterImage" width="324" height="470"/>
         <image name="Dash_White-2" width="208" height="114"/>

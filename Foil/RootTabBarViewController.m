@@ -26,6 +26,7 @@
     __weak IBOutlet UILabel *toolTipUILabel;
     CGRect tooltipOriginalPosition;
     __weak IBOutlet UIBarButtonItem *assistedModeButton;
+    UIColor *labelColor;
     
     BOOL sixthTipStillPresent;
     BOOL tutorialOnProgress;
