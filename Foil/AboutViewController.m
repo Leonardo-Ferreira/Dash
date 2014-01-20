@@ -40,21 +40,10 @@
     }
     
     ////////////// GESTURE RECOGNIZERS //////////////////////
-    UISwipeGestureRecognizer *openSlideout = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeIn:)];
-    openSlideout.direction = UISwipeGestureRecognizerDirectionRight;
-    
-    UISwipeGestureRecognizer *closeSlideout = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeOut:)];
-    closeSlideout.direction = UISwipeGestureRecognizerDirectionLeft;
     
     UISwipeGestureRecognizer *exitScreen = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleExitScreen:)];
     exitScreen.direction = UISwipeGestureRecognizerDirectionDown;
-    
-    UITapGestureRecognizer *tapScreen = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-    
-    [self.view addGestureRecognizer:tapScreen];
     [self.view addGestureRecognizer:exitScreen];
-    [self.view addGestureRecognizer:openSlideout];
-    [self.view addGestureRecognizer:closeSlideout];
     /////////////////////////////////////////////////////////
     
 }
@@ -62,29 +51,6 @@
 -(void)handleExitScreen:(UISwipeGestureRecognizer*)exitScreen{
     [self goBack];
     
-}
-
-//GESTURES FOR SLIDEOUT MENU
-
--(void)handleSwipeIn:(UISwipeGestureRecognizer*)swipeIn{
-    SlidoutController *slideout = [[SlidoutController alloc] init];
-    [slideout openSlideOut];
-    NSLog(@"works");
-}
-
--(void)handleSwipeOut:(UISwipeGestureRecognizer*)swipeOut{
-    [self swipeOut];
-    NSLog(@"works");
-}
-
--(void)handleTap:(UITapGestureRecognizer*)tapScreen{
-    [self swipeOut];
-    NSLog(@"works");
-}
-
--(void)swipeOut{
-    SlidoutController *slideout = [[SlidoutController alloc] init];
-    [slideout closeSlideOut];
 }
 
 //SHAKE MOTION

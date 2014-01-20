@@ -9,7 +9,9 @@
 #import "NoIndicatorSelectedVC.h"
 #import "objc/message.h"
 
-@interface NoIndicatorSelectedVC ()
+@interface NoIndicatorSelectedVC (){
+    UIAlertView *alert;
+}
 
 @end
 
@@ -31,8 +33,10 @@
 }
 
 -(void)alertUser{
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Visualização Avançada" message:@"Selecione um indicador e gire seu aparelho para acessar o modo de visualização avançada." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    alert = [[UIAlertView alloc]initWithTitle:@"Visualização Avançada" message:@"Selecione um indicador e gire seu aparelho para acessar o modo de visualização avançada." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
+
 }
 
 -(void) viewDidAppear:(BOOL)animated{
@@ -52,7 +56,7 @@
     {
         case UIDeviceOrientationPortrait:
         case UIDeviceOrientationPortraitUpsideDown:
-            
+            [alert dismissWithClickedButtonIndex:0 animated:NO];
             [self pushView];
             break;
             
@@ -62,6 +66,7 @@
 }
 
 -(void)pushView{
+    
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
     objc_msgSend([UIDevice currentDevice], @selector(setOrientation:), UIInterfaceOrientationPortrait);
     [self dismissViewControllerAnimated:YES completion:nil];

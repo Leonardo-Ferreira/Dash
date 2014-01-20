@@ -63,12 +63,14 @@
 
 -(void)handleSwipeIn:(UISwipeGestureRecognizer*)swipeIn{
     [_colletionView setUserInteractionEnabled:NO];
+    [self.navBar setUserInteractionEnabled:NO];
     SlidoutController *controller = [[SlidoutController alloc] init];
     [controller openSlideOut];
 }
 
 -(void)handleSwipeOut:(UISwipeGestureRecognizer*)swipeOut{
     [_colletionView setUserInteractionEnabled:YES];
+    [self.navBar setUserInteractionEnabled:YES];
     [self swipeOut];
 }
 
@@ -144,11 +146,11 @@
 }
 
 - (IBAction)backButtonClick:(UIBarButtonItem *)sender {
-    [self swipeOut];
     [self goBack];
 }
 
 - (void)goBack {
+    [self swipeOut];
     myAppDelegate = (FoilAppDelegate*)[[UIApplication sharedApplication] delegate];
     myAppDelegate.reviewThisPagesTutorial = NO;
     [self.navigationController popViewControllerAnimated:YES];

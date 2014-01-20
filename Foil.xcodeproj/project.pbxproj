@@ -373,11 +373,6 @@
 				CLASSPREFIX = Foil;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Leonardo Ferreira";
-				TargetAttributes = {
-					B3A43E0117A1ABD400D3FF44 = {
-						DevelopmentTeam = 85ZL36NVSN;
-					};
-				};
 			};
 			buildConfigurationList = B3A43DFD17A1ABD400D3FF44 /* Build configuration list for PBXProject "Foil" */;
 			compatibilityVersion = "Xcode 3.2";

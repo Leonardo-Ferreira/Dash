@@ -924,6 +924,7 @@ obter uma breve descrição.</string>
                         <outlet property="eighthTipImage" destination="EV3-6J-o7i" id="ywR-12-vLs"/>
                         <outlet property="eighthTipText" destination="tqD-FR-3XK" id="AqP-ZD-6Kb"/>
                         <outlet property="eighthTipView" destination="6oL-mt-X2l" id="jWz-LW-Icy"/>
+                        <outlet property="nav" destination="2tq-Ar-4CV" id="QTC-oX-xGf"/>
                         <outlet property="rootTabBar" destination="JTs-0L-nin" id="KR1-AM-EQb"/>
                         <outlet property="seventhTipImage" destination="lhI-B0-67j" id="fU6-p8-zSU"/>
                         <outlet property="seventhTipText" destination="DgX-34-Mc4" id="pYT-WA-mip"/>

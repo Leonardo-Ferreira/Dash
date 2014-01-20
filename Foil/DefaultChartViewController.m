@@ -236,7 +236,12 @@
             
             for (NSString *auxKey in auxKeys) {
                 NSDate *dateFromString = [[NSDate alloc] init];
+                
                 dateFromString = [dateFormatter dateFromString:auxKey];
+                if (!dateFromString) {
+                    [dateFormatter setDateFormat:@"dd/MM/yyyy HH:mm:SS"];
+                    dateFromString = [dateFormatter dateFromString:auxKey];
+                }
                 [orderedKeys addObject:dateFromString];
             }
         }else if (referencedIndicator.xAxisType == IndicatorValueTypeNumeric || referencedIndicator.xAxisType == IndicatorValueTypeMonetary){

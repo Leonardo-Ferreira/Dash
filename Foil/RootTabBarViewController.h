@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, TooltipState){
     TooltipFading,
     TooltipGone
 };
+@property (weak, nonatomic) IBOutlet UINavigationBar *nav;
 
 @property (weak, nonatomic) IBOutlet UIView *tutorialBackground;
 @property (weak, nonatomic) IBOutlet UIView *eighthTipView;

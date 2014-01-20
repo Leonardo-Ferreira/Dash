@@ -265,6 +265,7 @@
     SlidoutController *controller = [[SlidoutController alloc] init];
     [controller openSlideOut];
     stopTooltip = YES;
+    [self.nav setUserInteractionEnabled:NO];
     [self hideTooltip:0];
     NSLog(@"Swipe In working as intended.");
 }
@@ -277,6 +278,7 @@
 
 -(void)swipeOut{
     SlidoutController *controller = [[SlidoutController alloc] init];
+    [self.nav setUserInteractionEnabled:YES];
     [controller closeSlideOut];
     stopTooltip = NO;
 }

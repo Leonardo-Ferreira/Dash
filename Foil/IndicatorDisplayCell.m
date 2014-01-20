@@ -35,8 +35,9 @@
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:.5]];
             //[NSThread sleepForTimeInterval:.1];
         }
+        NSString *finalVal;
         if (referencedIndicator.dataFinishedLoadingSuccessfully) {
-            NSString *finalVal = referencedIndicator.value;
+            finalVal = referencedIndicator.value;
             if (referencedIndicator.valueType == IndicatorValueTypeMonetary) {
                 float auxVal = [referencedIndicator.value floatValue];
                 int ref = 1;
@@ -79,21 +80,27 @@
                         break;
                 }
             }
-            indicatorValueLabel.text = [[NSString stringWithFormat:@"%@ %@ %@",referencedIndicator.valuePrefix,finalVal,referencedIndicator.valueSufix] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            finalVal = [[NSString stringWithFormat:@"%@ %@ %@",referencedIndicator.valuePrefix,finalVal,referencedIndicator.valueSufix] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        }
+        else{
+            finalVal = @"Erro";
+        }
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            indicatorValueLabel.text = finalVal;
             [activityIndicator stopAnimating];
             indicatorValueLabel.hidden = NO;
-        }
+        });
     });
 }
 
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect
+ {
+ // Drawing code
+ }
+ */
 
 @end

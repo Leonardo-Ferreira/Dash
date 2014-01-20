@@ -60,6 +60,7 @@
     [controller openSlideOut];
     [self.view endEditing:YES];
     [self dismissSecondTip];
+    [self.buttonLogin setUserInteractionEnabled:NO];
     NSLog(@"Swipe In working as intended.");
 }
 
@@ -70,6 +71,7 @@
 
 -(void)swipeOut{
     SlidoutController *controller = [[SlidoutController alloc] init];
+    [self.buttonLogin setUserInteractionEnabled:YES];
     [self dismissThirdTip];
     [controller closeSlideOut];
 }
@@ -117,6 +119,7 @@
 }
 
 - (IBAction)loginClicked {
+    //[self swipeOut];
     NSLog(@"login clicked. Preparing to exibit next view");
     [self checkForInterationsAndLoadUserContexts];
     if (myAppDelegate.tutorialState >= FirstTipPresented && myAppDelegate.tutorialState <= ThirdTipPresented) {

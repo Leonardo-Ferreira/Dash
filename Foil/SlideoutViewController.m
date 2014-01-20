@@ -88,7 +88,6 @@
         }
         else{
             [del.navigationController pushViewController:viewController animated:YES];
-            [self closeSlideout];
             //[self presentViewController:viewController animated:YES completion:nil];
             //This could be presented, but sinse it can link the user to the tutorial view, and also has accessto our slideout, we decided to add to the navigation controller.
         }
